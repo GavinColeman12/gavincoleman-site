@@ -9,6 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Cal.com embed script -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "intro", {origin:"https://app.cal.com"});
+    Cal.ns.intro("ui", {"hideEventTypeDetails":false,"layout":"week_view"});
+  </script>
 </head>
 <body>
 
@@ -16,8 +23,7 @@
   <nav class="nav">
     <div class="nav__inner">
       <a href="#" class="nav__brand">
-        <span class="nav__brand-mark">GC</span>
-        <span class="nav__brand-text">Gavin Coleman</span>
+        <img src="images/logo.png" alt="Crescendo Consultants" class="nav__brand-logo" />
       </a>
       <ul class="nav__links">
         <li><a href="#about">About</a></li>
@@ -25,7 +31,7 @@
         <li><a href="#case-studies">Case Studies</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
       </ul>
-      <a href="#contact" class="btn btn--primary btn--small">Book a Call</a>
+      <a href="#contact" class="btn btn--primary btn--small" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
     </div>
   </nav>
 
@@ -50,7 +56,7 @@
           I help small and medium-sized businesses turn AI, automation, and modern software into real growth — without the overhead of a big firm.
         </p>
         <div class="hero__cta">
-          <a href="#contact" class="btn btn--primary">Start a Project →</a>
+          <a href="#contact" class="btn btn--primary" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
           <a href="#case-studies" class="btn btn--ghost">See Case Studies</a>
         </div>
         <div class="hero__stats">
@@ -469,11 +475,8 @@
         I work with a small number of clients at a time to ensure quality. Book a 30-minute intro call and I'll tell you honestly whether I can help.
       </p>
       <div class="contact__actions">
-        <a href="mailto:gavincol1997@gmail.com?subject=Consulting%20inquiry" class="btn btn--primary btn--large">Email Me →</a>
-        <a href="tel:+18044059880" class="btn btn--ghost btn--large">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          +1 (804) 405-9880
-        </a>
+        <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
+        <a href="mailto:gavincol1997@gmail.com?subject=Consulting%20inquiry" class="btn btn--ghost btn--large">Email Me</a>
       </div>
       <div class="contact__direct">
         <a href="mailto:gavincol1997@gmail.com">gavincol1997@gmail.com</a>
@@ -485,7 +488,7 @@
   <footer class="footer">
     <div class="footer__inner">
       <div class="footer__brand">
-        <div class="footer__mark">GC</div>
+        <img src="images/logo.png" alt="Crescendo Consultants" class="footer__logo" />
         <div>
           <div class="footer__name">Gavin Coleman</div>
           <div class="footer__tagline">Independent Technology Consultant</div>
@@ -508,5 +511,329 @@
   </footer>
 
   <script src="script.js"></script>
+
+<!-- Lead capture popup -->
+<div id="lead-popup-overlay" style="display:none;">
+  <div id="lead-popup">
+    <button id="lead-popup-close" aria-label="Close">&times;</button>
+
+    <div class="lead-popup-header">
+      <img src="images/logo.png" alt="Crescendo Consultants" class="lead-popup-logo" />
+      <h2>Ready to Grow? Let's Connect.</h2>
+      <p class="lead-popup-subtitle">Start with a free consultation</p>
+      <p class="lead-popup-description">
+        Tell me a bit about your business and goals. I'll follow up with personalized insights on how Crescendo Consulting can help you grow smarter.
+      </p>
+    </div>
+
+    <form name="lead-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead-form">
+      <input type="hidden" name="form-name" value="lead-capture" />
+      <p style="display:none;">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+      </div>
+
+      <input type="tel" name="phone" placeholder="Phone Number" />
+
+      <textarea name="message" placeholder="Need help with strategy, growth, or AI implementation? Let me know where I can support you..." rows="4"></textarea>
+
+      <button type="submit" class="lead-submit-btn">Let's Grow</button>
+    </form>
+
+    <div class="lead-popup-divider">
+      <span>or</span>
+    </div>
+    <button class="lead-cal-btn" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
+      📅 Book a Free Intro Call
+    </button>
+
+    <div id="lead-success" style="display:none;">
+      <h3>Thanks — I'll be in touch within 24 hours.</h3>
+    </div>
+  </div>
+</div>
+
+<style>
+  #lead-popup-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  #lead-popup {
+    background: #ffffff;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px 32px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  #lead-popup-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+
+  #lead-popup-close:hover {
+    color: #000;
+  }
+
+  .lead-popup-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 8px;
+    color: #1a1a1a;
+  }
+
+  .lead-popup-subtitle {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin: 8px 0 12px;
+  }
+
+  .lead-popup-description {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0 0 24px;
+  }
+
+  #lead-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  #lead-form input,
+  #lead-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  #lead-form input:focus,
+  #lead-form textarea:focus {
+    outline: none;
+    border-color: #1B4F72;
+  }
+
+  #lead-form textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+  }
+
+  .lead-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #1B4F72;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .lead-submit-btn:hover {
+    background: #2C6A94;
+  }
+
+  #lead-success {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  #lead-success h3 {
+    color: #17A589;
+    font-size: 20px;
+  }
+
+  .lead-popup-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: #aaa;
+    font-size: 13px;
+  }
+
+  .lead-popup-divider::before,
+  .lead-popup-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+  }
+
+  .lead-cal-btn {
+    width: 100%;
+    padding: 14px;
+    background: #ffffff;
+    color: #1B4F72;
+    border: 2px solid #1B4F72;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .lead-cal-btn:hover {
+    background: #1B4F72;
+    color: #ffffff;
+  }
+
+  /* Nav logo */
+  .nav__brand-logo {
+    height: 32px;
+    width: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  /* Footer logo */
+  .footer__logo {
+    height: 40px;
+    width: auto;
+  }
+
+  /* Popup logo */
+  .lead-popup-logo {
+    display: block;
+    height: 48px;
+    width: auto;
+    margin: 0 auto 16px;
+  }
+
+  @media (max-width: 600px) {
+    #lead-popup {
+      padding: 32px 20px;
+    }
+    #lead-form .form-row {
+      grid-template-columns: 1fr;
+    }
+    .lead-popup-header h2 {
+      font-size: 22px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const POPUP_DELAY = 45000; // 45 seconds
+  const STORAGE_KEY = 'lead_popup_shown';
+
+  // Don't show again if already dismissed or submitted in this session
+  function hasBeenShown() {
+    return sessionStorage.getItem(STORAGE_KEY) === 'true';
+  }
+
+  function markAsShown() {
+    sessionStorage.setItem(STORAGE_KEY, 'true');
+  }
+
+  function showPopup() {
+    if (hasBeenShown()) return;
+    document.getElementById('lead-popup-overlay').style.display = 'flex';
+    markAsShown();
+  }
+
+  function hidePopup() {
+    document.getElementById('lead-popup-overlay').style.display = 'none';
+  }
+
+  // Show after delay
+  setTimeout(showPopup, POPUP_DELAY);
+
+  // Close button
+  document.getElementById('lead-popup-close').addEventListener('click', hidePopup);
+
+  // Click outside to close
+  document.getElementById('lead-popup-overlay').addEventListener('click', function(e) {
+    if (e.target.id === 'lead-popup-overlay') hidePopup();
+  });
+
+  // Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hidePopup();
+  });
+
+  // Form submission — Netlify handles it natively, but we want to show success message
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    })
+    .then(() => {
+      form.style.display = 'none';
+      document.getElementById('lead-success').style.display = 'block';
+      // Auto-close after 3 seconds
+      setTimeout(hidePopup, 3000);
+    })
+    .catch((error) => {
+      alert('There was an error submitting the form. Please try emailing gavin@crescendo-consulting.net directly.');
+    });
+  });
+})();
+</script>
+
+<!-- Hidden form for Netlify form detection during build -->
+<form name="lead-capture" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <textarea name="message"></textarea>
+</form>
+
 </body>
 </html>
