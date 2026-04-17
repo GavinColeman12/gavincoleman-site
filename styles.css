@@ -429,6 +429,63 @@ ul {
   background: var(--border);
 }
 
+/* Image-based logo bar — uniform visual weight trust strip */
+.logos__grid--images {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 40px 56px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.logos__item-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  flex: 0 0 auto;
+}
+
+.logos__item-img img {
+  height: 28px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.logos__item-img:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Per-brand sizing tweaks — optically balance visual weight.
+   Rule of thumb: pure wordmarks get smaller heights; boxed logos (AMEX) get slightly larger. */
+.logos__item-img img[alt="Walmart"]                 { height: 22px; }
+.logos__item-img img[alt="Disney"]                  { height: 34px; }
+.logos__item-img img[alt="Marriott"]                { height: 20px; }
+.logos__item-img img[alt="American Express"]        { height: 40px; }
+.logos__item-img img[alt="Bain & Company"]          { height: 18px; }
+.logos__item-img img[alt="Santander"]               { height: 20px; }
+.logos__item-img img[alt="Dick's Sporting Goods"]   { height: 28px; }
+.logos__item-img img[alt="Publicis Sapient"]        { height: 28px; }
+.logos__item-img img[alt="Colgate"]                 { height: 18px; }
+.logos__item-img img[alt="Citi"]                    { height: 22px; }
+.logos__item-img img[alt="Morgan Stanley"]          { height: 16px; }
+.logos__item-img img[alt="Marcus by Goldman Sachs"] { height: 26px; }
+.logos__item-img img[alt="Fidelity"]                { height: 22px; }
+
+@media (max-width: 900px) {
+  .logos__grid--images { gap: 28px 40px; }
+}
+@media (max-width: 520px) {
+  .logos__grid--images { gap: 24px 32px; }
+}
+
 /* ============================================================
    Sections shared
    ============================================================ */
@@ -717,6 +774,20 @@ ul {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
+}
+
+/* 5th (featured) case card spans both columns, centered at same width as siblings */
+.case-card--featured {
+  grid-column: 1 / -1;
+  max-width: calc((100% - 28px) / 2);
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .case-card--featured {
+    max-width: 100%;
+  }
 }
 
 .case-card {
