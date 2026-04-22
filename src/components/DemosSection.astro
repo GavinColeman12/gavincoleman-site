@@ -255,9 +255,10 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     aspect-ratio: auto !important;
   }
   /* Portrait demo: instead of stretching the phone-shape to fill a wide cell,
-     letterbox it — center a phone-width column within the cell. */
+     letterbox it — center a phone-width column within the cell.
+     440px gives the form enough width to breathe while staying phone-ish. */
   .demo-cell__embed :global(.crescendo-demo--portrait) {
-    max-width: 340px !important;
+    max-width: 440px !important;
     margin: 0 auto !important;
   }
   @media (max-width: 960px) {
