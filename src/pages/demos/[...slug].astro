@@ -46,6 +46,11 @@ const isLive = Boolean(demo.data.liveUrl && demo.data.liveUrl.length > 0);
           src={demo.data.liveUrl}
           title={`Crescendo — ${demo.data.title} demo`}
           caption="Live interactive demo · sample data only"
+          aspect={demo.data.aspect}
+          sandbox={demo.data.sandbox}
+          allow={demo.data.allow}
+          resizeSource={demo.data.resizeSource}
+          initialHeight={demo.data.initialHeight}
         />
       ) : (
         <div class="demo__frame-wrap">

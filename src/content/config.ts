@@ -24,6 +24,14 @@ const demos = defineCollection({
     order: z.number().default(0),    // for ordering in the grid (lower = first)
     pricingFrom: z.string().optional(), // e.g. "$8,000"
     timeline: z.string().optional(), // e.g. "2 weeks to pilot"
+    aspect: z.enum(['landscape', 'portrait', 'auto']).default('landscape'),
+      // "landscape" = 16:10 dashboard style
+      // "portrait"  = 9:16 phone-app style
+      // "auto"      = content-driven, auto-resizes via postMessage from iframe
+    sandbox: z.string().optional(),  // iframe sandbox attr, e.g. "allow-scripts allow-same-origin allow-forms"
+    allow: z.string().optional(),    // iframe allow attr; defaults in DemoEmbed cover clipboard/fullscreen. Override for e.g. microphone.
+    resizeSource: z.string().optional(), // for aspect="auto": the postMessage source ID to listen for
+    initialHeight: z.number().default(900), // for aspect="auto": starting iframe height in pixels
     draft: z.boolean().default(false),
   }),
 });

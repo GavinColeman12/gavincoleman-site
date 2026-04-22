@@ -1,19 +1,29 @@
 ---
 // Reusable demo embed — drop into any .astro page or .mdx content file.
 //
-// Usage:
-//   <DemoEmbed
-//     src="https://crescendo-client-dashboard.vercel.app/embed"
-//     title="Crescendo — interactive client portfolio demo"
-//     caption="Live interactive demo · sample data only"
-//   />
+// Three aspect variants:
 //
-// All props optional except `src`.
+//   landscape (default): 16:10 dashboard style, max 1200px
+//     <DemoEmbed src="..." />
+//
+//   portrait: 9:16 phone-app style, max 560px
+//     <DemoEmbed src="..." aspect="portrait" />
+//
+//   auto: content-driven, auto-resizes via postMessage from iframe
+//     <DemoEmbed src="..." aspect="auto" resizeSource="geo-visibility-checker" />
+//
+// With sandbox flags (stricter iframe permissions):
+//   <DemoEmbed src="..." sandbox="allow-scripts allow-same-origin allow-forms allow-popups" />
 export interface Props {
   src: string;
   title?: string;
   caption?: string;
   newTabLabel?: string;
+  aspect?: 'landscape' | 'portrait' | 'auto';
+  sandbox?: string;
+  allow?: string;
+  resizeSource?: string;
+  initialHeight?: number;
 }
 
 const {
@@ -21,16 +31,27 @@ const {
   title = 'Interactive demo',
   caption = 'Live interactive demo · sample data only',
   newTabLabel = 'Open in new tab ↗',
+  aspect = 'landscape',
+  sandbox,
+  allow = 'clipboard-read; clipboard-write; fullscreen',
+  resizeSource,
+  initialHeight = 900,
 } = Astro.props;
+
+const wrapClass = `crescendo-demo crescendo-demo--${aspect}`;
+// Unique id for auto-resize variant so the listener targets the right frame
+const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(2, 9)}` : undefined;
 ---
 
-<figure class="crescendo-demo">
-  <div class="crescendo-demo__frame">
+<figure class={wrapClass}>
+  <div class="crescendo-demo__frame" style={aspect === 'auto' ? `height:${initialHeight}px;` : ''}>
     <iframe
+      id={frameId}
       src={src}
       title={title}
       loading="lazy"
-      allow="clipboard-read; clipboard-write; fullscreen"
+      allow={allow}
+      sandbox={sandbox}
     ></iframe>
   </div>
   <figcaption>
@@ -39,14 +60,69 @@ const {
   </figcaption>
 </figure>
 
+{aspect === 'auto' && resizeSource && (
+  <script is:inline define:vars={{ frameId, resizeSource }}>
+    (function () {
+      var frame = document.getElementById(frameId);
+      if (!frame) return;
+      window.addEventListener('message', function (e) {
+        if (!e.data || e.data.source !== resizeSource) return;
+        if (e.data.type === 'resize' && typeof e.data.height === 'number') {
+          var wrap = frame.parentElement;
+          if (wrap) wrap.style.height = (e.data.height + 8) + 'px';
+        }
+      });
+    })();
+  </script>
+)}
+
 <style>
   .crescendo-demo {
     margin: 2.5rem auto;
+  }
+
+  /* Landscape — dashboard-style, wide */
+  .crescendo-demo--landscape {
     max-width: 1200px;
   }
+  .crescendo-demo--landscape .crescendo-demo__frame {
+    aspect-ratio: 16 / 10;
+  }
+  @media (max-width: 640px) {
+    .crescendo-demo--landscape .crescendo-demo__frame {
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  /* Portrait — phone-shaped app */
+  .crescendo-demo--portrait {
+    max-width: 640px;
+  }
+  .crescendo-demo--portrait .crescendo-demo__frame {
+    aspect-ratio: 9 / 16;
+    min-height: 720px;
+  }
+  @media (min-width: 768px) {
+    .crescendo-demo--portrait {
+      max-width: 560px;
+    }
+    .crescendo-demo--portrait .crescendo-demo__frame {
+      min-height: 820px;
+    }
+  }
+
+  /* Auto — content-driven height via postMessage */
+  .crescendo-demo--auto {
+    max-width: 900px;
+  }
+  .crescendo-demo--auto .crescendo-demo__frame {
+    /* height set inline from initialHeight; resizes via postMessage listener */
+    transition: height 0.2s ease;
+  }
+
+  /* Shared frame styling */
   .crescendo-demo__frame {
     position: relative;
-    aspect-ratio: 16 / 10;
     border-radius: 16px;
     overflow: hidden;
     background: #0a0b10;
@@ -54,6 +130,11 @@ const {
       0 1px 2px rgba(0, 0, 0, 0.1),
       0 20px 60px -20px rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .crescendo-demo--portrait .crescendo-demo__frame,
+  .crescendo-demo--auto .crescendo-demo__frame {
+    background: #f8fafc;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.12);
   }
   .crescendo-demo__frame iframe {
     position: absolute;
@@ -63,6 +144,7 @@ const {
     border: 0;
     display: block;
   }
+
   .crescendo-demo figcaption {
     display: flex;
     justify-content: space-between;
@@ -79,12 +161,12 @@ const {
     text-decoration: none;
     border-bottom: 1px solid currentColor;
     transition: color 0.15s;
+    white-space: nowrap;
   }
   .crescendo-demo figcaption a:hover {
     color: #8b7cf0;
   }
   @media (max-width: 640px) {
-    .crescendo-demo__frame { aspect-ratio: 3 / 4; }
     .crescendo-demo figcaption { flex-direction: column; align-items: flex-start; gap: 6px; }
   }
 </style>
