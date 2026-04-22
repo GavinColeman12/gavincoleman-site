@@ -229,9 +229,43 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     text-decoration: underline;
   }
 
-  /* EMBED CELL — demo fills its grid cell */
+  /* EMBED CELL — uniform height across all demos for visual parity.
+     Slightly taller than a natural 16:10 aspect at ~700px column width. */
   .demo-cell__embed {
     width: 100%;
+    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Force all embedded demos inside the grid to fill their cell exactly,
+     overriding per-aspect CSS from DemoEmbed. */
+  .demo-cell__embed :global(.crescendo-demo) {
+    width: 100%;
+    height: 100%;
+    max-width: 100% !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .demo-cell__embed :global(.crescendo-demo__frame) {
+    flex: 1 1 auto;
+    height: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+  }
+  /* Portrait demo: instead of stretching the phone-shape to fill a wide cell,
+     letterbox it — center a phone-width column within the cell. */
+  .demo-cell__embed :global(.crescendo-demo--portrait) {
+    max-width: 340px !important;
+    margin: 0 auto !important;
+  }
+  @media (max-width: 960px) {
+    .demo-cell__embed { height: 520px; }
+  }
+  @media (max-width: 600px) {
+    .demo-cell__embed { height: 480px; }
+    .demo-cell__embed :global(.crescendo-demo--portrait) { max-width: 100% !important; }
   }
 
   /* COMING SOON */

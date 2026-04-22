@@ -42,7 +42,9 @@ const {
 
 const wrapClass = `crescendo-demo crescendo-demo--${aspect}${fluid ? ' crescendo-demo--fluid' : ''}`;
 // Unique id for auto-resize variant so the listener targets the right frame
-const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(2, 9)}` : undefined;
+// Skip auto-resize entirely in fluid mode — the container height is fixed by the grid.
+const shouldAutoResize = aspect === 'auto' && !fluid;
+const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2, 9)}` : undefined;
 ---
 
 <figure class={wrapClass}>
@@ -62,7 +64,7 @@ const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(
   </figcaption>
 </figure>
 
-{aspect === 'auto' && resizeSource && (
+{shouldAutoResize && resizeSource && (
   <script is:inline define:vars={{ frameId, resizeSource }}>
     (function () {
       var frame = document.getElementById(frameId);
