@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+type FaqItem = { q: string; a: string };
+type FaqSection = { heading: string; items: FaqItem[] };
+
+const sections: FaqSection[] = [
+  {
+    heading: 'How Crescendo works',
+    items: [
+      {
+        q: 'What does an independent AI consultant actually do?',
+        a: "An independent AI consultant diagnoses the specific operational problems a business wants to solve, identifies where AI can meaningfully help (and where it cannot), and then either builds the solution directly or designs and manages its build. At Crescendo, every engagement includes both strategy and hands-on implementation — the same person who designs the solution writes the code. The typical output is a working system the client's team can run independently after the engagement ends, not a slide deck.",
+      },
+      {
+        q: 'What is the difference between hiring an independent AI consultant and an agency?',
+        a: "Independent consultants give you direct access to a senior practitioner with no account managers, junior handoffs, or project overhead — typically at 40–60% less cost than a comparable agency engagement. The tradeoff is capacity: a single operator runs only a small number of engagements at a time, so timing matters. For small and mid-market businesses with a specific bottleneck, the independent model usually delivers a better outcome per dollar. For multi-year global transformations involving hundreds of stakeholders, an agency is still the right call.",
+      },
+      {
+        q: 'What industries does Crescendo Consultants work with?',
+        a: 'Crescendo focuses on small and mid-market businesses in professional services (law, accounting, consulting), healthcare (dental, medical, medspa), financial services, and retail and e-commerce — typically 15 to 200 employees with clear operational bottlenecks. Prior enterprise work has spanned Disney, Marriott, American Express, Walmart, Bain & Company, Citi, Morgan Stanley, Fidelity, Santander, Colgate, and others; the pattern library travels well to mid-market problems.',
+      },
+      {
+        q: 'Do you build custom software or just advise?',
+        a: "Crescendo builds. Strategy without implementation rarely translates into business outcomes, so every engagement is scoped to produce a concrete technical deliverable — a working chatbot, an agentic workflow, a data pipeline, a dashboard — alongside the strategy that frames it. If a client needs advisory-only work (board-level strategy input, vendor selection, AI readiness assessment), that's available too, but it's a smaller slice of the practice.",
+      },
+    ],
+  },
+  {
+    heading: 'Cost and timeline',
+    items: [
+      {
+        q: 'How much does it cost to hire an independent AI consultant?',
+        a: 'Crescendo engagements typically range from $5,000 for a discrete tool build, to $15,000–$40,000 for a full 4–12 week implementation, to $5,000–$10,000 per month for a fractional technology leadership retainer. Every scope starts with a free 30-minute diagnostic call so clients know exactly what they are paying for before anything is signed. Paid diagnostic sprints ($2,500–$5,000, 1–2 weeks) are also available for businesses that want a written assessment before committing to a full build.',
+      },
+      {
+        q: 'How long does a typical AI implementation take?',
+        a: "Most AI implementations at Crescendo run 4–12 weeks end to end, depending on complexity. A tightly-scoped tool build — a specific chatbot, a single automated workflow, an internal knowledge assistant — takes 2–4 weeks. A broader transformation involving multi-system integrations or agentic workflows spanning departments takes 8–12 weeks. Anything longer than that is usually structured as a fractional retainer rather than a project.",
+      },
+      {
+        q: 'Is there a minimum engagement?',
+        a: "The smallest engagement is typically $5,000 or two weeks — below that, there isn't enough runway to produce a real business outcome. Discovery and paid diagnostic sprints can be smaller, starting at $2,500 for a 1-week assessment. Most clients come in for a larger engagement after the diagnostic.",
+      },
+      {
+        q: 'What ROI should I expect from an AI engagement?',
+        a: 'Crescendo engagements are scoped to pay for themselves within 6–12 months. ROI is measured one of three ways: labor hours reclaimed (each reclaimed hour has a real dollar value), revenue unlocked (faster response times, better conversion, more capacity), or cost avoided (fewer errors, less churn, better decisions). Every scope of work includes an explicit ROI target written into the brief — no engagement begins without one.',
+      },
+    ],
+  },
+  {
+    heading: 'Process and working together',
+    items: [
+      {
+        q: 'How do engagements start?',
+        a: "Every engagement starts with a free 30-minute intro call to identify whether Crescendo is the right fit. If there's mutual interest, the next step is a 1–2 week paid diagnostic sprint that produces a written assessment, prioritized opportunities, and a concrete scope of work. Only then is a full implementation engagement signed. If the client moves forward, the diagnostic fee credits toward the implementation.",
+      },
+      {
+        q: 'Do you work remotely or on-site?',
+        a: 'Engagements run primarily remotely, with optional on-site travel for discovery workshops, stakeholder interviews, or go-live sprints. Most clients find remote delivery moves faster because it compresses the meeting cadence and keeps documentation tight. On-site visits are not required, but are not unusual either — typically one or two across a 12-week engagement.',
+      },
+      {
+        q: 'Who owns the code and IP you build?',
+        a: "The client owns 100% of the code, models, and data produced during an engagement. Crescendo retains only general methodology and non-client-specific patterns — nothing that belongs to the client's business. Standard mutual NDAs are signed before any material work begins, and custom NDAs are welcome. This is the default, not a negotiation point.",
+      },
+      {
+        q: 'What happens after the engagement ends?',
+        a: "Every Crescendo build is designed to be run by the client's team once the engagement ends — documentation, training sessions, and monitoring setup are included in every scope. Optional post-launch retainers are available for clients who want ongoing technical support, performance tuning, or iterative improvements, typically $2,500–$7,500 per month. The default is independence, not dependence.",
+      },
+    ],
+  },
+  {
+    heading: 'AI readiness and expectations',
+    items: [
+      {
+        q: 'How do I know if my business is ready for AI?',
+        a: 'Businesses are typically ready for AI when three conditions are met: a repetitive operational bottleneck costing real money (usually $50K+ per year in labor hours or lost revenue), clean-enough data or processes to feed into a model, and a named internal owner who will actually implement and monitor the tool after it ships. If any of those three are missing, the first engagement should focus on getting them in place. AI deployed without any of the three usually fails regardless of how good the tool is.',
+      },
+      {
+        q: 'Will AI replace my employees?',
+        a: "In the majority of Crescendo engagements, AI replaces specific tasks rather than whole roles. A typical outcome is that a team of five now handles the workload of six or seven without adding headcount, or that a high-cost senior person stops doing routine work and redirects those hours to higher-leverage projects. The businesses that see the best results from AI use it to grow capacity and improve margins, not to cut payroll.",
+      },
+      {
+        q: 'What technology stack do you use?',
+        a: 'The default stack is Python, modern cloud (AWS, GCP, Azure depending on client preference), Claude and GPT for LLM work, agentic frameworks (LangChain, LangGraph, or direct model APIs depending on fit), Postgres or Snowflake for data, and Vercel/Netlify for client-facing deployments. The stack is selected to match the client — not every engagement needs a data warehouse, not every engagement needs a custom agent. The point is fit, not novelty.',
+      },
+    ],
+  },
+];
+
+// Flat list for JSON-LD schema
+const allItems = sections.flatMap((s) => s.items);
+---
+
+<BaseLayout
+  title="FAQ — Crescendo Consultants | Independent AI Consulting"
+  description="Frequently asked questions about hiring an independent AI consultant for small and mid-market businesses — costs, timelines, industries, process, and what to expect from an AI implementation."
+  canonicalPath="/faq"
+>
+  <!-- JSON-LD structured data for FAQ schema (GEO / AI search optimization) -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: allItems.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.a,
+        },
+      })),
+    })}
+  />
+
+  <section class="faq">
+    <div class="faq__inner">
+      <header class="faq__header">
+        <div class="eyebrow">Frequently Asked</div>
+        <h1 class="faq__title">How Crescendo works — <em>in plain English</em>.</h1>
+        <p class="faq__lede">
+          Costs, timelines, process, deliverables, and the questions real clients ask before hiring an independent AI consultant. If what you're looking for isn't here, <a href="mailto:Gavin-Coleman@crescendo-consulting.net">email me</a> or <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;">book a 30-minute intro call</a>.
+        </p>
+      </header>
+
+      {sections.map((section) => (
+        <section class="faq__section">
+          <h2 class="faq__section-heading">{section.heading}</h2>
+          <div class="faq__list">
+            {section.items.map((item) => (
+              <details class="faq__item">
+                <summary class="faq__q">
+                  <span class="faq__q-text">{item.q}</span>
+                  <span class="faq__q-icon" aria-hidden="true"></span>
+                </summary>
+                <div class="faq__a">
+                  <p>{item.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="faq__cta">
+        <h2 class="faq__cta-title">Still have a question?</h2>
+        <p class="faq__cta-dek">Book a free 30-minute intro call. I'll give you a direct answer — not a sales pitch.</p>
+        <div class="faq__cta-actions">
+          <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
+          <a href="mailto:Gavin-Coleman@crescendo-consulting.net" class="btn btn--ghost btn--large">Email Directly</a>
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .faq {
+    background: #fafaf7;
+    padding: 120px 24px 100px;
+  }
+  .faq__inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .faq__header {
+    margin-bottom: 72px;
+  }
+  .faq__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(36px, 5.5vw, 52px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 20px 0 24px;
+  }
+  .faq__title em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .faq__lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: #3a3f54;
+    max-width: 680px;
+  }
+  .faq__lede a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .faq__section {
+    margin-bottom: 56px;
+  }
+  .faq__section-heading {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 0 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0ddd4;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq__item {
+    border-bottom: 1px solid #e0ddd4;
+  }
+  .faq__item:first-child {
+    border-top: none;
+  }
+
+  .faq__q {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 0;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: #0a0e27;
+    transition: color 0.15s;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { color: #2563eb; }
+
+  .faq__q-text {
+    flex: 1;
+  }
+  .faq__q-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+  .faq__q-icon::before,
+  .faq__q-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #0a0e27;
+    transition: transform 0.2s;
+  }
+  .faq__q-icon::before {
+    width: 14px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+  }
+  .faq__q-icon::after {
+    width: 2px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+  }
+  .faq__item[open] .faq__q-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq__a {
+    padding: 0 0 24px;
+    max-width: 680px;
+  }
+  .faq__a p {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3a3f54;
+    margin: 0;
+  }
+
+  .faq__cta {
+    margin-top: 96px;
+    padding: 56px 0 0;
+    border-top: 1px solid #e0ddd4;
+    text-align: center;
+  }
+  .faq__cta-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: #0a0e27;
+    margin: 0 0 12px;
+  }
+  .faq__cta-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    color: #3a3f54;
+    margin: 0 0 28px;
+  }
+  .faq__cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 600px) {
+    .faq { padding: 96px 20px 80px; }
+    .faq__q { font-size: 20px; padding: 22px 0; }
+    .faq__a p { font-size: 16px; }
+  }
+</style>

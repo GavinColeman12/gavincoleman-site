@@ -1,0 +1,365 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const demos = await getCollection('demos', ({ data }) => !data.draft);
+  return demos.map((demo) => ({ params: { slug: demo.slug }, props: { demo } }));
+}
+
+interface Props { demo: CollectionEntry<'demos'>; }
+const { demo } = Astro.props;
+const { Content } = await demo.render();
+
+// Other demos for "explore more"
+const all = await getCollection('demos', ({ data }) => !data.draft);
+const others = all
+  .filter((d) => d.slug !== demo.slug)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const isLive = Boolean(demo.data.liveUrl && demo.data.liveUrl.length > 0);
+---
+
+<BaseLayout
+  title={`${demo.data.title} — Crescendo Consultants`}
+  description={demo.data.pitch}
+  canonicalPath={`/demos/${demo.slug}`}
+>
+  <section class="demo">
+    <div class="demo__inner">
+
+      <a href="/demos" class="demo__back">← All Demos</a>
+
+      <div class="demo__tags">
+        {demo.data.tags.map((t) => <span class="demo__tag">{t}</span>)}
+      </div>
+
+      <h1 class="demo__title">{demo.data.title}</h1>
+      <p class="demo__pitch">{demo.data.pitch}</p>
+
+      <!-- Live iframe embed -->
+      <div class="demo__frame-wrap">
+        {isLive ? (
+          <iframe
+            src={demo.data.liveUrl}
+            title={demo.data.title}
+            loading="lazy"
+            allow="clipboard-read; clipboard-write; fullscreen; microphone"
+            class="demo__frame"
+          ></iframe>
+        ) : (
+          <div class="demo__frame-placeholder">
+            <div class="demo__frame-placeholder-icon">⧖</div>
+            <div class="demo__frame-placeholder-title">Live demo coming soon</div>
+            <div class="demo__frame-placeholder-dek">
+              Want early access? <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;color:#fff;text-decoration:underline;">Book an intro call</a> and I'll walk you through the working prototype directly.
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Meta summary bar -->
+      <div class="demo__meta-bar">
+        {demo.data.pricingFrom && (
+          <div class="demo__meta-item">
+            <div class="demo__meta-label">Starting at</div>
+            <div class="demo__meta-value">{demo.data.pricingFrom}</div>
+          </div>
+        )}
+        {demo.data.timeline && (
+          <div class="demo__meta-item">
+            <div class="demo__meta-label">Timeline</div>
+            <div class="demo__meta-value">{demo.data.timeline}</div>
+          </div>
+        )}
+        <div class="demo__meta-item">
+          <div class="demo__meta-label">Built for</div>
+          <div class="demo__meta-value">{demo.data.tags.join(' · ')}</div>
+        </div>
+      </div>
+
+      <!-- Body content -->
+      <div class="demo__body">
+        <Content />
+      </div>
+
+      <!-- CTA -->
+      <aside class="demo__cta">
+        <h3 class="demo__cta-title">Want something like this for your business?</h3>
+        <p class="demo__cta-dek">Book a free 30-minute intro call. I'll tell you honestly whether this pattern fits your business.</p>
+        <div class="demo__cta-actions">
+          <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call →</a>
+          <a href="mailto:Gavin-Coleman@crescendo-consulting.net?subject=Demo%20inquiry" class="btn btn--ghost btn--large">Email Directly</a>
+        </div>
+      </aside>
+
+      <!-- Other demos -->
+      {others.length > 0 && (
+        <section class="demo__others">
+          <h3 class="demo__others-label">Explore More Demos</h3>
+          <ul class="demo__others-list">
+            {others.map((d) => (
+              <li>
+                <a href={`/demos/${d.slug}`} class="demo__others-link">
+                  <h4>{d.data.title}</h4>
+                  <p>{d.data.pitch}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .demo {
+    background: #fafaf7;
+    padding: 80px 24px 100px;
+  }
+  .demo__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .demo__back {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-decoration: none;
+    margin-bottom: 28px;
+  }
+  .demo__back:hover { color: #2563eb; }
+
+  .demo__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .demo__tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6b7280;
+    background: #f0ede4;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .demo__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 0 0 16px;
+  }
+  .demo__pitch {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 21px;
+    line-height: 1.5;
+    color: #3a3f54;
+    margin: 0 0 44px;
+    max-width: 820px;
+  }
+
+  /* Iframe wrapper */
+  .demo__frame-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(10,14,39,0.12), 0 0 0 1px rgba(10,14,39,0.06);
+    background: #0a0e27;
+    margin-bottom: 32px;
+  }
+  .demo__frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+  .demo__frame-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #0a0e27 0%, #2563eb 100%);
+  }
+  .demo__frame-placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  .demo__frame-placeholder-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .demo__frame-placeholder-dek {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  /* Meta bar */
+  .demo__meta-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 24px 28px;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 10px;
+    margin-bottom: 56px;
+  }
+  .demo__meta-item {}
+  .demo__meta-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+  .demo__meta-value {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #0a0e27;
+  }
+  @media (max-width: 720px) {
+    .demo__meta-bar { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* Body content */
+  .demo__body {
+    max-width: 720px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #1a1d2e;
+  }
+  .demo__body h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: #0a0e27;
+    margin: 2.2em 0 0.6em;
+  }
+  .demo__body h2:first-child {
+    margin-top: 0;
+  }
+  .demo__body p {
+    margin: 0 0 1.4em;
+  }
+
+  /* CTA */
+  .demo__cta {
+    margin: 72px 0 64px;
+    padding: 40px 32px;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 720px;
+  }
+  .demo__cta-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    margin: 0 0 10px;
+    color: #0a0e27;
+  }
+  .demo__cta-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0 0 24px;
+  }
+  .demo__cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Other demos */
+  .demo__others {
+    max-width: 1160px;
+    margin-top: 56px;
+    padding-top: 48px;
+    border-top: 1px solid #e0ddd4;
+  }
+  .demo__others-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #6b7280;
+    margin: 0 0 24px;
+  }
+  .demo__others-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 860px) {
+    .demo__others-list { grid-template-columns: 1fr; }
+  }
+  .demo__others-link {
+    display: block;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+  .demo__others-link:hover {
+    border-color: #2563eb;
+    transform: translateY(-2px);
+  }
+  .demo__others-link h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: #0a0e27;
+  }
+  .demo__others-link p {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #3a3f54;
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .demo { padding: 60px 20px 80px; }
+  }
+</style>

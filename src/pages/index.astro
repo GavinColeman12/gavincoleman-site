@@ -1,43 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gavin Coleman — Independent Technology Consultant</title>
-  <meta name="description" content="Independent technology consultant helping small and medium-sized businesses harness AI, automation, and modern software to grow faster and work smarter." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
 
-  <!-- Cal.com embed script -->
-  <script type="text/javascript">
-    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-    Cal("init", "intro", {origin:"https://app.cal.com"});
-    Cal.ns.intro("ui", {"hideEventTypeDetails":false,"layout":"week_view"});
-  </script>
-</head>
-<body>
-
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="nav__inner">
-      <a href="#" class="nav__brand">
-        <img src="images/logo-mark.png" alt="" class="nav__brand-mark-img" />
-        <span class="nav__brand-wordmark">
-          <span class="nav__brand-name">CRESCENDO</span>
-          <span class="nav__brand-sub">CONSULTANTS</span>
-        </span>
-      </a>
-      <ul class="nav__links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#case-studies">Case Studies</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-      </ul>
-      <a href="#contact" class="btn btn--primary btn--small" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
-    </div>
-  </nav>
+<BaseLayout
+  title="Crescendo Consultants — Independent AI & Technology Consulting"
+  description="Fortune 100 AI playbooks delivered directly to your business. Independent strategy and implementation — no agency overhead."
+  canonicalPath="/"
+>
 
   <!-- HERO -->
   <header class="hero">
@@ -80,7 +49,7 @@
       </div>
       <div class="hero__portrait">
         <div class="hero__portrait-frame">
-          <img src="images/hero-main.jpg" alt="Gavin Coleman presenting" />
+          <img src="/images/hero-main.jpg" alt="Gavin Coleman presenting" />
         </div>
         <div class="hero__badge">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -96,21 +65,19 @@
   <section class="logos">
     <p class="logos__label">Worked with teams at</p>
     <div class="logos__grid logos__grid--images">
-      <!-- Row 1: Consumer / Retail / Hospitality / Entertainment -->
-      <div class="logos__item-img"><img src="images/logos/disney.svg" alt="Disney" /></div>
-      <div class="logos__item-img"><img src="images/logos/marriott.svg" alt="Marriott" /></div>
-      <div class="logos__item-img"><img src="images/logos/walmart.svg" alt="Walmart" /></div>
-      <div class="logos__item-img"><img src="images/logos/dsg.svg" alt="Dick's Sporting Goods" /></div>
-      <div class="logos__item-img"><img src="images/logos/colgate.svg" alt="Colgate" /></div>
-      <div class="logos__item-img"><img src="images/logos/publicissapient.svg" alt="Publicis Sapient" /></div>
-      <!-- Row 2: Financial Services / Consulting -->
-      <div class="logos__item-img"><img src="images/logos/amex.svg" alt="American Express" /></div>
-      <div class="logos__item-img"><img src="images/logos/citi.svg" alt="Citi" /></div>
-      <div class="logos__item-img"><img src="images/logos/morganstanley.svg" alt="Morgan Stanley" /></div>
-      <div class="logos__item-img"><img src="images/logos/marcus.svg" alt="Marcus by Goldman Sachs" /></div>
-      <div class="logos__item-img"><img src="images/logos/fidelity.svg" alt="Fidelity" /></div>
-      <div class="logos__item-img"><img src="images/logos/santander.svg" alt="Santander" /></div>
-      <div class="logos__item-img"><img src="images/logos/bain.svg" alt="Bain &amp; Company" /></div>
+      <div class="logos__item-img"><img src="/images/logos/disney.svg" alt="Disney" /></div>
+      <div class="logos__item-img"><img src="/images/logos/marriott.svg" alt="Marriott" /></div>
+      <div class="logos__item-img"><img src="/images/logos/walmart.svg" alt="Walmart" /></div>
+      <div class="logos__item-img"><img src="/images/logos/dsg.svg" alt="Dick's Sporting Goods" /></div>
+      <div class="logos__item-img"><img src="/images/logos/colgate.svg" alt="Colgate" /></div>
+      <div class="logos__item-img"><img src="/images/logos/publicissapient.svg" alt="Publicis Sapient" /></div>
+      <div class="logos__item-img"><img src="/images/logos/amex.svg" alt="American Express" /></div>
+      <div class="logos__item-img"><img src="/images/logos/citi.svg" alt="Citi" /></div>
+      <div class="logos__item-img"><img src="/images/logos/morganstanley.svg" alt="Morgan Stanley" /></div>
+      <div class="logos__item-img"><img src="/images/logos/marcus.svg" alt="Marcus by Goldman Sachs" /></div>
+      <div class="logos__item-img"><img src="/images/logos/fidelity.svg" alt="Fidelity" /></div>
+      <div class="logos__item-img"><img src="/images/logos/santander.svg" alt="Santander" /></div>
+      <div class="logos__item-img"><img src="/images/logos/bain.svg" alt="Bain &amp; Company" /></div>
     </div>
   </section>
 
@@ -119,7 +86,7 @@
     <div class="section__inner about__inner">
       <div class="about__photo">
         <div class="about__photo-frame">
-          <img src="images/about-portrait.jpg" alt="Gavin Coleman in Greece" />
+          <img src="/images/about-portrait.jpg" alt="Gavin Coleman" />
         </div>
         <div class="about__photo-accent"></div>
       </div>
@@ -292,24 +259,14 @@
         <p class="section__subtitle">The Fortune 100 pattern library, applied to mid-market problems. Every case below is a real client, with real results.</p>
       </div>
       <div class="cases__grid">
-
         <article class="case-card">
           <div class="case-card__tag">Healthcare · Reputation</div>
           <h3 class="case-card__title">Reputation Intelligence for a Manhattan Dental Practice</h3>
           <p class="case-card__desc">Built a custom AI reputation audit system that pulls reviews across platforms, runs sentiment analysis, and generates actionable recommendations — turning weeks of manual work into a 90-second automated process.</p>
           <div class="case-card__metrics">
-            <div class="metric">
-              <div class="metric__value">+40%</div>
-              <div class="metric__label">5-star review rate</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">15 hrs</div>
-              <div class="metric__label">Saved per week</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">89</div>
-              <div class="metric__label">Health score (up from 62)</div>
-            </div>
+            <div class="metric"><div class="metric__value">+40%</div><div class="metric__label">5-star review rate</div></div>
+            <div class="metric"><div class="metric__value">15 hrs</div><div class="metric__label">Saved per week</div></div>
+            <div class="metric"><div class="metric__value">89</div><div class="metric__label">Health score (up from 62)</div></div>
           </div>
         </article>
 
@@ -318,18 +275,9 @@
           <h3 class="case-card__title">AI-Powered HR Policy Assistant</h3>
           <p class="case-card__desc">Deployed a Claude-powered internal chatbot that ingests employee handbooks and HR policies, then answers employee questions in natural language 24/7 with citations to the source policy.</p>
           <div class="case-card__metrics">
-            <div class="metric">
-              <div class="metric__value">80%</div>
-              <div class="metric__label">HR questions self-served</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">6 hrs</div>
-              <div class="metric__label">HR time recovered weekly</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">85</div>
-              <div class="metric__label">Employees served</div>
-            </div>
+            <div class="metric"><div class="metric__value">80%</div><div class="metric__label">HR questions self-served</div></div>
+            <div class="metric"><div class="metric__value">6 hrs</div><div class="metric__label">HR time recovered weekly</div></div>
+            <div class="metric"><div class="metric__value">85</div><div class="metric__label">Employees served</div></div>
           </div>
         </article>
 
@@ -338,18 +286,9 @@
           <h3 class="case-card__title">Operational Diligence Agent for a Mid-Market PE Fund</h3>
           <p class="case-card__desc">Built an AI diligence system for an $800M mid-market PE fund that ingests target financials, org charts, and operational data, then generates a 40-page operational diligence memo in two hours — work that previously took analysts three weeks per deal.</p>
           <div class="case-card__metrics">
-            <div class="metric">
-              <div class="metric__value">$600K</div>
-              <div class="metric__label">Diligence cost saved (8 deals)</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">93%</div>
-              <div class="metric__label">Analyst time reclaimed</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">2 deals</div>
-              <div class="metric__label">Killed on AI-flagged risk</div>
-            </div>
+            <div class="metric"><div class="metric__value">$600K</div><div class="metric__label">Diligence cost saved (8 deals)</div></div>
+            <div class="metric"><div class="metric__value">93%</div><div class="metric__label">Analyst time reclaimed</div></div>
+            <div class="metric"><div class="metric__value">2 deals</div><div class="metric__label">Killed on AI-flagged risk</div></div>
           </div>
         </article>
 
@@ -358,18 +297,9 @@
           <h3 class="case-card__title">Automated Customer Onboarding Pipeline</h3>
           <p class="case-card__desc">Replaced a manual 3-day customer onboarding process with an automated pipeline that handles contract intake, data collection, kickoff scheduling, and resource provisioning — all triggered by a single form submission.</p>
           <div class="case-card__metrics">
-            <div class="metric">
-              <div class="metric__value">-93%</div>
-              <div class="metric__label">Onboarding time (3 days → 2 hrs)</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">100%</div>
-              <div class="metric__label">Error-free handoffs</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">4.9★</div>
-              <div class="metric__label">Client onboarding NPS</div>
-            </div>
+            <div class="metric"><div class="metric__value">-93%</div><div class="metric__label">Onboarding time (3 days → 2 hrs)</div></div>
+            <div class="metric"><div class="metric__value">100%</div><div class="metric__label">Error-free handoffs</div></div>
+            <div class="metric"><div class="metric__value">4.9★</div><div class="metric__label">Client onboarding NPS</div></div>
           </div>
         </article>
 
@@ -378,21 +308,11 @@
           <h3 class="case-card__title">AI-Powered Patient Intake for a Multi-Site Medical Group</h3>
           <p class="case-card__desc">Built an AI voice and chat intake agent for an 8-clinic medical group that captures insurance, medical history, and visit prep before the patient arrives — replacing a manual 45-minute process and delivering handoff-ready context to clinical staff in under 10 minutes.</p>
           <div class="case-card__metrics">
-            <div class="metric">
-              <div class="metric__value">-78%</div>
-              <div class="metric__label">Intake time (45 min → 10 min)</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">+$1.2M</div>
-              <div class="metric__label">Annual patient capacity</div>
-            </div>
-            <div class="metric">
-              <div class="metric__value">94%</div>
-              <div class="metric__label">Pre-visit completion rate</div>
-            </div>
+            <div class="metric"><div class="metric__value">-78%</div><div class="metric__label">Intake time (45 min → 10 min)</div></div>
+            <div class="metric"><div class="metric__value">+$1.2M</div><div class="metric__label">Annual patient capacity</div></div>
+            <div class="metric"><div class="metric__value">94%</div><div class="metric__label">Pre-visit completion rate</div></div>
           </div>
         </article>
-
       </div>
     </div>
   </section>
@@ -412,10 +332,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">SC</div>
-            <div>
-              <div class="testimonial__name">Sarah Chen</div>
-              <div class="testimonial__role">CEO, Manhattan Dental Group</div>
-            </div>
+            <div><div class="testimonial__name">Sarah Chen</div><div class="testimonial__role">CEO, Manhattan Dental Group</div></div>
           </footer>
         </blockquote>
 
@@ -426,10 +343,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4);">MW</div>
-            <div>
-              <div class="testimonial__name">Marcus Weber</div>
-              <div class="testimonial__role">Founder, Horizon Technologies</div>
-            </div>
+            <div><div class="testimonial__name">Marcus Weber</div><div class="testimonial__role">Founder, Horizon Technologies</div></div>
           </footer>
         </blockquote>
 
@@ -440,10 +354,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">PP</div>
-            <div>
-              <div class="testimonial__name">Priya Patel</div>
-              <div class="testimonial__role">COO, Apex Advisory Partners</div>
-            </div>
+            <div><div class="testimonial__name">Priya Patel</div><div class="testimonial__role">COO, Apex Advisory Partners</div></div>
           </footer>
         </blockquote>
 
@@ -454,10 +365,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">DK</div>
-            <div>
-              <div class="testimonial__name">David Kim</div>
-              <div class="testimonial__role">VP Operations, Nimbus Logistics</div>
-            </div>
+            <div><div class="testimonial__name">David Kim</div><div class="testimonial__role">VP Operations, Nimbus Logistics</div></div>
           </footer>
         </blockquote>
 
@@ -468,10 +376,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);">JR</div>
-            <div>
-              <div class="testimonial__name">Jessica Rodriguez</div>
-              <div class="testimonial__role">CEO, Brightline SaaS</div>
-            </div>
+            <div><div class="testimonial__name">Jessica Rodriguez</div><div class="testimonial__role">CEO, Brightline SaaS</div></div>
           </footer>
         </blockquote>
 
@@ -482,10 +387,7 @@
           </p>
           <footer class="testimonial__author">
             <div class="testimonial__avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b);">RT</div>
-            <div>
-              <div class="testimonial__name">Ryan Thompson</div>
-              <div class="testimonial__role">Managing Partner, Keystone Ventures</div>
-            </div>
+            <div><div class="testimonial__name">Ryan Thompson</div><div class="testimonial__role">Managing Partner, Keystone Ventures</div></div>
           </footer>
         </blockquote>
       </div>
@@ -508,389 +410,12 @@
       </p>
       <div class="contact__actions">
         <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
-        <a href="mailto:gavincol1997@gmail.com?subject=Consulting%20inquiry" class="btn btn--ghost btn--large">Email Me</a>
+        <a href="mailto:Gavin-Coleman@crescendo-consulting.net?subject=Consulting%20inquiry" class="btn btn--ghost btn--large">Email Me</a>
       </div>
       <div class="contact__direct">
-        <a href="mailto:gavincol1997@gmail.com">gavincol1997@gmail.com</a>
+        <a href="mailto:Gavin-Coleman@crescendo-consulting.net">Gavin-Coleman@crescendo-consulting.net</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <img src="images/logo.png" alt="Crescendo Consultants" class="footer__logo" />
-        <div>
-          <div class="footer__name">Gavin Coleman</div>
-          <div class="footer__tagline">Independent Technology Consultant</div>
-        </div>
-      </div>
-      <div class="footer__links">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#case-studies">Case Studies</a>
-        <a href="#testimonials">Testimonials</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="footer__contact">
-        <a href="mailto:gavincol1997@gmail.com">gavincol1997@gmail.com</a>
-        <span class="footer__sep">·</span>
-        <a href="tel:+18044059880">+1 (804) 405-9880</a>
-      </div>
-      <div class="footer__copy">© 2026 Gavin Coleman. All rights reserved.</div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-
-<!-- Lead capture popup -->
-<div id="lead-popup-overlay" style="display:none;">
-  <div id="lead-popup">
-    <button id="lead-popup-close" aria-label="Close">&times;</button>
-
-    <div class="lead-popup-header">
-      <img src="images/logo.png" alt="Crescendo Consultants" class="lead-popup-logo" />
-      <h2>Ready to Grow? Let's Connect.</h2>
-      <p class="lead-popup-subtitle">Start with a free consultation</p>
-      <p class="lead-popup-description">
-        Tell me a bit about your business and goals. I'll follow up with personalized insights on how Crescendo Consulting can help you grow smarter.
-      </p>
-    </div>
-
-    <form name="lead-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead-form">
-      <input type="hidden" name="form-name" value="lead-capture" />
-      <p style="display:none;">
-        <label>Don't fill this out: <input name="bot-field" /></label>
-      </p>
-
-      <div class="form-row">
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="Email" required />
-      </div>
-
-      <input type="tel" name="phone" placeholder="Phone Number" />
-
-      <textarea name="message" placeholder="Need help with strategy, growth, or AI implementation? Let me know where I can support you..." rows="4"></textarea>
-
-      <button type="submit" class="lead-submit-btn">Let's Grow</button>
-    </form>
-
-    <div class="lead-popup-divider">
-      <span>or</span>
-    </div>
-    <button class="lead-cal-btn" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
-      📅 Book a Free Intro Call
-    </button>
-
-    <div id="lead-success" style="display:none;">
-      <h3>Thanks — I'll be in touch within 24 hours.</h3>
-    </div>
-  </div>
-</div>
-
-<style>
-  #lead-popup-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    animation: fadeIn 0.3s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  #lead-popup {
-    background: #ffffff;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 40px 32px;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: slideUp 0.4s ease;
-  }
-
-  @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  #lead-popup-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: #888;
-    cursor: pointer;
-    line-height: 1;
-    padding: 4px 8px;
-  }
-
-  #lead-popup-close:hover {
-    color: #000;
-  }
-
-  .lead-popup-header h2 {
-    font-size: 26px;
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 8px;
-    color: #1a1a1a;
-  }
-
-  .lead-popup-subtitle {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-    margin: 8px 0 12px;
-  }
-
-  .lead-popup-description {
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-    line-height: 1.5;
-    margin: 0 0 24px;
-  }
-
-  #lead-form .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  #lead-form input,
-  #lead-form textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #d0d0d0;
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: inherit;
-    box-sizing: border-box;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-
-  #lead-form input:focus,
-  #lead-form textarea:focus {
-    outline: none;
-    border-color: #1B4F72;
-  }
-
-  #lead-form textarea {
-    resize: vertical;
-    min-height: 100px;
-    font-family: inherit;
-  }
-
-  .lead-submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: #1B4F72;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background 0.2s;
-  }
-
-  .lead-submit-btn:hover {
-    background: #2C6A94;
-  }
-
-  #lead-success {
-    text-align: center;
-    padding: 40px 20px;
-  }
-
-  #lead-success h3 {
-    color: #17A589;
-    font-size: 20px;
-  }
-
-  .lead-popup-divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 20px 0;
-    color: #aaa;
-    font-size: 13px;
-  }
-
-  .lead-popup-divider::before,
-  .lead-popup-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #e0e0e0;
-  }
-
-  .lead-cal-btn {
-    width: 100%;
-    padding: 14px;
-    background: #ffffff;
-    color: #1B4F72;
-    border: 2px solid #1B4F72;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .lead-cal-btn:hover {
-    background: #1B4F72;
-    color: #ffffff;
-  }
-
-  /* Nav brand — mark + wordmark inline */
-  .nav__brand {
-    gap: 10px !important;
-  }
-  .nav__brand-mark-img {
-    height: 34px;
-    width: auto;
-    display: block;
-  }
-  .nav__brand-wordmark {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-    color: #fff;
-  }
-  .nav__brand-name {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  .nav__brand-sub {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 3px;
-  }
-  @media (max-width: 640px) {
-    .nav__brand-sub { display: none; }
-    .nav__brand-name { font-size: 14px; letter-spacing: 0.5px; }
-  }
-
-  /* Footer logo */
-  .footer__logo {
-    height: 56px;
-    width: auto;
-  }
-
-  /* Popup logo */
-  .lead-popup-logo {
-    display: block;
-    height: 64px;
-    width: auto;
-    margin: 0 auto 20px;
-  }
-
-  @media (max-width: 600px) {
-    #lead-popup {
-      padding: 32px 20px;
-    }
-    #lead-form .form-row {
-      grid-template-columns: 1fr;
-    }
-    .lead-popup-header h2 {
-      font-size: 22px;
-    }
-  }
-</style>
-
-<script>
-(function() {
-  const POPUP_DELAY = 45000; // 45 seconds
-  const STORAGE_KEY = 'lead_popup_shown';
-
-  // Don't show again if already dismissed or submitted in this session
-  function hasBeenShown() {
-    return sessionStorage.getItem(STORAGE_KEY) === 'true';
-  }
-
-  function markAsShown() {
-    sessionStorage.setItem(STORAGE_KEY, 'true');
-  }
-
-  function showPopup() {
-    if (hasBeenShown()) return;
-    document.getElementById('lead-popup-overlay').style.display = 'flex';
-    markAsShown();
-  }
-
-  function hidePopup() {
-    document.getElementById('lead-popup-overlay').style.display = 'none';
-  }
-
-  // Show after delay
-  setTimeout(showPopup, POPUP_DELAY);
-
-  // Close button
-  document.getElementById('lead-popup-close').addEventListener('click', hidePopup);
-
-  // Click outside to close
-  document.getElementById('lead-popup-overlay').addEventListener('click', function(e) {
-    if (e.target.id === 'lead-popup-overlay') hidePopup();
-  });
-
-  // Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') hidePopup();
-  });
-
-  // Form submission — Netlify handles it natively, but we want to show success message
-  document.getElementById('lead-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
-    })
-    .then(() => {
-      form.style.display = 'none';
-      document.getElementById('lead-success').style.display = 'block';
-      // Auto-close after 3 seconds
-      setTimeout(hidePopup, 3000);
-    })
-    .catch((error) => {
-      alert('There was an error submitting the form. Please try emailing gavin@crescendo-consulting.net directly.');
-    });
-  });
-})();
-</script>
-
-<!-- Hidden form for Netlify form detection during build -->
-<form name="lead-capture" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name" />
-  <input type="email" name="email" />
-  <input type="tel" name="phone" />
-  <textarea name="message"></textarea>
-</form>
-
-</body>
-</html>
+</BaseLayout>

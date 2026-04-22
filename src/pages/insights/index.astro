@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('insights', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
+const rest = sorted.filter((p) => p.slug !== featured.slug);
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<BaseLayout
+  title="Insights — Crescendo Consultants"
+  description="Commentary, research, playbooks, field notes, and teardowns on AI and enterprise technology, and the small and mid-market businesses actually deploying it."
+  canonicalPath="/insights"
+>
+  <section class="insights">
+    <div class="insights__inner">
+
+      <header class="insights__header">
+        <div class="eyebrow">Insights</div>
+        <h1 class="insights__title">The latest in AI and enterprise tech — <em>and what to do about it</em>.</h1>
+        <p class="insights__lede">
+          Commentary, research, playbooks, field notes, and teardowns on the technologies reshaping how businesses operate. What's new, what matters, and what companies should actually build with it.
+        </p>
+      </header>
+
+      <hr class="insights__rule" />
+
+      <!-- FEATURED -->
+      <section class="insights__featured">
+        <a href={`/insights/${featured.slug}`} class="insights__featured-link">
+          <div class="insights__meta">
+            <span class="insights__cat">{featured.data.category}</span>
+            <span class="insights__dot">·</span>
+            <time>{formatDate(featured.data.date)}</time>
+            <span class="insights__dot">·</span>
+            <span>{featured.data.readTime} min read</span>
+          </div>
+          <h2 class="insights__featured-title">{featured.data.title}</h2>
+          <p class="insights__featured-dek">{featured.data.dek}</p>
+          <span class="insights__read-more">Read the piece →</span>
+        </a>
+      </section>
+
+      <hr class="insights__rule" />
+
+      <!-- FEED -->
+      <section class="insights__feed">
+        <div class="insights__feed-label">Latest</div>
+        <ul class="insights__list">
+          {rest.map((p) => (
+            <li class="insights__item">
+              <a href={`/insights/${p.slug}`} class="insights__item-link">
+                <div class="insights__meta">
+                  <span class="insights__cat">{p.data.category}</span>
+                  <span class="insights__dot">·</span>
+                  <time>{formatDate(p.data.date)}</time>
+                  <span class="insights__dot">·</span>
+                  <span>{p.data.readTime} min read</span>
+                </div>
+                <h3 class="insights__item-title">{p.data.title}</h3>
+                <p class="insights__item-dek">{p.data.dek}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- EMAIL SIGNUP -->
+      <section class="insights__signup">
+        <div class="insights__signup-inner">
+          <h2 class="insights__signup-title">Get new pieces in your inbox.</h2>
+          <p class="insights__signup-dek">
+            Roughly one essay a week. No promotions, no fluff. Unsubscribe anytime.
+          </p>
+          <form
+            name="insights-signup"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="insights__signup-form"
+          >
+            <input type="hidden" name="form-name" value="insights-signup" />
+            <p style="display:none;"><label>Don't fill this out: <input name="bot-field" /></label></p>
+            <input type="email" name="email" placeholder="you@yourcompany.com" required class="insights__signup-input" />
+            <button type="submit" class="btn btn--primary">Subscribe</button>
+          </form>
+          <p class="insights__signup-rss">
+            Prefer RSS? <a href="/insights/feed.xml">Subscribe via feed</a>.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .insights {
+    background: #fafaf7;
+    padding: 120px 24px 80px;
+    min-height: 60vh;
+  }
+  .insights__inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .insights__header {
+    margin-bottom: 64px;
+  }
+  .insights__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(40px, 6vw, 56px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 20px 0 24px;
+  }
+  .insights__title em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .insights__lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #3a3f54;
+    max-width: 620px;
+  }
+  .insights__rule {
+    border: none;
+    border-top: 1px solid #e0ddd4;
+    margin: 48px 0;
+  }
+
+  .insights__featured-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .insights__featured-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: #0a0e27;
+    margin: 12px 0 16px;
+  }
+  .insights__featured-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0 0 20px;
+    max-width: 620px;
+  }
+  .insights__read-more {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    letter-spacing: -0.01em;
+  }
+  .insights__featured-link:hover .insights__read-more {
+    text-decoration: underline;
+  }
+
+  .insights__meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .insights__cat {
+    color: #0a0e27;
+    font-weight: 600;
+  }
+  .insights__dot {
+    color: #c7c4b8;
+  }
+
+  .insights__feed-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #6b7280;
+    margin-bottom: 24px;
+  }
+  .insights__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .insights__item {
+    border-top: 1px solid #e0ddd4;
+  }
+  .insights__item:last-child {
+    border-bottom: 1px solid #e0ddd4;
+  }
+  .insights__item-link {
+    display: block;
+    padding: 32px 0;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .insights__item-link:hover {
+    opacity: 0.75;
+  }
+  .insights__item-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: #0a0e27;
+    margin: 10px 0 10px;
+  }
+  .insights__item-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0;
+    max-width: 620px;
+  }
+
+  .insights__signup {
+    margin-top: 96px;
+    padding: 56px 0 0;
+    border-top: 1px solid #e0ddd4;
+  }
+  .insights__signup-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: #0a0e27;
+    margin: 0 0 12px;
+  }
+  .insights__signup-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    color: #3a3f54;
+    margin: 0 0 24px;
+  }
+  .insights__signup-form {
+    display: flex;
+    gap: 10px;
+    max-width: 520px;
+  }
+  .insights__signup-input {
+    flex: 1;
+    padding: 12px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    border: 1px solid #d0cdc0;
+    background: #fff;
+    border-radius: 6px;
+  }
+  .insights__signup-input:focus {
+    outline: none;
+    border-color: #2563eb;
+  }
+  .insights__signup-rss {
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .insights__signup-rss a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  .insights__signup-rss a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .insights { padding: 96px 20px 60px; }
+    .insights__signup-form { flex-direction: column; }
+  }
+</style>

@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('demos', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Demos — Crescendo Consultants"
+  description="Live, interactive demos of the AI tools Crescendo Consultants builds — client portfolio dashboards, intake forms, voice AI receptionists, GEO content rewriters, and HR policy chatbots."
+  canonicalPath="/demos"
+>
+  <section class="demos">
+    <div class="demos__inner">
+
+      <header class="demos__header">
+        <div class="eyebrow">Live Demos</div>
+        <h1 class="demos__title">See it before you sign anything.</h1>
+        <p class="demos__lede">
+          Every demo below is a working system — not a screenshot, not a slideshow. Click through, poke at it, and if you can see it working for your business, book an intro call.
+        </p>
+      </header>
+
+      <div class="demos__grid">
+        {sorted.map((d) => (
+          <a href={`/demos/${d.slug}`} class="demo-card">
+            <div class="demo-card__screenshot">
+              {d.data.screenshot ? (
+                <img src={d.data.screenshot} alt={d.data.title} loading="lazy" />
+              ) : (
+                <div class="demo-card__screenshot-placeholder">
+                  <span>{d.data.title}</span>
+                </div>
+              )}
+              {!d.data.liveUrl && <span class="demo-card__badge">Coming Soon</span>}
+            </div>
+            <div class="demo-card__body">
+              <div class="demo-card__tags">
+                {d.data.tags.map((t) => <span class="demo-card__tag">{t}</span>)}
+              </div>
+              <h2 class="demo-card__title">{d.data.title}</h2>
+              <p class="demo-card__pitch">{d.data.pitch}</p>
+              <span class="demo-card__cta">
+                {d.data.liveUrl ? 'Try the live demo →' : 'Preview →'}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <section class="demos__cta">
+        <h2 class="demos__cta-title">Want something built like this?</h2>
+        <p class="demos__cta-dek">
+          Every demo above is a real system a real client is running. Book a 30-minute intro call and we'll tell you honestly whether the same approach fits your business.
+        </p>
+        <div class="demos__cta-actions">
+          <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call →</a>
+          <a href="/faq" class="btn btn--ghost btn--large">See the FAQ</a>
+        </div>
+      </section>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .demos {
+    background: #fafaf7;
+    padding: 120px 24px 100px;
+  }
+  .demos__inner {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+  .demos__header {
+    max-width: 720px;
+    margin: 0 auto 72px;
+  }
+  .demos__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(40px, 6vw, 56px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 20px 0 24px;
+  }
+  .demos__lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #3a3f54;
+  }
+
+  .demos__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 860px) {
+    .demos__grid { grid-template-columns: 1fr; }
+  }
+
+  .demo-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .demo-card:hover {
+    transform: translateY(-2px);
+    border-color: #2563eb;
+    box-shadow: 0 20px 40px rgba(10,14,39,0.08);
+  }
+
+  .demo-card__screenshot {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #0a0e27 0%, #2563eb 100%);
+    overflow: hidden;
+  }
+  .demo-card__screenshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .demo-card__screenshot-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: 'Fraunces', Georgia, serif;
+    color: rgba(255,255,255,0.9);
+    font-size: 22px;
+    font-weight: 500;
+    padding: 32px;
+    text-align: center;
+  }
+  .demo-card__badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #f59e0b;
+    color: #0a0e27;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+
+  .demo-card__body {
+    padding: 28px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .demo-card__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .demo-card__tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6b7280;
+    background: #f0ede4;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .demo-card__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: #0a0e27;
+    margin: 4px 0 0;
+  }
+  .demo-card__pitch {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0;
+  }
+  .demo-card__cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-top: 4px;
+  }
+
+  .demos__cta {
+    margin-top: 80px;
+    padding: 56px 32px;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 14px;
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .demos__cta-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: #0a0e27;
+    margin: 0 0 12px;
+  }
+  .demos__cta-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0 0 28px;
+  }
+  .demos__cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 600px) {
+    .demos { padding: 96px 20px 80px; }
+  }
+</style>

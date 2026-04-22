@@ -1,0 +1,357 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+interface Props { post: CollectionEntry<'insights'>; }
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Find next posts to read
+const all = await getCollection('insights', ({ data }) => !data.draft);
+const others = all
+  .filter((p) => p.slug !== post.slug)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout
+  title={`${post.data.title} — Crescendo Consultants`}
+  description={post.data.dek}
+  canonicalPath={`/insights/${post.slug}`}
+>
+  <article class="article">
+    <div class="article__inner">
+
+      <!-- Back to insights -->
+      <a href="/insights" class="article__back">← All Insights</a>
+
+      <!-- Meta / header -->
+      <div class="article__meta">
+        <span class="article__cat">{post.data.category}</span>
+        <span class="article__dot">·</span>
+        <time>{formatDate(post.data.date)}</time>
+        <span class="article__dot">·</span>
+        <span>{post.data.readTime} min read</span>
+      </div>
+
+      <h1 class="article__title">{post.data.title}</h1>
+      <p class="article__dek">{post.data.dek}</p>
+
+      <hr class="article__rule" />
+
+      <!-- Body -->
+      <div class="article__body">
+        <Content />
+      </div>
+
+      <!-- CTA block -->
+      <aside class="article__cta">
+        <h3 class="article__cta-title">Turn insight into a working system.</h3>
+        <p class="article__cta-dek">
+          See Crescendo's live demos, or book a free 30-minute intro call to talk about what this would look like for your business.
+        </p>
+        <div class="article__cta-actions">
+          <a href="/demos" class="btn btn--primary">See Live Demos</a>
+          <a class="btn btn--ghost" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call</a>
+        </div>
+      </aside>
+
+      <!-- Read next -->
+      {others.length > 0 && (
+        <section class="article__next">
+          <h3 class="article__next-label">Read Next</h3>
+          <ul class="article__next-list">
+            {others.map((p) => (
+              <li class="article__next-item">
+                <a href={`/insights/${p.slug}`} class="article__next-link">
+                  <div class="article__next-meta">
+                    <span class="article__cat">{p.data.category}</span>
+                    <span class="article__dot">·</span>
+                    <span>{p.data.readTime} min read</span>
+                  </div>
+                  <h4 class="article__next-title">{p.data.title}</h4>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  /* ARTICLE — Fraunces editorial layout */
+  .article {
+    background: #fafaf7;
+    padding: 96px 24px 80px;
+  }
+  .article__inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .article__back {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    text-decoration: none;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+  .article__back:hover { color: #2563eb; }
+
+  .article__meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .article__cat {
+    color: #0a0e27;
+    font-weight: 600;
+  }
+  .article__dot { color: #c7c4b8; }
+
+  .article__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 0 0 20px;
+  }
+  .article__dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 21px;
+    line-height: 1.5;
+    color: #3a3f54;
+    margin: 0 0 40px;
+  }
+  .article__rule {
+    border: none;
+    border-top: 1px solid #e0ddd4;
+    margin: 40px 0;
+  }
+
+  /* Body typography — Fraunces essay style */
+  .article__body {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.7;
+    color: #1a1d2e;
+  }
+  .article__body p {
+    margin: 0 0 1.5em;
+  }
+  .article__body h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: #0a0e27;
+    margin: 2.4em 0 0.8em;
+  }
+  .article__body h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: #0a0e27;
+    margin: 2em 0 0.6em;
+  }
+  .article__body h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 2em 0 0.6em;
+  }
+  .article__body strong {
+    font-weight: 700;
+    color: #0a0e27;
+  }
+  .article__body em {
+    font-style: italic;
+  }
+  .article__body a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .article__body ul, .article__body ol {
+    margin: 0 0 1.5em;
+    padding-left: 1.5em;
+  }
+  .article__body li {
+    margin-bottom: 0.5em;
+  }
+  .article__body blockquote {
+    border-left: 3px solid #2563eb;
+    margin: 1.5em 0;
+    padding: 0.5em 0 0.5em 1.5em;
+    font-style: italic;
+    color: #3a3f54;
+  }
+  .article__body code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.92em;
+    background: #ece9de;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .article__body pre {
+    background: #0a0e27;
+    color: #ece9de;
+    padding: 20px 24px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 14px;
+    margin: 1.5em 0;
+  }
+  .article__body pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .article__body hr {
+    border: none;
+    border-top: 1px solid #e0ddd4;
+    margin: 2.5em 0;
+  }
+  .article__body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+  }
+  .article__body th, .article__body td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e0ddd4;
+  }
+  .article__body th {
+    font-weight: 700;
+    color: #0a0e27;
+    background: #f0ede4;
+    letter-spacing: -0.005em;
+  }
+
+  /* CTA block */
+  .article__cta {
+    margin: 72px 0 64px;
+    padding: 40px 32px;
+    background: #fff;
+    border: 1px solid #e0ddd4;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .article__cta-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    margin: 0 0 10px;
+    color: #0a0e27;
+  }
+  .article__cta-dek {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0 0 24px;
+  }
+  .article__cta-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Read next */
+  .article__next {
+    margin-top: 80px;
+    padding-top: 56px;
+    border-top: 1px solid #e0ddd4;
+  }
+  .article__next-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #6b7280;
+    margin: 0 0 24px;
+  }
+  .article__next-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .article__next-item {
+    border-top: 1px solid #e0ddd4;
+  }
+  .article__next-item:last-child {
+    border-bottom: 1px solid #e0ddd4;
+  }
+  .article__next-link {
+    display: block;
+    padding: 24px 0;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .article__next-link:hover { opacity: 0.7; }
+  .article__next-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 6px;
+  }
+  .article__next-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #0a0e27;
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .article { padding: 80px 20px 60px; }
+    .article__body { font-size: 17px; }
+    .article__body h2 { font-size: 25px; }
+    .article__body h3 { font-size: 21px; }
+    .article__cta { padding: 32px 20px; }
+  }
+</style>

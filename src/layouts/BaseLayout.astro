@@ -1,0 +1,206 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description = "Independent technology consultant helping small and medium-sized businesses harness AI, automation, and modern software to grow faster and work smarter.",
+  canonicalPath,
+} = Astro.props;
+
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {canonicalPath && <link rel="canonical" href={`https://crescendo-consultants.com${canonicalPath}`} />}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Cal.com embed script -->
+  <script is:inline>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "intro", {origin:"https://app.cal.com"});
+    Cal.ns.intro("ui", {"hideEventTypeDetails":false,"layout":"week_view"});
+  </script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__brand">
+        <img src="/images/logo-mark.png" alt="" class="nav__brand-mark-img" />
+        <span class="nav__brand-wordmark">
+          <span class="nav__brand-name">CRESCENDO</span>
+          <span class="nav__brand-sub">CONSULTANTS</span>
+        </span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/insights">Insights</a></li>
+        <li><a href="/demos">Demos</a></li>
+        <li><a href="/#case-studies">Case Studies</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+      <a href="/#contact" class="btn btn--primary btn--small" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
+    </div>
+  </nav>
+
+  <slot />
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="/images/logo.png" alt="Crescendo Consultants" class="footer__logo" />
+        <div>
+          <div class="footer__name">Gavin Coleman</div>
+          <div class="footer__tagline">Independent Technology Consultant</div>
+        </div>
+      </div>
+      <div class="footer__links">
+        <a href="/#about">About</a>
+        <a href="/#services">Services</a>
+        <a href="/insights">Insights</a>
+        <a href="/demos">Demos</a>
+        <a href="/#case-studies">Case Studies</a>
+        <a href="/faq">FAQ</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div class="footer__contact">
+        <a href="mailto:Gavin-Coleman@crescendo-consulting.net">Gavin-Coleman@crescendo-consulting.net</a>
+        <span class="footer__sep">·</span>
+        <a href="tel:+18044059880">+1 (804) 405-9880</a>
+      </div>
+      <div class="footer__copy">© 2026 Crescendo Consultants. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/script.js" is:inline></script>
+
+  <!-- Lead capture popup -->
+  <div id="lead-popup-overlay" style="display:none;">
+    <div id="lead-popup">
+      <button id="lead-popup-close" aria-label="Close">&times;</button>
+
+      <div class="lead-popup-header">
+        <img src="/images/logo.png" alt="Crescendo Consultants" class="lead-popup-logo" />
+        <h2>Ready to Grow? Let's Connect.</h2>
+        <p class="lead-popup-subtitle">Start with a free consultation</p>
+        <p class="lead-popup-description">
+          Tell me a bit about your business and goals. I'll follow up with personalized insights on how Crescendo Consultants can help you grow smarter.
+        </p>
+      </div>
+
+      <form name="lead-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead-form">
+        <input type="hidden" name="form-name" value="lead-capture" />
+        <p style="display:none;">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <input type="tel" name="phone" placeholder="Phone Number" />
+
+        <textarea name="message" placeholder="Need help with strategy, growth, or AI implementation? Let me know where I can support you..." rows="4"></textarea>
+
+        <button type="submit" class="lead-submit-btn">Let's Grow</button>
+      </form>
+
+      <div class="lead-popup-divider">
+        <span>or</span>
+      </div>
+      <button class="lead-cal-btn" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
+        📅 Book a Free Intro Call
+      </button>
+
+      <div id="lead-success" style="display:none;">
+        <h3>Thanks — I'll be in touch within 24 hours.</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden forms for Netlify form detection during build -->
+  <form name="lead-capture" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <textarea name="message"></textarea>
+  </form>
+  <form name="insights-signup" netlify netlify-honeypot="bot-field" hidden>
+    <input type="email" name="email" />
+  </form>
+
+  <script is:inline>
+    (function() {
+      const POPUP_DELAY = 45000;
+      const STORAGE_KEY = 'lead_popup_shown';
+
+      function hasBeenShown() {
+        return sessionStorage.getItem(STORAGE_KEY) === 'true';
+      }
+      function markAsShown() {
+        sessionStorage.setItem(STORAGE_KEY, 'true');
+      }
+      function showPopup() {
+        if (hasBeenShown()) return;
+        const el = document.getElementById('lead-popup-overlay');
+        if (el) { el.style.display = 'flex'; markAsShown(); }
+      }
+      function hidePopup() {
+        const el = document.getElementById('lead-popup-overlay');
+        if (el) el.style.display = 'none';
+      }
+
+      setTimeout(showPopup, POPUP_DELAY);
+
+      const closeBtn = document.getElementById('lead-popup-close');
+      if (closeBtn) closeBtn.addEventListener('click', hidePopup);
+
+      const overlay = document.getElementById('lead-popup-overlay');
+      if (overlay) overlay.addEventListener('click', function(e) {
+        if (e.target.id === 'lead-popup-overlay') hidePopup();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') hidePopup();
+      });
+
+      const form = document.getElementById('lead-form');
+      if (form) form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const f = e.target;
+        const data = new FormData(f);
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        })
+        .then(() => {
+          f.style.display = 'none';
+          const s = document.getElementById('lead-success');
+          if (s) s.style.display = 'block';
+          setTimeout(hidePopup, 3000);
+        })
+        .catch(() => {
+          alert('There was an error submitting the form. Please try emailing Gavin-Coleman@crescendo-consulting.net directly.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

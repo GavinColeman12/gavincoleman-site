@@ -1235,3 +1235,223 @@ ul {
     bottom: -24px;
   }
 }
+
+/* ============================================================
+   Lead capture popup
+   ============================================================ */
+#lead-popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#lead-popup {
+  background: #ffffff;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px 32px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+#lead-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+#lead-popup-close:hover { color: #000; }
+
+.lead-popup-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 8px;
+  color: #1a1a1a;
+}
+
+.lead-popup-subtitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 8px 0 12px;
+}
+
+.lead-popup-description {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+
+#lead-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#lead-form input,
+#lead-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+#lead-form input:focus,
+#lead-form textarea:focus {
+  outline: none;
+  border-color: #1B4F72;
+}
+
+#lead-form textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.lead-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #1B4F72;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.lead-submit-btn:hover { background: #2C6A94; }
+
+#lead-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#lead-success h3 {
+  color: #17A589;
+  font-size: 20px;
+}
+
+.lead-popup-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.lead-popup-divider::before,
+.lead-popup-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.lead-cal-btn {
+  width: 100%;
+  padding: 14px;
+  background: #ffffff;
+  color: #1B4F72;
+  border: 2px solid #1B4F72;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lead-cal-btn:hover {
+  background: #1B4F72;
+  color: #ffffff;
+}
+
+/* Nav brand — mark + wordmark inline */
+.nav__brand { gap: 10px !important; }
+.nav__brand-mark-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+.nav__brand-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  color: #fff;
+}
+.nav__brand-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.nav__brand-sub {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 3px;
+}
+@media (max-width: 640px) {
+  .nav__brand-sub { display: none; }
+  .nav__brand-name { font-size: 14px; letter-spacing: 0.5px; }
+}
+
+/* Footer logo */
+.footer__logo {
+  height: 56px;
+  width: auto;
+}
+
+/* Popup logo */
+.lead-popup-logo {
+  display: block;
+  height: 64px;
+  width: auto;
+  margin: 0 auto 20px;
+}
+
+@media (max-width: 600px) {
+  #lead-popup { padding: 32px 20px; }
+  #lead-form .form-row { grid-template-columns: 1fr; }
+  .lead-popup-header h2 { font-size: 22px; }
+}
