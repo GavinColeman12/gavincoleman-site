@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DemosSection from '../components/DemosSection.astro';
 ---
 
 <BaseLayout
@@ -316,6 +317,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </section>
+
+  <!-- LIVE DEMOS (reused component — also the whole /demos page) -->
+  <DemosSection compact={true} />
 
   <!-- TESTIMONIALS -->
   <section id="testimonials" class="testimonials section section--subtle">

@@ -1,10 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DemoEmbed from '../../components/DemoEmbed.astro';
-import { getCollection } from 'astro:content';
-
-const all = await getCollection('demos', ({ data }) => !data.draft);
-const sorted = all.sort((a, b) => a.data.order - b.data.order);
+import DemosSection from '../../components/DemosSection.astro';
 ---
 
 <BaseLayout
@@ -12,275 +8,37 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   description="Interactive, working demos of the AI tools Crescendo Consultants builds. Every demo runs live in your browser — no signup, no download, no sales call required."
   canonicalPath="/demos"
 >
-  <section class="demos">
-    <div class="demos__inner">
+  <DemosSection compact={false} />
 
-      <header class="demos__header">
-        <div class="eyebrow">Live Demos</div>
-        <h1 class="demos__title">Every demo below is a real system. <em>Use them all right here.</em></h1>
-        <p class="demos__lede">
-          No signup, no download, no sales call. Each tool is fully interactive — poke at them, try the inputs, see what fits your business. When you're ready to talk, there's a call link at the bottom.
-        </p>
-        <div class="demos__toc">
-          <span class="demos__toc-label">Jump to:</span>
-          {sorted.map((d, i) => (
-            <>
-              {i > 0 && <span class="demos__toc-dot">·</span>}
-              <a href={`#demo-${d.slug}`}>{d.data.title}</a>
-            </>
-          ))}
-        </div>
-      </header>
-
-      {sorted.map((d, i) => {
-        const isLive = Boolean(d.data.liveUrl && d.data.liveUrl.length > 0);
-        return (
-          <section id={`demo-${d.slug}`} class="demo-block">
-            <div class="demo-block__head">
-              <div class="demo-block__tags">
-                {d.data.tags.map((t) => <span class="demo-block__tag">{t}</span>)}
-              </div>
-              <h2 class="demo-block__title">{d.data.title}</h2>
-              <p class="demo-block__pitch">{d.data.pitch}</p>
-              <div class="demo-block__meta">
-                {d.data.pricingFrom && <span><strong>{d.data.pricingFrom}</strong> · Starting price</span>}
-                {d.data.pricingFrom && d.data.timeline && <span class="demo-block__meta-sep">·</span>}
-                {d.data.timeline && <span><strong>{d.data.timeline}</strong></span>}
-                <span class="demo-block__meta-sep">·</span>
-                <a href={`/demos/${d.slug}`} class="demo-block__details-link">Full details →</a>
-              </div>
-            </div>
-
-            {isLive ? (
-              <DemoEmbed
-                src={d.data.liveUrl}
-                title={`Crescendo — ${d.data.title} demo`}
-                caption="Live interactive demo · sample data only"
-                aspect={d.data.aspect}
-                sandbox={d.data.sandbox}
-                allow={d.data.allow}
-                resizeSource={d.data.resizeSource}
-                initialHeight={d.data.initialHeight}
-              />
-            ) : (
-              <div class="demo-block__coming-soon">
-                <div class="demo-block__coming-soon-icon">⧖</div>
-                <div class="demo-block__coming-soon-title">Live demo coming soon</div>
-                <div class="demo-block__coming-soon-dek">
-                  Want early access? <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;color:#fff;text-decoration:underline;">Book an intro call</a> and we'll walk you through the working prototype directly.
-                </div>
-              </div>
-            )}
-          </section>
-        );
-      })}
-
-      <section class="demos__cta">
-        <h2 class="demos__cta-title">Seen one you want?</h2>
-        <p class="demos__cta-dek">
-          Book a 30-minute intro call. We'll tell you honestly whether the approach fits — and if it does, roughly what a build would cost and take.
-        </p>
-        <div class="demos__cta-actions">
-          <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call →</a>
-          <a href="/faq" class="btn btn--ghost btn--large">Read the FAQ</a>
-        </div>
-      </section>
-
+  <section class="demos-page-cta">
+    <div class="demos-page-cta__inner">
+      <h2 class="demos-page-cta__title">Seen one you want?</h2>
+      <p class="demos-page-cta__dek">
+        Book a 30-minute intro call. We'll tell you honestly whether the approach fits — and if it does, roughly what a build would cost and take.
+      </p>
+      <div class="demos-page-cta__actions">
+        <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call →</a>
+        <a href="/faq" class="btn btn--ghost btn--large">Read the FAQ</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .demos {
+  .demos-page-cta {
     background: #fafaf7;
-    padding: 120px 24px 100px;
+    padding: 0 24px 100px;
   }
-  .demos__inner {
-    max-width: 1240px;
-    margin: 0 auto;
-  }
-
-  /* HEADER */
-  .demos__header {
-    max-width: 760px;
-    margin: 0 auto 80px;
-    text-align: center;
-  }
-  .demos__title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: clamp(40px, 5.5vw, 56px);
-    font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: #0a0e27;
-    margin: 20px 0 24px;
-  }
-  .demos__title em {
-    font-style: italic;
-    font-weight: 400;
-  }
-  .demos__lede {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 20px;
-    line-height: 1.55;
-    color: #3a3f54;
-    margin: 0 0 36px;
-  }
-  .demos__toc {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: #6b7280;
-    padding: 16px 20px;
-    background: #fff;
-    border: 1px solid #e0ddd4;
-    border-radius: 10px;
-  }
-  .demos__toc-label {
-    font-weight: 600;
-    color: #0a0e27;
-    letter-spacing: 0.02em;
-  }
-  .demos__toc a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 500;
-    white-space: nowrap;
-  }
-  .demos__toc a:hover {
-    text-decoration: underline;
-  }
-  .demos__toc-dot {
-    color: #c7c4b8;
-  }
-
-  /* DEMO BLOCKS */
-  .demo-block {
-    padding: 80px 0;
-    border-top: 1px solid #e0ddd4;
-    scroll-margin-top: 80px;
-  }
-  .demo-block:first-of-type {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .demo-block__head {
-    max-width: 780px;
-    margin: 0 auto 32px;
-    text-align: center;
-  }
-  .demo-block__tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 14px;
-  }
-  .demo-block__tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #6b7280;
-    background: #f0ede4;
-    padding: 4px 10px;
-    border-radius: 4px;
-  }
-  .demo-block__title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: clamp(28px, 3.5vw, 38px);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-    color: #0a0e27;
-    margin: 4px 0 12px;
-  }
-  .demo-block__pitch {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 18px;
-    line-height: 1.5;
-    color: #3a3f54;
-    margin: 0 0 20px;
+  .demos-page-cta__inner {
     max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .demo-block__meta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: #6b7280;
-  }
-  .demo-block__meta strong {
-    color: #0a0e27;
-    font-weight: 600;
-  }
-  .demo-block__meta-sep {
-    color: #c7c4b8;
-  }
-  .demo-block__details-link {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .demo-block__details-link:hover {
-    text-decoration: underline;
-  }
-
-  /* COMING SOON */
-  .demo-block__coming-soon {
-    max-width: 900px;
-    margin: 2.5rem auto;
-    padding: 72px 32px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #0a0e27 0%, #2563eb 100%);
-    color: #fff;
-    text-align: center;
-    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.35);
-  }
-  .demo-block__coming-soon-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.7;
-  }
-  .demo-block__coming-soon-title {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 12px;
-  }
-  .demo-block__coming-soon-dek {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    color: rgba(255,255,255,0.85);
-    max-width: 480px;
     margin: 0 auto;
-    line-height: 1.5;
-  }
-
-  /* BOTTOM CTA */
-  .demos__cta {
-    margin-top: 80px;
     padding: 56px 32px;
     background: #fff;
     border: 1px solid #e0ddd4;
     border-radius: 14px;
     text-align: center;
-    max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
   }
-  .demos__cta-title {
+  .demos-page-cta__title {
     font-family: 'Fraunces', Georgia, serif;
     font-size: 32px;
     font-weight: 500;
@@ -288,22 +46,21 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     color: #0a0e27;
     margin: 0 0 12px;
   }
-  .demos__cta-dek {
+  .demos-page-cta__dek {
     font-family: 'Fraunces', Georgia, serif;
     font-size: 17px;
     line-height: 1.55;
     color: #3a3f54;
     margin: 0 0 28px;
   }
-  .demos__cta-actions {
+  .demos-page-cta__actions {
     display: flex;
     gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
   }
-
   @media (max-width: 600px) {
-    .demos { padding: 96px 20px 80px; }
-    .demo-block { padding: 56px 0; }
+    .demos-page-cta { padding: 0 20px 80px; }
+    .demos-page-cta__inner { padding: 40px 24px; }
   }
 </style>

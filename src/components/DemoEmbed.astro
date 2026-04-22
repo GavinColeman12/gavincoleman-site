@@ -24,6 +24,7 @@ export interface Props {
   allow?: string;
   resizeSource?: string;
   initialHeight?: number;
+  fluid?: boolean; // when true, removes max-width so the embed fills its container
 }
 
 const {
@@ -36,9 +37,10 @@ const {
   allow = 'clipboard-read; clipboard-write; fullscreen',
   resizeSource,
   initialHeight = 900,
+  fluid = false,
 } = Astro.props;
 
-const wrapClass = `crescendo-demo crescendo-demo--${aspect}`;
+const wrapClass = `crescendo-demo crescendo-demo--${aspect}${fluid ? ' crescendo-demo--fluid' : ''}`;
 // Unique id for auto-resize variant so the listener targets the right frame
 const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(2, 9)}` : undefined;
 ---
@@ -78,12 +80,25 @@ const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(
 
 <style>
   .crescendo-demo {
+    margin: 0 auto;
+  }
+  /* Non-fluid default: centered with vertical margin */
+  .crescendo-demo:not(.crescendo-demo--fluid) {
     margin: 2.5rem auto;
+  }
+  /* Fluid: fills container width, no max-width, tighter margin */
+  .crescendo-demo--fluid {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
   }
 
   /* Landscape — dashboard-style, wide */
   .crescendo-demo--landscape {
     max-width: 1200px;
+  }
+  .crescendo-demo--landscape.crescendo-demo--fluid {
+    max-width: 100%;
   }
   .crescendo-demo--landscape .crescendo-demo__frame {
     aspect-ratio: 16 / 10;
@@ -110,10 +125,22 @@ const frameId = aspect === 'auto' ? `cc-demo-${Math.random().toString(36).slice(
       min-height: 820px;
     }
   }
+  /* Fluid portrait: when embedded in a grid cell, don't exceed the column
+     width but still preserve phone-like proportions. Cap max height so the
+     phone doesn't overwhelm the grid row. */
+  .crescendo-demo--portrait.crescendo-demo--fluid {
+    max-width: 420px;
+  }
+  .crescendo-demo--portrait.crescendo-demo--fluid .crescendo-demo__frame {
+    min-height: 680px;
+  }
 
   /* Auto — content-driven height via postMessage */
   .crescendo-demo--auto {
     max-width: 900px;
+  }
+  .crescendo-demo--auto.crescendo-demo--fluid {
+    max-width: 100%;
   }
   .crescendo-demo--auto .crescendo-demo__frame {
     /* height set inline from initialHeight; resizes via postMessage listener */
