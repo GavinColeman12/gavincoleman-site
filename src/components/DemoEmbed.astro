@@ -1,0 +1,90 @@
+---
+// Reusable demo embed — drop into any .astro page or .mdx content file.
+//
+// Usage:
+//   <DemoEmbed
+//     src="https://crescendo-client-dashboard.vercel.app/embed"
+//     title="Crescendo — interactive client portfolio demo"
+//     caption="Live interactive demo · sample data only"
+//   />
+//
+// All props optional except `src`.
+export interface Props {
+  src: string;
+  title?: string;
+  caption?: string;
+  newTabLabel?: string;
+}
+
+const {
+  src,
+  title = 'Interactive demo',
+  caption = 'Live interactive demo · sample data only',
+  newTabLabel = 'Open in new tab ↗',
+} = Astro.props;
+---
+
+<figure class="crescendo-demo">
+  <div class="crescendo-demo__frame">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="clipboard-read; clipboard-write; fullscreen"
+    ></iframe>
+  </div>
+  <figcaption>
+    <span>{caption}</span>
+    <a href={src} target="_blank" rel="noopener noreferrer">{newTabLabel}</a>
+  </figcaption>
+</figure>
+
+<style>
+  .crescendo-demo {
+    margin: 2.5rem auto;
+    max-width: 1200px;
+  }
+  .crescendo-demo__frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0a0b10;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.1),
+      0 20px 60px -20px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .crescendo-demo__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .crescendo-demo figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 0.75rem;
+    padding: 0 0.25rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    color: rgb(110, 110, 120);
+  }
+  .crescendo-demo figcaption a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    transition: color 0.15s;
+  }
+  .crescendo-demo figcaption a:hover {
+    color: #8b7cf0;
+  }
+  @media (max-width: 640px) {
+    .crescendo-demo__frame { aspect-ratio: 3 / 4; }
+    .crescendo-demo figcaption { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+</style>
