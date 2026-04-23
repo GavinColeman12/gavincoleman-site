@@ -151,103 +151,178 @@ import DemosSection from '../components/DemosSection.astro';
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES — three engagement tiers -->
   <section id="services" class="services section section--dark">
     <div class="section__inner">
       <div class="section__header">
         <div class="eyebrow eyebrow--light">Services</div>
         <h2 class="section__title section__title--light">
-          Six ways I help businesses grow.
+          Three ways to work with Crescendo.
         </h2>
         <p class="section__subtitle">
-          Every engagement is tailored, but most fall into one of these areas. Need something else? Let's talk.
+          Every engagement is tailored, but the shape is consistent: start with a diagnostic, choose a build, stay on retainer if you want ongoing leadership. No RFPs, no SOW theater, no surprise invoices.
         </p>
       </div>
-      <div class="services__grid">
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7 7 .6-5.3 4.8L18 22l-6-3.5L6 22l1.3-7.6L2 9.6 9 9z"/></svg>
-          </div>
-          <div class="service-card__num">01</div>
-          <h3 class="service-card__title">AI Strategy &amp; Implementation</h3>
-          <p class="service-card__desc">Identify your highest-leverage AI opportunities and deliver them end-to-end. From discovery to deployment to measurable ROI.</p>
-          <ul class="service-card__list">
-            <li>AI opportunity assessment</li>
-            <li>Custom GPT &amp; Claude integrations</li>
-            <li>Implementation &amp; change management</li>
-          </ul>
-        </div>
 
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13h6M9 17h6"/></svg>
-          </div>
-          <div class="service-card__num">02</div>
-          <h3 class="service-card__title">Intelligent Automation</h3>
-          <p class="service-card__desc">Turn repetitive operational work into automated workflows. Free your team to focus on the work that actually drives growth.</p>
-          <ul class="service-card__list">
-            <li>Workflow automation design</li>
-            <li>Custom tool &amp; integration builds</li>
-            <li>Process redesign &amp; optimization</li>
-          </ul>
+      <!-- TIER 1 — Diagnostic Sprint -->
+      <div class="tier tier--hero">
+        <div class="tier__meta">
+          <span class="tier__num">01</span>
+          <span class="tier__label">Start here</span>
         </div>
-
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <div class="tier__hero-inner">
+          <div class="tier__hero-copy">
+            <h3 class="tier__title">The Two-Week Diagnostic Sprint</h3>
+            <p class="tier__pitch">
+              Before any build. Two weeks understanding your business, your data, and the bottlenecks actually costing you money. You leave with a written assessment, a ranked list of AI opportunities, and a concrete scope of work. The diagnostic fee credits toward whatever we build next.
+            </p>
+            <ul class="tier__bullets">
+              <li>Full operational and data audit across your existing stack</li>
+              <li>Prioritized list of AI opportunities, scored by ROI and effort</li>
+              <li>Written scope of work for the top one or two opportunities</li>
+              <li>An honest &quot;start here&quot; recommendation — or &quot;don&apos;t build this yet&quot;</li>
+            </ul>
           </div>
-          <div class="service-card__num">03</div>
-          <h3 class="service-card__title">Reputation &amp; Customer Intelligence</h3>
-          <p class="service-card__desc">AI-powered systems that monitor your reviews, surface customer insights, and help you respond at scale — before problems compound.</p>
-          <ul class="service-card__list">
-            <li>Review monitoring &amp; sentiment analysis</li>
-            <li>Automated response systems</li>
-            <li>Competitive positioning dashboards</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <div class="tier__hero-side">
+            <div class="tier__price-block">
+              <div class="tier__price">$2,500 – $5,000</div>
+              <div class="tier__timeline">1–2 weeks · credits toward implementation</div>
+            </div>
+            <a class="btn btn--primary btn--large tier__cta" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
+              Book a Diagnostic Sprint →
+            </a>
           </div>
-          <div class="service-card__num">04</div>
-          <h3 class="service-card__title">Custom AI Tools</h3>
-          <p class="service-card__desc">Bespoke chatbots, assistants, and analytics tools built around your exact business logic. Not templates — real systems.</p>
-          <ul class="service-card__list">
-            <li>Internal knowledge assistants</li>
-            <li>Customer-facing AI chatbots</li>
-            <li>Bespoke analytics dashboards</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
-          </div>
-          <div class="service-card__num">05</div>
-          <h3 class="service-card__title">Data Infrastructure</h3>
-          <p class="service-card__desc">From spreadsheets to scalable data systems. Design the foundations your team needs to make data-driven decisions as you grow.</p>
-          <ul class="service-card__list">
-            <li>Data architecture &amp; modeling</li>
-            <li>ETL pipelines &amp; reporting</li>
-            <li>Migration from legacy systems</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </div>
-          <div class="service-card__num">06</div>
-          <h3 class="service-card__title">Fractional Technology Leadership</h3>
-          <p class="service-card__desc">Strategic tech guidance without the cost of a full-time CTO. Available as a retainer for ongoing leadership and decision support.</p>
-          <ul class="service-card__list">
-            <li>Tech roadmap &amp; architecture</li>
-            <li>Vendor evaluation &amp; negotiation</li>
-            <li>Team coaching &amp; hiring support</li>
-          </ul>
         </div>
       </div>
+
+      <!-- TIER 2 — Implementation Builds -->
+      <div class="tier tier--builds">
+        <div class="tier__meta">
+          <span class="tier__num">02</span>
+          <span class="tier__label">Build with Crescendo</span>
+        </div>
+        <p class="tier__intro">
+          Six build archetypes we ship. Each is a working system your team can run independently when we're done — not a slide deck. Most clients come in through the diagnostic and pick the build that maps to their priority opportunity.
+        </p>
+        <div class="builds__grid">
+          <a href="/demos#demo-ai-intake-form" class="build-card">
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h4 class="build-card__title">AI Intake &amp; Voice Capture</h4>
+            <p class="build-card__desc">24/7 conversational intake forms and voice AI that book appointments, qualify leads, and route urgent calls — before your team even logs in.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$4.5K – $10K</span>
+              <span class="build-card__dot">·</span>
+              <span>2–4 weeks</span>
+            </div>
+            <span class="build-card__cta">See the demos →</span>
+          </a>
+
+          <a href="/demos#demo-reputation-intelligence" class="build-card">
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17 21l-5-3-5 3 1-7.5L3 9l6.5-.5z"/></svg>
+            </div>
+            <h4 class="build-card__title">Reputation &amp; Review Intelligence</h4>
+            <p class="build-card__desc">Ingest reviews across every platform, extract sentiment and themes, and draft responses at scale — in your voice, queued for approval in a 15-minute sitting.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$6K – $12K</span>
+              <span class="build-card__dot">·</span>
+              <span>2–4 weeks</span>
+            </div>
+            <span class="build-card__cta">See the demo →</span>
+          </a>
+
+          <a href="/demos#demo-geo-content-rewriter" class="build-card">
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h4 class="build-card__title">GEO &amp; AI Search Optimization</h4>
+            <p class="build-card__desc">Rewrite your website so it shows up in Google's AI Overviews, ChatGPT answers, and Perplexity citations. Most small-business sites are structurally invisible to AI search.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$4.5K – $8K</span>
+              <span class="build-card__dot">·</span>
+              <span>1 wk / 20 pages</span>
+            </div>
+            <span class="build-card__cta">See the demo →</span>
+          </a>
+
+          <a href="/demos#demo-hr-policy-chatbot" class="build-card">
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <h4 class="build-card__title">Internal Knowledge &amp; HR Assistants</h4>
+            <p class="build-card__desc">Employees get instant answers to handbook, benefits, and policy questions — with citations to the source doc. HR stops answering the same fifty things every week.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$5K – $10K</span>
+              <span class="build-card__dot">·</span>
+              <span>2–3 weeks</span>
+            </div>
+            <span class="build-card__cta">See the demo →</span>
+          </a>
+
+          <a href="/demos#demo-client-portfolio-dashboard" class="build-card">
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h4 class="build-card__title">Agentic Operational Workflows</h4>
+            <p class="build-card__desc">Multi-step AI agents that span your systems — onboarding pipelines, client-health dashboards, operational diligence, back-office automation.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$12K – $40K</span>
+              <span class="build-card__dot">·</span>
+              <span>4–12 weeks</span>
+            </div>
+            <span class="build-card__cta">See the demo →</span>
+          </a>
+
+          <a href="#contact" class="build-card build-card--custom" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
+            <div class="build-card__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h4 class="build-card__title">Custom AI Tools</h4>
+            <p class="build-card__desc">Bespoke AI for odd-shaped problems that don't fit a template. Start with a diagnostic, leave with a working system designed for your exact business logic.</p>
+            <div class="build-card__meta">
+              <span class="build-card__price">$8K – $25K</span>
+              <span class="build-card__dot">·</span>
+              <span>3–8 weeks</span>
+            </div>
+            <span class="build-card__cta">Start with a diagnostic →</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- TIER 3 — Fractional Leadership -->
+      <div class="tier tier--retainer">
+        <div class="tier__meta">
+          <span class="tier__num">03</span>
+          <span class="tier__label">Ongoing partnership</span>
+        </div>
+        <div class="tier__hero-inner">
+          <div class="tier__hero-copy">
+            <h3 class="tier__title">Fractional AI &amp; Technology Leadership</h3>
+            <p class="tier__pitch">
+              For clients who want ongoing strategic technology guidance without the cost of a full-time CTO or Head of AI. A senior operator on retainer — on call for decisions, architecture, vendor selection, and roadmap reviews. Most engagements start after a discrete build and extend into a multi-quarter partnership.
+            </p>
+            <ul class="tier__bullets">
+              <li>Weekly 30-minute strategic check-in</li>
+              <li>Architecture and vendor decision support</li>
+              <li>Team hiring, interviewing, and coaching</li>
+              <li>On-call access for urgent technical questions</li>
+              <li>Quarterly roadmap review with founders or board</li>
+            </ul>
+          </div>
+          <div class="tier__hero-side">
+            <div class="tier__price-block">
+              <div class="tier__price">$5K – $10K / mo</div>
+              <div class="tier__timeline">3-month minimum · typically 6–12 months</div>
+            </div>
+            <a class="btn btn--primary btn--large tier__cta" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
+              Book a Call →
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
