@@ -149,21 +149,18 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     transition: height 0.2s ease;
   }
 
-  /* Shared frame styling */
+  /* Shared frame styling — unified across all aspect variants.
+     Light warm background matches the site's off-white aesthetic and avoids
+     weird dark letterbox around the phone-shaped portrait intake form. */
   .crescendo-demo__frame {
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    background: #0a0b10;
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.1),
-      0 20px 60px -20px rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-  }
-  .crescendo-demo--portrait .crescendo-demo__frame,
-  .crescendo-demo--auto .crescendo-demo__frame {
     background: #f8fafc;
-    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.12);
+    box-shadow:
+      0 1px 2px rgba(10, 14, 39, 0.06),
+      0 20px 40px -20px rgba(10, 14, 39, 0.20);
+    border: 1px solid rgba(10, 14, 39, 0.08);
   }
   .crescendo-demo__frame iframe {
     position: absolute;

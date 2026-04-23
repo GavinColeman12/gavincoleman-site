@@ -269,9 +269,10 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     .demo-cell__embed :global(.crescendo-demo--portrait) { max-width: 100% !important; }
   }
 
-  /* COMING SOON */
+  /* COMING SOON — fills the 560px cell uniformly, matches demo frame chrome */
   .demo-cell__coming-soon {
-    aspect-ratio: 16 / 10;
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
     background: linear-gradient(135deg, #0a0e27 0%, #2563eb 100%);
     color: #fff;
@@ -282,7 +283,10 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     gap: 8px;
     padding: 32px;
     text-align: center;
-    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.35);
+    box-shadow:
+      0 1px 2px rgba(10, 14, 39, 0.06),
+      0 20px 40px -20px rgba(10, 14, 39, 0.20);
+    border: 1px solid rgba(10, 14, 39, 0.08);
   }
   .demo-cell__coming-soon-icon {
     font-size: 36px;
