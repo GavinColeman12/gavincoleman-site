@@ -327,11 +327,31 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   .demo-window__body :global(.crescendo-demo figcaption) {
     display: none;
   }
-  /* Portrait demo inside window: center with a matching navy letterbox */
+
+  /* Scale-to-fit trick: render each iframe at a full desktop viewport, then
+     scale it down visually to fit the cell. Apps get the layout they were
+     designed for instead of a cramped ~700px viewport. */
+  .demo-window__body :global(.crescendo-demo--landscape iframe),
+  .demo-window__body :global(.crescendo-demo--auto iframe) {
+    width: 167% !important;
+    height: 167% !important;
+    transform: scale(0.6);
+    transform-origin: top left;
+  }
+
+  /* Portrait demo inside window: center with a matching navy letterbox.
+     Portrait apps are designed for phone viewports, so we render at a
+     slightly larger phone width and scale down subtly. */
   .demo-window__body :global(.crescendo-demo--portrait) {
-    max-width: 420px !important;
+    max-width: 360px !important;
     margin: 0 auto !important;
     background: transparent;
+  }
+  .demo-window__body :global(.crescendo-demo--portrait iframe) {
+    width: 125% !important;
+    height: 125% !important;
+    transform: scale(0.8);
+    transform-origin: top left;
   }
   /* When portrait is letterboxed, paint the surrounding area navy to match the window */
   .demo-window:has(:global(.crescendo-demo--portrait)) .demo-window__body {
