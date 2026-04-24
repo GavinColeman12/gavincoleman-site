@@ -65,27 +65,42 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
               </div>
             </div>
             <div class="demo-cell__embed">
-              {isLive ? (
-                <DemoEmbed
-                  src={d.data.liveUrl}
-                  title={`Crescendo — ${d.data.title} demo`}
-                  caption="Live interactive demo · sample data only"
-                  aspect={d.data.aspect}
-                  sandbox={d.data.sandbox}
-                  allow={d.data.allow}
-                  resizeSource={d.data.resizeSource}
-                  initialHeight={d.data.initialHeight}
-                  fluid={true}
-                />
-              ) : (
-                <div class="demo-cell__coming-soon">
-                  <div class="demo-cell__coming-soon-icon">⧖</div>
-                  <div class="demo-cell__coming-soon-title">Coming soon</div>
-                  <div class="demo-cell__coming-soon-dek">
-                    <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;color:#fff;text-decoration:underline;">Book a call</a> for early access.
-                  </div>
+              <!-- Uniform browser-window chrome wrapping every demo — ties them together visually regardless of app theme -->
+              <div class="demo-window">
+                <div class="demo-window__chrome">
+                  <span class="demo-window__dot"></span>
+                  <span class="demo-window__dot"></span>
+                  <span class="demo-window__dot"></span>
+                  <span class="demo-window__url">
+                    {isLive
+                      ? (d.data.liveUrl ?? '').replace(/^https?:\/\//, '').replace(/\/$/, '').slice(0, 48)
+                      : 'coming-soon.crescendo-consulting.net'}
+                  </span>
                 </div>
-              )}
+                <div class="demo-window__body">
+                  {isLive ? (
+                    <DemoEmbed
+                      src={d.data.liveUrl}
+                      title={`Crescendo — ${d.data.title} demo`}
+                      caption="Live interactive demo · sample data only"
+                      aspect={d.data.aspect}
+                      sandbox={d.data.sandbox}
+                      allow={d.data.allow}
+                      resizeSource={d.data.resizeSource}
+                      initialHeight={d.data.initialHeight}
+                      fluid={true}
+                    />
+                  ) : (
+                    <div class="demo-cell__coming-soon">
+                      <div class="demo-cell__coming-soon-icon">⧖</div>
+                      <div class="demo-cell__coming-soon-title">Coming soon</div>
+                      <div class="demo-cell__coming-soon-dek">
+                        <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;color:#fff;text-decoration:underline;">Book a call</a> for early access.
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </article>
         );
@@ -229,18 +244,68 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     text-decoration: underline;
   }
 
-  /* EMBED CELL — uniform height across all demos for visual parity.
-     Slightly taller than a natural 16:10 aspect at ~700px column width. */
+  /* EMBED CELL — uniform 560px height across all demos.
+     Now contains a browser-window chrome that wraps every embed for visual parity. */
   .demo-cell__embed {
     width: 100%;
     height: 560px;
+    display: block;
+  }
+
+  /* DEMO WINDOW — the consistent navy chrome around every iframe */
+  .demo-window {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #0a0e27;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 2px rgba(10, 14, 39, 0.08),
+      0 24px 48px -24px rgba(10, 14, 39, 0.35);
+    border: 1px solid rgba(10, 14, 39, 0.12);
+  }
+  .demo-window__chrome {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 14px;
+    padding: 10px 16px;
+    background: #141835;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
-  /* Force all embedded demos inside the grid to fill their cell exactly,
-     overriding per-aspect CSS from DemoEmbed. */
-  .demo-cell__embed :global(.crescendo-demo) {
+  .demo-window__dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+  .demo-window__dot:nth-child(1) { background: #ff5f57; }
+  .demo-window__dot:nth-child(2) { background: #febc2e; }
+  .demo-window__dot:nth-child(3) { background: #28c840; }
+  .demo-window__url {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: -0.01em;
+    margin-left: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+  .demo-window__body {
+    flex: 1 1 auto;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    min-height: 0;
+  }
+
+  /* Force DemoEmbed to fill the body of the window chrome exactly */
+  .demo-window__body :global(.crescendo-demo) {
     width: 100%;
     height: 100%;
     max-width: 100% !important;
@@ -248,32 +313,43 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     display: flex;
     flex-direction: column;
   }
-  .demo-cell__embed :global(.crescendo-demo__frame) {
+  .demo-window__body :global(.crescendo-demo__frame) {
     flex: 1 1 auto;
     height: 100% !important;
     min-height: 0 !important;
     aspect-ratio: auto !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #fff !important;
   }
-  /* Portrait demo: instead of stretching the phone-shape to fill a wide cell,
-     letterbox it — center a phone-width column within the cell.
-     440px gives the form enough width to breathe while staying phone-ish. */
-  .demo-cell__embed :global(.crescendo-demo--portrait) {
-    max-width: 440px !important;
+  /* Hide DemoEmbed's own figcaption — redundant with the window chrome */
+  .demo-window__body :global(.crescendo-demo figcaption) {
+    display: none;
+  }
+  /* Portrait demo inside window: center with a matching navy letterbox */
+  .demo-window__body :global(.crescendo-demo--portrait) {
+    max-width: 420px !important;
     margin: 0 auto !important;
+    background: transparent;
   }
+  /* When portrait is letterboxed, paint the surrounding area navy to match the window */
+  .demo-window:has(:global(.crescendo-demo--portrait)) .demo-window__body {
+    background: #0a0e27;
+  }
+
   @media (max-width: 960px) {
     .demo-cell__embed { height: 520px; }
   }
   @media (max-width: 600px) {
     .demo-cell__embed { height: 480px; }
-    .demo-cell__embed :global(.crescendo-demo--portrait) { max-width: 100% !important; }
+    .demo-window__body :global(.crescendo-demo--portrait) { max-width: 100% !important; }
   }
 
-  /* COMING SOON — fills the 560px cell uniformly, matches demo frame chrome */
+  /* COMING SOON — fills the window body, matches chrome aesthetic */
   .demo-cell__coming-soon {
     width: 100%;
     height: 100%;
-    border-radius: 16px;
     background: linear-gradient(135deg, #0a0e27 0%, #2563eb 100%);
     color: #fff;
     display: flex;
@@ -283,10 +359,6 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     gap: 8px;
     padding: 32px;
     text-align: center;
-    box-shadow:
-      0 1px 2px rgba(10, 14, 39, 0.06),
-      0 20px 40px -20px rgba(10, 14, 39, 0.20);
-    border: 1px solid rgba(10, 14, 39, 0.08);
   }
   .demo-cell__coming-soon-icon {
     font-size: 36px;
