@@ -49,9 +49,15 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
 
 <figure class={wrapClass}>
   <div class="crescendo-demo__frame" style={aspect === 'auto' ? `height:${initialHeight}px;` : ''}>
+    <!-- Loading skeleton — shown until iframe fires its load event. Sits behind the iframe (z-index 1, iframe is on top with opacity 0 → 1). -->
+    <div class="crescendo-demo__skeleton" aria-hidden="true">
+      <div class="crescendo-demo__pulse"></div>
+      <div class="crescendo-demo__skeleton-label">Waking the demo…</div>
+      <div class="crescendo-demo__skeleton-sub">First load can take 10–20 seconds.</div>
+    </div>
     <iframe
       id={frameId}
-      src={src}
+      data-src={src}
       title={title}
       loading="lazy"
       allow={allow}
@@ -63,6 +69,57 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     <a href={src} target="_blank" rel="noopener noreferrer">{newTabLabel}</a>
   </figcaption>
 </figure>
+
+<script>
+  // IntersectionObserver-based lazy load with a real loading skeleton.
+  // Browser-native loading="lazy" doesn't give us the "skeleton until load
+  // event" UX, and it eagerly fetches earlier than we want for cold-starting
+  // services (Railway free tier sleeps after inactivity).
+  function setupCrescendoDemo(frame: Element) {
+    const iframe = frame.querySelector('iframe[data-src]') as HTMLIFrameElement | null;
+    if (!iframe) return;
+    const src = iframe.getAttribute('data-src');
+    if (!src) return;
+
+    let loaded = false;
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      iframe!.addEventListener(
+        'load',
+        () => {
+          frame.classList.add('is-loaded');
+        },
+        { once: true }
+      );
+      // Fallback — if the iframe never fires load (cross-origin error, blocked,
+      // network hung), reveal it after 25s anyway so users aren't staring at
+      // a spinner forever.
+      setTimeout(() => frame.classList.add('is-loaded'), 25000);
+      iframe!.src = src!;
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              load();
+              io.disconnect();
+            }
+          });
+        },
+        { rootMargin: '300px' }
+      );
+      io.observe(frame);
+    } else {
+      load();
+    }
+  }
+
+  // One global wire-up per page load — handles every demo embed at once
+  document.querySelectorAll('.crescendo-demo__frame').forEach(setupCrescendoDemo);
+</script>
 
 {shouldAutoResize && resizeSource && (
   <script is:inline define:vars={{ frameId, resizeSource }}>
@@ -169,6 +226,54 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     height: 100%;
     border: 0;
     display: block;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 2;
+  }
+  .crescendo-demo__frame.is-loaded iframe { opacity: 1; }
+
+  /* Loading skeleton — visible until the iframe load event fires.
+     Sits underneath the iframe; iframe fades in over it. */
+  .crescendo-demo__skeleton {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px;
+    background: linear-gradient(135deg, #0a0e27 0%, #141835 100%);
+    color: #b8c1d6;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+  }
+  .crescendo-demo__frame.is-loaded .crescendo-demo__skeleton {
+    opacity: 0;
+  }
+  .crescendo-demo__pulse {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid rgba(59, 130, 246, 0.18);
+    border-top-color: #3b82f6;
+    animation: crescendo-pulse 0.95s linear infinite;
+  }
+  @keyframes crescendo-pulse { to { transform: rotate(360deg); } }
+  .crescendo-demo__skeleton-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #b8c1d6;
+  }
+  .crescendo-demo__skeleton-sub {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #7a85a3;
   }
 
   .crescendo-demo figcaption {

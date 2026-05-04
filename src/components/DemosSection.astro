@@ -65,7 +65,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
               </div>
             </div>
             <div class="demo-cell__embed">
-              <!-- Uniform browser-window chrome wrapping every demo — ties them together visually regardless of app theme -->
+              <!-- Desktop / tablet: uniform browser-window chrome wrapping every demo -->
               <div class="demo-window">
                 <div class="demo-window__chrome">
                   <span class="demo-window__dot"></span>
@@ -76,6 +76,19 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
                       ? (d.data.liveUrl ?? '').replace(/^https?:\/\//, '').replace(/\/$/, '').slice(0, 48)
                       : 'coming-soon.crescendo-consulting.net'}
                   </span>
+                  {isLive && (
+                    <div class="demo-window__actions">
+                      <button class="demo-window__btn" data-action="copy" data-url={d.data.liveUrl} aria-label="Copy demo URL" title="Copy URL">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                      <button class="demo-window__btn" data-action="fullscreen" aria-label="Toggle fullscreen" title="Fullscreen">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V3h5M21 8V3h-5M3 16v5h5M21 16v5h-5"/></svg>
+                      </button>
+                      <a class="demo-window__btn" href={d.data.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Open demo in new tab" title="Open in new tab">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      </a>
+                    </div>
+                  )}
                 </div>
                 <div class="demo-window__body">
                   {isLive ? (
@@ -101,6 +114,20 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
                   )}
                 </div>
               </div>
+
+              <!-- Mobile-only fallback: dashboards are unreadable on phones, so show a tappable card instead of an unreadable iframe -->
+              {isLive && (
+                <a class="demo-cell__mobile-cta" href={d.data.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <div class="demo-cell__mobile-cta-body">
+                    <div class="demo-cell__mobile-cta-title">{d.data.title}</div>
+                    <div class="demo-cell__mobile-cta-dek">Built for desktop dashboards. Tap to open the live demo in a new tab — or come back on a laptop for the full experience.</div>
+                  </div>
+                  <div class="demo-cell__mobile-cta-action">
+                    Open demo
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                  </div>
+                </a>
+              )}
             </div>
           </article>
         );
@@ -115,6 +142,52 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
 
   </div>
 </section>
+
+<script>
+  // Toast helper — single shared element for the whole page
+  let toastEl: HTMLDivElement | null = null;
+  let toastTimer: number | null = null;
+  function showToast(msg: string) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'crescendo-toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      toastEl?.classList.remove('is-visible');
+    }, 1800);
+  }
+
+  // Copy URL buttons
+  document.querySelectorAll<HTMLButtonElement>('.demo-window__btn[data-action="copy"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.url;
+      if (!url) return;
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast('Demo URL copied');
+      } catch {
+        showToast('Could not copy — open the URL manually');
+      }
+    });
+  });
+
+  // Fullscreen toggle on the demo-window
+  document.querySelectorAll<HTMLButtonElement>('.demo-window__btn[data-action="fullscreen"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const win = btn.closest('.demo-window') as HTMLElement | null;
+      if (!win) return;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (win.requestFullscreen) {
+        win.requestFullscreen();
+      }
+    });
+  });
+</script>
 
 <style>
   .demos-section {
@@ -296,6 +369,35 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     white-space: nowrap;
     flex: 1;
   }
+  /* Action buttons in the chrome — Copy / Fullscreen / Open */
+  .demo-window__actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .demo-window__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+  .demo-window__btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .demo-window__btn:active {
+    transform: scale(0.96);
+  }
   .demo-window__body {
     flex: 1 1 auto;
     position: relative;
@@ -361,9 +463,76 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   @media (max-width: 960px) {
     .demo-cell__embed { height: 520px; }
   }
+  @media (max-width: 760px) {
+    /* Below 760px, dashboards are unreadable. Hide the demo-window entirely
+       and show the tappable mobile CTA card instead. */
+    .demo-cell__embed { height: auto; }
+    .demo-cell__embed .demo-window { display: none; }
+    .demo-cell__mobile-cta { display: flex; }
+  }
   @media (max-width: 600px) {
-    .demo-cell__embed { height: 480px; }
     .demo-window__body :global(.crescendo-demo--portrait) { max-width: 100% !important; }
+  }
+
+  /* Mobile fallback CTA — tappable card replacing the iframe on small screens */
+  .demo-cell__mobile-cta {
+    display: none; /* shown only on mobile via media query above */
+    flex-direction: column;
+    gap: 18px;
+    background: linear-gradient(135deg, #0a0e27 0%, #141835 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 24px 22px;
+    text-decoration: none;
+    color: #fff;
+    box-shadow:
+      0 1px 2px rgba(10, 14, 39, 0.08),
+      0 24px 48px -24px rgba(10, 14, 39, 0.35);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .demo-cell__mobile-cta:active {
+    transform: scale(0.99);
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+  .demo-cell__mobile-cta-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .demo-cell__mobile-cta-dek {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #b8c1d6;
+  }
+  .demo-cell__mobile-cta-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: #3b82f6;
+    color: #fff;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    align-self: flex-start;
+  }
+
+  /* Fullscreen mode — when a demo-window is fullscreened, blow it out */
+  .demo-window:fullscreen,
+  .demo-window:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+  .demo-window:fullscreen .demo-window__body,
+  .demo-window:-webkit-full-screen .demo-window__body {
+    height: calc(100vh - 46px);
   }
 
   /* COMING SOON — fills the window body, matches chrome aesthetic */
@@ -404,5 +573,34 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   @media (max-width: 600px) {
     .demos-section { padding: 80px 20px; }
     .demos-section--compact { padding: 72px 20px; }
+  }
+</style>
+
+<!-- Toast notification — global, single instance, used by Copy URL action.
+     Defined as global styles so the JS-injected element picks them up. -->
+<style is:global>
+  .crescendo-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #141835;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99999;
+  }
+  .crescendo-toast.is-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
   }
 </style>
