@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = 'May 6, 2026';
+---
+
+<BaseLayout
+  title="Data Deletion | Crescendo Consultants"
+  description="How to request deletion of personal information that Crescendo Consultants holds about you, including data accessed via Meta, Google, and other third-party APIs."
+  canonicalPath="/data-deletion"
+>
+  <section class="legal">
+    <div class="legal__inner">
+      <header class="legal__header">
+        <div class="eyebrow">Legal</div>
+        <h1 class="legal__title">Data Deletion</h1>
+        <p class="legal__lede">
+          You can ask Crescendo Consultants to delete the personal information we hold about you at any time. This page explains how to make the request, what we delete, and how long it takes.
+        </p>
+        <p class="legal__updated">Last updated: {lastUpdated}</p>
+      </header>
+
+      <div class="legal__body">
+
+        <h2>How to request deletion</h2>
+        <p>Send an email from the address you originally contacted us with to:</p>
+        <p class="legal__email">
+          <a href="mailto:gavin.coleman@crescendo-consulting.net?subject=Data%20Deletion%20Request">gavin.coleman@crescendo-consulting.net</a>
+        </p>
+        <p>Use the subject line <strong>"Data Deletion Request"</strong>. In the body, please include:</p>
+        <ul>
+          <li>The email address(es) and/or phone number you have used to contact us.</li>
+          <li>If applicable, the name of any business you contacted us on behalf of.</li>
+          <li>If your request relates to data we accessed through a Meta Platform (Facebook or Instagram), the username or Page name of the relevant account.</li>
+        </ul>
+        <p>If you cannot send email, you can call <a href="tel:+18044059880">+1 (804) 405-9880</a> and leave a voicemail with the same details. We will follow up to verify your identity before deleting anything.</p>
+
+        <h2>What we delete</h2>
+        <p>On a verified deletion request, we permanently remove:</p>
+        <ul>
+          <li>Contact-form submissions, intro-call notes, and any free-text messages you sent us.</li>
+          <li>Mailing-list records, including your email address and any subscription history.</li>
+          <li>Any data we accessed via Meta's Graph API or other third-party APIs that relates to you or to a business account you control.</li>
+          <li>Any reports, dashboards, or working files we produced from that data, unless they form part of a closed client engagement subject to the retention rules below.</li>
+        </ul>
+
+        <h2>What we may retain (and why)</h2>
+        <p>The law requires us to keep certain records even after a deletion request:</p>
+        <ul>
+          <li><strong>Closed paid engagements</strong> — invoices, signed contracts, and tax records are retained for up to 7 years to meet U.S. tax and accounting requirements. We will isolate these records from active systems.</li>
+          <li><strong>Records of the deletion request itself</strong> — we keep a minimal log (date of request, email used to request) so we can demonstrate compliance if you or a regulator ever ask.</li>
+          <li><strong>Aggregated, anonymised statistics</strong> — usage counts and similar metrics that cannot be linked back to you may be retained.</li>
+        </ul>
+        <p>Everything outside those narrow exceptions is deleted.</p>
+
+        <h2>How long it takes</h2>
+        <p>We acknowledge every request within <strong>3 business days</strong> and complete deletion within <strong>30 days</strong>. If a request is unusually complex (for example, restoring backups to remove a record), we may extend by up to 60 additional days and will let you know in writing.</p>
+
+        <h2>Deletion of Meta-derived data specifically</h2>
+        <p>If you came to this page because you used a Crescendo tool that connected to your Facebook or Instagram account, you can also revoke our app's access directly from Meta:</p>
+        <ul>
+          <li><strong>Facebook</strong>: Settings &amp; Privacy → Settings → Apps and Websites → find <em>Independent Consulting Tool</em> → Remove.</li>
+          <li><strong>Instagram</strong>: Settings → Security → Apps and Websites → Active → find <em>Independent Consulting Tool</em> → Remove.</li>
+        </ul>
+        <p>Revoking access stops us from making any further calls to Meta on your behalf. To delete the data we have already retrieved, send a deletion request as described above.</p>
+
+        <h2>Confirmation</h2>
+        <p>Once deletion is complete, we email you a confirmation from <a href="mailto:gavin.coleman@crescendo-consulting.net">gavin.coleman@crescendo-consulting.net</a> stating what was deleted and what (if anything) was retained under the exceptions above.</p>
+
+        <h2>Questions or appeals</h2>
+        <p>If you are not satisfied with how we handled your request, you have the right to lodge a complaint with your local data-protection authority. You can also email us first — we are a small practice and most disputes can be resolved with a quick conversation.</p>
+        <p>
+          Gavin Coleman<br />
+          Crescendo Consultants<br />
+          <a href="mailto:gavin.coleman@crescendo-consulting.net">gavin.coleman@crescendo-consulting.net</a><br />
+          +1 (804) 405-9880
+        </p>
+
+        <p class="legal__see-also">See also: <a href="/privacy">Privacy Policy</a></p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal {
+    background: #fafaf7;
+    padding: 120px 24px 100px;
+  }
+  .legal__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .legal__header {
+    margin-bottom: 56px;
+  }
+  .legal__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(36px, 5.5vw, 52px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0a0e27;
+    margin: 20px 0 20px;
+  }
+  .legal__lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: #3a3f54;
+    margin: 0 0 16px;
+  }
+  .legal__updated {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #6b7280;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  .legal__body {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3a3f54;
+  }
+  .legal__body h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #0a0e27;
+    margin: 48px 0 16px;
+  }
+  .legal__body p {
+    margin: 0 0 16px;
+  }
+  .legal__body ul {
+    margin: 0 0 20px;
+    padding-left: 22px;
+  }
+  .legal__body li {
+    margin: 0 0 10px;
+  }
+  .legal__body a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal__body strong {
+    color: #0a0e27;
+    font-weight: 700;
+  }
+  .legal__email {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px !important;
+  }
+  .legal__see-also {
+    margin-top: 48px !important;
+    padding-top: 24px;
+    border-top: 1px solid #e0ddd4;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #6b7280;
+  }
+</style>
