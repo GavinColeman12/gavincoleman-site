@@ -1672,8 +1672,12 @@ ul {
 }
 
 @media (max-width: 720px) {
-  .nav__links {
+  .nav__links,
+  .nav__cta {
     display: none;
+  }
+  .nav__toggle {
+    display: inline-flex;
   }
 
   .nav__inner {
@@ -1953,4 +1957,241 @@ ul {
   #lead-popup { padding: 32px 20px; }
   #lead-form .form-row { grid-template-columns: 1fr; }
   .lead-popup-header h2 { font-size: 22px; }
+}
+
+/* ============================================================
+   Mobile hamburger + drawer
+   ============================================================ */
+.nav__toggle {
+  display: none; /* shown via @media max-width: 720px above */
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+.nav__toggle-line {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+}
+.nav__toggle-line:nth-child(1) { top: 14px; }
+.nav__toggle-line:nth-child(2) { top: 21px; }
+.nav__toggle-line:nth-child(3) { top: 28px; }
+.nav__toggle.is-open .nav__toggle-line:nth-child(1) {
+  top: 21px;
+  transform: rotate(45deg);
+}
+.nav__toggle.is-open .nav__toggle-line:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle.is-open .nav__toggle-line:nth-child(3) {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+.nav-mobile {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(360px, 88vw);
+  background: #0a0e27;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 96px 28px 32px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.45);
+  overflow-y: auto;
+}
+.nav-mobile.is-open {
+  transform: translateX(0);
+}
+.nav-mobile__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-mobile__links li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.nav-mobile__links a {
+  display: block;
+  padding: 16px 4px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-decoration: none;
+  min-height: 44px;
+}
+.nav-mobile__links a:active {
+  color: #8b7cf0;
+}
+.nav-mobile__cta {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* ============================================================
+   Mobile polish — additional small-screen refinements
+   ============================================================ */
+@media (max-width: 720px) {
+  /* Hero: tighter, no oversized portrait */
+  .hero__title {
+    font-size: clamp(32px, 8vw, 44px);
+  }
+  .hero__subtitle {
+    font-size: 16px;
+  }
+  .hero__portrait-frame {
+    width: min(340px, 80vw);
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  /* Section titles scale down */
+  .section__title {
+    font-size: clamp(28px, 7vw, 38px);
+  }
+  .section__subtitle {
+    font-size: 16px;
+  }
+
+  /* Platform section: stack and tighten */
+  .platform__inner {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    margin-top: 40px;
+  }
+  .platform__video {
+    position: static !important;
+  }
+  .platform__pillars li {
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+  }
+  .platform__pillar-title {
+    font-size: 17px;
+  }
+  .platform__pillar-desc {
+    font-size: 14px;
+  }
+  .platform__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .platform__actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Diagnostic tier with image: stack cleanly */
+  .tier--with-image .tier__hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .tier--with-image .tier__hero-image {
+    aspect-ratio: 16 / 11;
+  }
+
+  /* Build cards: single column with breathing room */
+  .builds__grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* Tier hero (diagnostic + retainer): tighter padding, stacked side */
+  .tier--hero,
+  .tier--retainer {
+    padding: 32px 22px;
+  }
+  .tier__hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .tier__hero-side {
+    align-items: stretch !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px !important;
+  }
+  .tier__cta {
+    text-align: center;
+    width: 100%;
+  }
+  .tier__title {
+    font-size: clamp(24px, 6.5vw, 30px);
+  }
+  .tier__pitch {
+    font-size: 16px;
+  }
+
+  /* Contact section: stacked buttons */
+  .contact__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact__actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .contact__title {
+    font-size: clamp(32px, 8vw, 44px);
+  }
+
+  /* About highlights: already 1-col, ensure card padding works */
+  .highlight {
+    padding: 18px;
+  }
+
+  /* Touch targets — all buttons should be tappable */
+  .btn--small {
+    min-height: 40px;
+  }
+  .btn {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Trust bar logos: tighter gap, smaller per-logo height */
+  .logos__grid--images {
+    gap: 18px 22px !important;
+  }
+  .logos__item-img img {
+    height: 22px !important;
+  }
+  .logos__item-img img[alt="American Express"] { height: 30px !important; }
+  .logos__item-img img[alt="Disney"] { height: 26px !important; }
+
+  /* Section padding tighter */
+  .section {
+    padding: 64px 18px;
+  }
+
+  /* Hero stats: full width pills */
+  .hero__stats {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
 }

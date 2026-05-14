@@ -53,9 +53,30 @@ import '../styles/global.css';
         <li><a href="/#case-studies">Case Studies</a></li>
         <li><a href="/faq">FAQ</a></li>
       </ul>
-      <a href="/#contact" class="btn btn--primary btn--small" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
+      <a href="/#contact" class="btn btn--primary btn--small nav__cta" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
+
+      <!-- Mobile hamburger toggle (visible only on small screens) -->
+      <button class="nav__toggle" id="nav-toggle" aria-label="Open menu" aria-controls="nav-mobile" aria-expanded="false">
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="nav-mobile" id="nav-mobile" hidden>
+    <ul class="nav-mobile__links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#platform">The Platform</a></li>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/insights">Insights</a></li>
+      <li><a href="/demos">Demos</a></li>
+      <li><a href="/#case-studies">Case Studies</a></li>
+      <li><a href="/faq">FAQ</a></li>
+    </ul>
+    <a href="/#contact" class="btn btn--primary btn--large nav-mobile__cta" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Call</a>
+  </div>
 
   <slot />
 
@@ -144,6 +165,46 @@ import '../styles/global.css';
   <form name="insights-signup" netlify netlify-honeypot="bot-field" hidden>
     <input type="email" name="email" />
   </form>
+
+  <!-- Mobile nav toggle -->
+  <script is:inline>
+    (function() {
+      const toggle = document.getElementById('nav-toggle');
+      const drawer = document.getElementById('nav-mobile');
+      if (!toggle || !drawer) return;
+
+      function setOpen(open) {
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.classList.toggle('is-open', open);
+        drawer.classList.toggle('is-open', open);
+        if (open) {
+          drawer.hidden = false;
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+          // Allow transition to play, then re-hide for a11y
+          setTimeout(function () {
+            if (!drawer.classList.contains('is-open')) drawer.hidden = true;
+          }, 300);
+        }
+      }
+
+      toggle.addEventListener('click', function () {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        setOpen(!isOpen);
+      });
+
+      // Close when any link in the drawer is tapped
+      drawer.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+      });
+    })();
+  </script>
 
   <script is:inline>
     (function() {
