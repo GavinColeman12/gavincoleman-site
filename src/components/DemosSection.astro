@@ -57,10 +57,8 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
               <h3 class="demo-cell__title">{d.data.title}</h3>
               <p class="demo-cell__pitch">{d.data.pitch}</p>
               <div class="demo-cell__meta">
-                {d.data.pricingFrom && <span><strong>{d.data.pricingFrom}</strong></span>}
-                {d.data.pricingFrom && d.data.timeline && <span class="demo-cell__meta-sep">·</span>}
                 {d.data.timeline && <span>{d.data.timeline}</span>}
-                <span class="demo-cell__meta-sep">·</span>
+                {d.data.timeline && <span class="demo-cell__meta-sep">·</span>}
                 <a href={`/demos/${d.slug}`} class="demo-cell__details-link">Full details →</a>
               </div>
             </div>
