@@ -1909,34 +1909,29 @@ ul {
   color: #ffffff;
 }
 
-/* Nav brand — mark + wordmark inline */
-.nav__brand { gap: 10px !important; }
-.nav__brand-mark-img {
-  height: 40px;
+/* Nav brand — full horizontal logo (waveform + wordmark + tail) */
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+.nav__brand-logo {
+  height: 42px;
   width: auto;
   display: block;
+  /* Uses logo-light.png variant — wordmark is pre-converted to white so the
+     pink-purple waveform gradient stays vibrant against the dark nav bg. */
+  opacity: 0.96;
+  transition: opacity 0.2s ease;
 }
-.nav__brand-wordmark {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-  color: #fff;
-}
-.nav__brand-name {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-.nav__brand-sub {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 2.5px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 3px;
+.nav__brand:hover .nav__brand-logo {
+  opacity: 1;
 }
 @media (max-width: 640px) {
-  .nav__brand-sub { display: none; }
-  .nav__brand-name { font-size: 14px; letter-spacing: 0.5px; }
+  .nav__brand-logo { height: 36px; }
+}
+@media (max-width: 380px) {
+  .nav__brand-logo { height: 32px; }
 }
 
 /* Footer logo */
