@@ -1912,7 +1912,7 @@ ul {
 /* Nav brand — mark + wordmark inline */
 .nav__brand { gap: 10px !important; }
 .nav__brand-mark-img {
-  height: 34px;
+  height: 40px;
   width: auto;
   display: block;
 }
