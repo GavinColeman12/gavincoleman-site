@@ -56,22 +56,15 @@
       align-items: center;
       gap: 14px;
     }
-    .brand__mark {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      clip-path: polygon(0 50%, 100% 10%, 75% 50%, 100% 90%);
-    }
-    .brand__name {
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      font-size: 14px;
-    }
-    .brand__sub {
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--text-subtle);
-      margin-top: 2px;
+    .brand__logo {
+      height: 42px;
+      width: auto;
+      display: block;
+      /* Logo wordmark is dark navy; on the dark one-pager bg we want it white.
+         CSS filter inverts everything visible, which works because the new
+         logo is monochrome dark navy. */
+      filter: brightness(0) invert(1);
+      opacity: 0.96;
     }
     .header__contact {
       text-align: right;
@@ -395,11 +388,7 @@
   <!-- HEADER -->
   <header class="header">
     <div class="brand">
-      <div class="brand__mark"></div>
-      <div>
-        <div class="brand__name">CRESCENDO</div>
-        <div class="brand__sub">CONSULTANTS</div>
-      </div>
+      <img src="public/images/logo.png" alt="Crescendo Consulting" class="brand__logo" />
     </div>
     <div class="header__contact">
       <a href="https://crescendo-consulting.net">crescendo-consulting.net</a><br/>
