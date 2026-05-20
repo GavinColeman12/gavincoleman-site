@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowTrack from '../components/ArrowTrack.astro';
 
 type FaqItem = { q: string; a: string };
 type FaqSection = { heading: string; items: FaqItem[] };
@@ -147,7 +148,7 @@ const allItems = sections.flatMap((s) => s.items);
         <p class="faq__cta-dek">Book a free 30-minute intro call. I'll give you a direct answer — not a sales pitch.</p>
         <div class="faq__cta-actions">
           <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
-          <a href="mailto:gavin.coleman@crescendo-consulting.net" class="btn btn--ghost btn--large">Email Directly</a>
+          <a href="mailto:gavin.coleman@crescendo-consulting.net" class="btn btn--ghost btn--large">Email Directly<ArrowTrack /></a>
         </div>
       </section>
     </div>

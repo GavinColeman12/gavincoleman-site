@@ -1002,105 +1002,6 @@ ul {
   gap: 24px;
 }
 
-.service-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  padding: 40px 32px 32px;
-  transition: transform 500ms var(--ease-premium),
-              border-color 350ms var(--ease-premium),
-              background 350ms var(--ease-premium),
-              box-shadow 500ms var(--ease-premium);
-  overflow: hidden;
-}
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(153, 33, 242, 0.15), transparent 40%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.service-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(192, 132, 252, 0.32);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 20px 50px -20px rgba(153, 33, 242, 0.45);
-}
-
-.service-card:hover::before {
-  opacity: 1;
-}
-
-.service-card__num {
-  position: absolute;
-  top: 24px;
-  right: 32px;
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 2px;
-}
-
-.service-card__icon {
-  width: 56px;
-  height: 56px;
-  background: var(--gradient-accent);
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  margin-bottom: 28px;
-  position: relative;
-}
-
-.service-card__title {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 14px;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  position: relative;
-}
-
-.service-card__desc {
-  font-size: 15px;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 24px;
-  position: relative;
-}
-
-.service-card__list {
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-}
-
-.service-card__list li {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.55);
-  padding: 6px 0 6px 20px;
-  position: relative;
-}
-
-.service-card__list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 14px;
-  width: 10px;
-  height: 1px;
-  background: var(--accent-2);
-}
-
 /* ============================================================
    Services — 3-tier engagement structure
    ============================================================ */
@@ -1353,22 +1254,26 @@ ul {
   border-radius: 14px;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  transition: transform 500ms var(--ease-premium),
+              border-color 350ms var(--ease-premium),
+              background 350ms var(--ease-premium),
+              box-shadow 500ms var(--ease-premium);
   overflow: hidden;
 }
 .build-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(500px circle at 50% 0%, rgba(153, 33, 242, 0.12), transparent 55%);
+  background: radial-gradient(520px circle at 50% 0%, rgba(153, 33, 242, 0.18), transparent 55%);
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 350ms var(--ease-premium);
   pointer-events: none;
 }
 .build-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-6px);
   border-color: rgba(192, 132, 252, 0.4);
   background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 50px -20px rgba(153, 33, 242, 0.45);
 }
 .build-card:hover::before {
   opacity: 1;
@@ -1612,14 +1517,16 @@ ul {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 40px;
-  transition: all 0.3s ease;
+  transition: transform 500ms var(--ease-premium),
+              border-color 350ms var(--ease-premium),
+              box-shadow 500ms var(--ease-premium);
   box-shadow: var(--shadow-sm);
 }
 
 .case-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(153, 33, 242, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -20px rgba(153, 33, 242, 0.35), var(--shadow-lg);
+  border-color: rgba(153, 33, 242, 0.35);
 }
 
 .case-card__tag {
