@@ -301,24 +301,24 @@ ul {
 /* Concentrated purple pockets — not a wash, just glows behind the dust */
 .hero__nebula--1 {
   background:
-    radial-gradient(ellipse 28% 32% at 22% 38%, rgba(153, 33, 242, 0.65) 0%, transparent 65%),
-    radial-gradient(ellipse 18% 20% at 78% 25%, rgba(192, 132, 252, 0.4) 0%, transparent 70%);
-  opacity: 0.55;
+    radial-gradient(ellipse 32% 38% at 28% 42%, rgba(153, 33, 242, 0.95) 0%, transparent 60%),
+    radial-gradient(ellipse 20% 22% at 78% 22%, rgba(192, 132, 252, 0.55) 0%, transparent 70%);
+  opacity: 0.85;
   animation: nebula-drift-1 48s ease-in-out infinite alternate;
 }
 
 .hero__nebula--2 {
   background:
-    radial-gradient(ellipse 24% 28% at 72% 72%, rgba(124, 28, 214, 0.55) 0%, transparent 65%),
-    radial-gradient(ellipse 16% 18% at 18% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
-  opacity: 0.4;
+    radial-gradient(ellipse 28% 32% at 72% 72%, rgba(124, 28, 214, 0.85) 0%, transparent 65%),
+    radial-gradient(ellipse 18% 20% at 18% 80%, rgba(168, 85, 247, 0.45) 0%, transparent 70%);
+  opacity: 0.65;
   animation: nebula-drift-2 63s ease-in-out infinite alternate;
 }
 
 .hero__nebula--3 {
   background:
-    radial-gradient(ellipse 20% 22% at 50% 50%, rgba(168, 85, 247, 0.35) 0%, transparent 60%);
-  opacity: 0.3;
+    radial-gradient(ellipse 22% 26% at 50% 55%, rgba(168, 85, 247, 0.55) 0%, transparent 60%);
+  opacity: 0.5;
   animation: nebula-drift-3 39s ease-in-out infinite alternate;
 }
 
@@ -387,12 +387,14 @@ ul {
   position: absolute;
   inset: -10%;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.32;
   mix-blend-mode: screen;
   background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.13 0 0 0 0 0.95 0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.75 0 0 0 0 0.5 0 0 0 0 1 0 0 0 1 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.13 0 0 0 0 0.95 0 0 0 1.4 -0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='3' stitchTiles='stitch' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.75 0 0 0 0 0.5 0 0 0 0 1 0 0 0 1 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E");
   background-size: 400px 400px, 600px 600px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 30%, transparent 90%);
   animation: dust-shift 22s linear infinite, dust-shift-2 38s linear infinite reverse;
 }
 
