@@ -62,6 +62,23 @@ import ArrowTrack from '../components/ArrowTrack.astro';
         </div>
       </div>
     </div>
+    <button
+      class="hero__motion-toggle"
+      type="button"
+      aria-label="Pause background motion"
+      aria-pressed="false"
+    >
+      <span class="hero__motion-toggle-icon" aria-hidden="true">
+        <svg class="hero__motion-toggle-svg hero__motion-toggle-svg--pause" width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+          <rect x="1.5" y="1" width="2.2" height="8" rx="0.6"/>
+          <rect x="6.3" y="1" width="2.2" height="8" rx="0.6"/>
+        </svg>
+        <svg class="hero__motion-toggle-svg hero__motion-toggle-svg--play" width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+          <path d="M2.2 1.3v7.4a0.4 0.4 0 0 0 0.62 0.34l5.4-3.7a0.4 0.4 0 0 0 0-0.68L2.82 0.96A0.4 0.4 0 0 0 2.2 1.3Z"/>
+        </svg>
+      </span>
+      <span class="hero__motion-toggle-label">Pause motion</span>
+    </button>
   </header>
 
   <!-- LOGO BAR -->
@@ -655,20 +672,61 @@ import ArrowTrack from '../components/ArrowTrack.astro';
         resizeTimer = setTimeout(function () { resize(); spawn(); }, 180);
       });
 
+      let userPaused = false;
+      let inView = true;
+
+      function maybeStart() {
+        if (!userPaused && inView && !document.hidden) start();
+      }
+
       if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver(function (entries) {
           for (let i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) start(); else stop();
+            inView = entries[i].isIntersecting;
+            if (inView) maybeStart(); else stop();
           }
         }, { threshold: 0.02 });
         io.observe(canvas);
       } else {
-        start();
+        maybeStart();
       }
 
       document.addEventListener('visibilitychange', function () {
-        if (document.hidden) stop(); else start();
+        if (document.hidden) stop(); else maybeStart();
       });
+
+      document.addEventListener('crescendo:motion-toggle', function (e) {
+        userPaused = !!(e.detail && e.detail.paused);
+        if (userPaused) stop(); else maybeStart();
+      });
+    })();
+
+    // Motion-pause button — toggles .hero--paused + canvas; show/hide
+    // based on whether the hero is in view.
+    (function () {
+      const toggle = document.querySelector('.hero__motion-toggle');
+      const hero = document.querySelector('.hero');
+      const label = toggle && toggle.querySelector('.hero__motion-toggle-label');
+      if (!toggle || !hero) return;
+
+      toggle.addEventListener('click', function () {
+        const paused = hero.classList.toggle('hero--paused');
+        toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        toggle.setAttribute('aria-label', paused ? 'Resume background motion' : 'Pause background motion');
+        if (label) label.textContent = paused ? 'Resume motion' : 'Pause motion';
+        document.dispatchEvent(new CustomEvent('crescendo:motion-toggle', { detail: { paused: paused } }));
+      });
+
+      // Show immediately; IO will hide once hero is fully scrolled past.
+      toggle.classList.add('is-visible');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+          for (let i = 0; i < entries.length; i++) {
+            toggle.classList.toggle('is-visible', entries[i].isIntersecting);
+          }
+        }, { threshold: 0 });
+        io.observe(hero);
+      }
     })();
   </script>
 
