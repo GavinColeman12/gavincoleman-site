@@ -2168,14 +2168,16 @@ ul {
   width: auto;
   display: block;
   flex-shrink: 0;
+  transform-origin: left center;
   filter: drop-shadow(0 0 12px rgba(153, 33, 242, 0));
   transition: filter 500ms var(--ease-premium),
-              transform 500ms var(--ease-premium);
+              transform 600ms var(--ease-premium);
 }
 
-.nav__brand:hover .nav__brand-chevron {
-  filter: drop-shadow(0 0 16px rgba(153, 33, 242, 0.55));
-  transform: scale(1.04);
+.nav__brand:hover .nav__brand-chevron,
+.nav__brand:focus-visible .nav__brand-chevron {
+  filter: drop-shadow(0 0 16px rgba(153, 33, 242, 0.6));
+  transform: scale(0.78);
 }
 
 .nav__brand-wordmark-wrap {
@@ -2196,19 +2198,20 @@ ul {
   width: auto;
   display: block;
   opacity: 0;
-  transform: translateX(-16px);
-  transition: opacity 400ms 120ms var(--ease-premium),
-              transform 500ms 100ms var(--ease-premium);
+  transform: translateY(28px);
+  transition: opacity 380ms 140ms var(--ease-premium),
+              transform 540ms 120ms var(--ease-premium);
 }
 
 .nav__brand:hover .nav__brand-wordmark,
 .nav__brand:focus-visible .nav__brand-wordmark {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 /* Mobile/tablet — always show wordmark since hover doesn't exist on touch */
 @media (hover: none), (max-width: 720px) {
+  .nav__brand-chevron { transform: none !important; }
   .nav__brand-wordmark-wrap { max-width: 220px; }
   .nav__brand-wordmark { opacity: 1; transform: none; }
 }
