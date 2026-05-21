@@ -89,3 +89,104 @@
     });
   });
 })();
+
+// Magnetic hover on primary CTAs — button drifts toward cursor (Accenture-style)
+(function () {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  if (reducedMotion || isTouch) return;
+
+  const STRENGTH = 0.28;
+  const targets = document.querySelectorAll('.btn--primary');
+
+  targets.forEach((btn) => {
+    btn.style.willChange = 'translate';
+    btn.style.transition = (btn.style.transition || '') + ', translate 360ms cubic-bezier(0.85, 0, 0, 1)';
+
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) * STRENGTH;
+      const dy = (e.clientY - r.top - r.height / 2) * STRENGTH;
+      btn.style.translate = dx + 'px ' + dy + 'px';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.translate = '';
+    });
+  });
+})();
+
+// Stat number ticker — count up from 0 on first viewport entry
+(function () {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll('[data-count]');
+  if (!els.length) return;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function tickerFor(el) {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const duration = parseInt(el.dataset.duration || '1300', 10);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+
+    if (reducedMotion) {
+      el.textContent = prefix + target.toFixed(decimals) + suffix;
+      return;
+    }
+
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const v = target * easeOutCubic(t);
+      el.textContent = prefix + v.toFixed(decimals) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target.toFixed(decimals) + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function isInView(el) {
+    const r = el.getBoundingClientRect();
+    return r.top < window.innerHeight && r.bottom > 0;
+  }
+
+  els.forEach((el) => {
+    if (isInView(el)) {
+      tickerFor(el);
+    } else if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              tickerFor(e.target);
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      io.observe(el);
+    } else {
+      tickerFor(el);
+    }
+  });
+})();
+
+// Scroll-progress bar — gradient bar at top of viewport, scales with scroll
+(function () {
+  const bar = document.querySelector('.scroll-progress');
+  if (!bar) return;
+
+  function update() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.max(0, Math.min(1, scrollTop / max)) : 0;
+    bar.style.transform = 'scaleX(' + progress + ')';
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
