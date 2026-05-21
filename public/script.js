@@ -2,16 +2,22 @@
 // Gavin Coleman — Consulting Site Interactions
 // ============================================================
 
-// Fade-in on scroll using IntersectionObserver
+// Reveal on scroll — two flavors share one IntersectionObserver:
+//   .fade-in        — opacity + 30px Y rise (cards, photos, highlights)
+//   .shift-in-right — opacity + 64px X enter (section headers; cinematic)
 (function () {
-  const selectors = [
-    '.section__header',
+  const fadeSelectors = [
     '.service-card',
     '.case-card',
     '.testimonial',
     '.about__photo',
     '.about__content',
     '.highlight',
+    '.build-card',
+  ];
+
+  const shiftSelectors = [
+    '.section__header',
   ];
 
   const observer = new IntersectionObserver(
@@ -29,10 +35,17 @@
     }
   );
 
-  selectors.forEach((selector) => {
+  fadeSelectors.forEach((selector) => {
     document.querySelectorAll(selector).forEach((el, idx) => {
       el.classList.add('fade-in');
       el.style.transitionDelay = `${Math.min(idx * 60, 300)}ms`;
+      observer.observe(el);
+    });
+  });
+
+  shiftSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      el.classList.add('shift-in-right');
       observer.observe(el);
     });
   });
@@ -171,6 +184,41 @@
     } else {
       tickerFor(el);
     }
+  });
+})();
+
+// Word rotator — cycles through [data-words]="a|b|c" with crossfade
+(function () {
+  const els = document.querySelectorAll('[data-words]');
+  if (!els.length) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  els.forEach((el) => {
+    const words = (el.dataset.words || '').split('|').map((s) => s.trim()).filter(Boolean);
+    if (words.length < 2) return;
+
+    const interval = parseInt(el.dataset.interval || '2800', 10);
+    let i = words.indexOf((el.textContent || '').trim());
+    if (i < 0) i = 0;
+
+    if (reducedMotion) return; // leave the static text as-is
+
+    function cycle() {
+      el.classList.add('is-leaving');
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('is-leaving');
+        el.classList.add('is-entering');
+        // Force reflow so the transition kicks
+        void el.offsetWidth;
+        requestAnimationFrame(() => {
+          el.classList.remove('is-entering');
+        });
+      }, 300);
+    }
+
+    setInterval(cycle, interval);
   });
 })();
 

@@ -9,6 +9,7 @@
 //   showHeader:boolean  — if false, caller renders its own heading. Default true.
 //
 import DemoEmbed from './DemoEmbed.astro';
+import ArrowTrack from './ArrowTrack.astro';
 import { getCollection } from 'astro:content';
 
 export interface Props {
@@ -59,7 +60,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
               <div class="demo-cell__meta">
                 {d.data.timeline && <span>{d.data.timeline}</span>}
                 {d.data.timeline && <span class="demo-cell__meta-sep">·</span>}
-                <a href={`/demos/${d.slug}`} class="demo-cell__details-link">Full details →</a>
+                <a href={`/demos/${d.slug}`} class="demo-cell__details-link">Full details<ArrowTrack /></a>
               </div>
             </div>
             <div class="demo-cell__embed">

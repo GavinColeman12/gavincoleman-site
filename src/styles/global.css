@@ -15,6 +15,7 @@
   --accent: #9921F2;
   --accent-2: #C084FC;
   --accent-deep: #7C1CD6;
+  --accent-darkest: #460073;
   --accent-gold: #f59e0b;
   --gradient-hero: linear-gradient(135deg, #0a0e27 0%, #2a1a52 50%, #0a0e27 100%);
   --gradient-accent: linear-gradient(135deg, #9921F2 0%, #C084FC 100%);
@@ -286,7 +287,10 @@ ul {
 .btn--ghost:focus-visible .btn__arrow-track > .btn__arrow-inner,
 .build-card:hover .btn__arrow-track > .btn__arrow-inner,
 .build-card:focus-visible .btn__arrow-track > .btn__arrow-inner,
-.case-card:hover .btn__arrow-track > .btn__arrow-inner {
+.case-card:hover .btn__arrow-track > .btn__arrow-inner,
+.insights__featured-link:hover .btn__arrow-track > .btn__arrow-inner,
+.demo-cell__details-link:hover .btn__arrow-track > .btn__arrow-inner,
+.demo-cell__details-link:focus-visible .btn__arrow-track > .btn__arrow-inner {
   transform: translateX(0);
 }
 
@@ -297,7 +301,10 @@ ul {
   position: relative;
   min-height: 100vh;
   padding: 140px 40px 80px;
-  background: #000000;
+  background:
+    radial-gradient(ellipse 90% 60% at 35% 45%, rgba(70, 0, 115, 0.45) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 75% 80%, rgba(70, 0, 115, 0.28) 0%, transparent 70%),
+    #000000;
   color: #fff;
   overflow: hidden;
   display: flex;
@@ -706,6 +713,41 @@ ul {
   background-clip: text;
   color: transparent;
   font-style: italic;
+}
+
+/* Word rotator inside the headline — cycles between offerings */
+.hero__rotator {
+  display: inline-block;
+  position: relative;
+  min-width: 5ch;
+  transition: opacity 280ms var(--ease-premium),
+              transform 380ms var(--ease-premium);
+  background: linear-gradient(135deg, #fff 0%, #E9D5FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  will-change: opacity, transform;
+}
+
+.hero__rotator.is-leaving {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.hero__rotator.is-entering {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__rotator {
+    transition: none;
+  }
+  .hero__rotator.is-leaving,
+  .hero__rotator.is-entering {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero__subtitle {
@@ -1968,8 +2010,24 @@ ul {
   transform: translateY(0);
 }
 
+/* Content-shift-left: enters from the right by 64px while fading in.
+   Used by section headers for an Accenture-style cinematic entrance. */
+.shift-in-right {
+  opacity: 0;
+  transform: translateX(64px);
+  transition: opacity 900ms var(--ease-premium),
+              transform 1100ms var(--ease-premium);
+  will-change: opacity, transform;
+}
+
+.shift-in-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fade-in {
+  .fade-in,
+  .shift-in-right {
     opacity: 1;
     transform: none;
     transition: none;
