@@ -257,13 +257,16 @@ ul {
   color: var(--accent);
 }
 
-/* Apply the same sliding-arrow effect to .btn--ghost (used widely already) */
+/* Sliding-arrow tracks — drop <ArrowTrack /> inside anything that
+   should reveal the arrow on hover. Default state: second arrow visible
+   (translateX(-36px)); hover: first arrow slides in. The hover trigger
+   list below selects every container that should drive the slide. */
 .btn--ghost {
   position: relative;
   overflow: hidden;
 }
 
-.btn--ghost > .btn__arrow-track {
+.btn__arrow-track {
   display: inline-block;
   margin-left: 8px;
   width: 18px;
@@ -271,7 +274,7 @@ ul {
   vertical-align: -2px;
 }
 
-.btn--ghost > .btn__arrow-track > .btn__arrow-inner {
+.btn__arrow-track > .btn__arrow-inner {
   display: inline-flex;
   gap: 18px;
   transform: translateX(-36px);
@@ -279,7 +282,11 @@ ul {
   color: var(--accent-2);
 }
 
-.btn--ghost:hover > .btn__arrow-track > .btn__arrow-inner {
+.btn--ghost:hover .btn__arrow-track > .btn__arrow-inner,
+.btn--ghost:focus-visible .btn__arrow-track > .btn__arrow-inner,
+.build-card:hover .btn__arrow-track > .btn__arrow-inner,
+.build-card:focus-visible .btn__arrow-track > .btn__arrow-inner,
+.case-card:hover .btn__arrow-track > .btn__arrow-inner {
   transform: translateX(0);
 }
 
