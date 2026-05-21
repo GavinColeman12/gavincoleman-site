@@ -2442,12 +2442,20 @@ ul {
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 8px;
   padding: 0;
   cursor: pointer;
   position: relative;
+  transition: background 220ms var(--ease-premium),
+              border-color 220ms var(--ease-premium);
+}
+.nav__toggle:hover,
+.nav__toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+  outline: none;
 }
 .nav__toggle-line {
   position: absolute;
