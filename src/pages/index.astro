@@ -13,16 +13,50 @@ import ArrowTrack from '../components/ArrowTrack.astro';
   <!-- HERO -->
   <header class="hero">
     <div class="hero__bg">
-      <div class="hero__blob hero__blob--1"></div>
-      <div class="hero__blob hero__blob--2"></div>
-      <div class="hero__nebula hero__nebula--1"></div>
-      <div class="hero__nebula hero__nebula--2"></div>
-      <div class="hero__nebula hero__nebula--3"></div>
-      <div class="hero__stars"></div>
-      <div class="hero__noise"></div>
-      <div class="hero__grid"></div>
-      <canvas class="hero__canvas" aria-hidden="true"></canvas>
-      <div class="hero__vignette"></div>
+      <!-- Crescendo: one upward-rising curve drawn in negative space.
+           The brand name literalized as a gesture. -->
+      <svg
+        class="hero__curve"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="crescGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#460073" stop-opacity="0" />
+            <stop offset="22%"  stop-color="#7500c0" stop-opacity="0.55" />
+            <stop offset="55%"  stop-color="#9921F2" stop-opacity="0.85" />
+            <stop offset="100%" stop-color="#E9D5FF" stop-opacity="0.95" />
+          </linearGradient>
+          <filter id="crescGlow" x="-10%" y="-30%" width="120%" height="160%">
+            <feGaussianBlur stdDeviation="6" result="glow" />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <!-- Subtle ghost beneath, blurred, low opacity -->
+        <path
+          class="hero__curve-ghost"
+          d="M -60 780 C 380 760, 760 600, 1100 320 S 1620 -40, 1700 -80"
+          stroke="url(#crescGrad)"
+          stroke-width="14"
+          fill="none"
+          stroke-linecap="round"
+          opacity="0.18"
+        />
+        <!-- Main crescendo line -->
+        <path
+          class="hero__curve-line"
+          d="M -60 780 C 380 760, 760 600, 1100 320 S 1620 -40, 1700 -80"
+          stroke="url(#crescGrad)"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          filter="url(#crescGlow)"
+        />
+      </svg>
     </div>
     <div class="hero__inner">
       <div class="hero__copy">
@@ -580,129 +614,9 @@ import ArrowTrack from '../components/ArrowTrack.astro';
   </section>
 
   <script is:inline>
-    (function () {
-      const canvas = document.querySelector('.hero__canvas');
-      if (!canvas || !canvas.getContext) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      const ctx = canvas.getContext('2d');
-      const parent = canvas.parentElement;
-      let width = 0, height = 0;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      let particles = [];
-      let rafId = null;
-      let running = false;
-
-      const COUNT = window.innerWidth < 768 ? 38 : 78;
-
-      function resize() {
-        const rect = parent.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
-        canvas.width = Math.max(1, Math.floor(width * dpr));
-        canvas.height = Math.max(1, Math.floor(height * dpr));
-        canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-
-      function spawn() {
-        particles = [];
-        for (let i = 0; i < COUNT; i++) {
-          const big = Math.random() < 0.12;
-          particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * (big ? 0.08 : 0.22),
-            vy: -0.04 - Math.random() * (big ? 0.08 : 0.18),
-            r: big ? 2.4 + Math.random() * 1.6 : 0.7 + Math.random() * 1.3,
-            a: big ? 0.40 + Math.random() * 0.25 : 0.18 + Math.random() * 0.30,
-            hue: 268 + Math.random() * 28,
-            phase: Math.random() * Math.PI * 2,
-            phaseStep: 0.005 + Math.random() * 0.010,
-          });
-        }
-      }
-
-      function frame() {
-        ctx.clearRect(0, 0, width, height);
-        ctx.globalCompositeOperation = 'lighter';
-
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.phase += p.phaseStep;
-          p.x += p.vx + Math.sin(p.phase) * 0.07;
-          p.y += p.vy + Math.cos(p.phase * 0.7) * 0.03;
-
-          if (p.x < -20) p.x = width + 20;
-          if (p.x > width + 20) p.x = -20;
-          if (p.y < -20) p.y = height + 20;
-          if (p.y > height + 20) p.y = -20;
-
-          const R = p.r * 5;
-          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, R);
-          g.addColorStop(0,    'hsla(' + p.hue + ', 92%, 72%, ' + p.a + ')');
-          g.addColorStop(0.45, 'hsla(' + p.hue + ', 90%, 62%, ' + (p.a * 0.28) + ')');
-          g.addColorStop(1,    'hsla(' + p.hue + ', 80%, 50%, 0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, R, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        rafId = requestAnimationFrame(frame);
-      }
-
-      function start() {
-        if (running) return;
-        running = true;
-        rafId = requestAnimationFrame(frame);
-      }
-      function stop() {
-        running = false;
-        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-      }
-
-      resize();
-      spawn();
-
-      let resizeTimer = null;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () { resize(); spawn(); }, 180);
-      });
-
-      let userPaused = false;
-      let inView = true;
-
-      function maybeStart() {
-        if (!userPaused && inView && !document.hidden) start();
-      }
-
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver(function (entries) {
-          for (let i = 0; i < entries.length; i++) {
-            inView = entries[i].isIntersecting;
-            if (inView) maybeStart(); else stop();
-          }
-        }, { threshold: 0.02 });
-        io.observe(canvas);
-      } else {
-        maybeStart();
-      }
-
-      document.addEventListener('visibilitychange', function () {
-        if (document.hidden) stop(); else maybeStart();
-      });
-
-      document.addEventListener('crescendo:motion-toggle', function (e) {
-        userPaused = !!(e.detail && e.detail.paused);
-        if (userPaused) stop(); else maybeStart();
-      });
-    })();
-
-    // Motion-pause button — toggles .hero--paused + canvas; show/hide
-    // based on whether the hero is in view.
+    // Motion-pause button — toggles .hero--paused on hero; show/hide
+    // based on whether the hero is in view. Now pauses the crescendo
+    // curve draw-in animation + the headline word-rotator via the class.
     (function () {
       const toggle = document.querySelector('.hero__motion-toggle');
       const hero = document.querySelector('.hero');
