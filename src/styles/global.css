@@ -512,6 +512,24 @@ ul {
   }
 }
 
+/* ---- Hero scroll burnout: as you scroll past, hero content fades to a
+   "spent" state. Opacity only — no transforms — so the hero stays put and
+   the new section can own the screen. JS sets --burnout from 1 → 0 across
+   0 → 50vh of scroll. Pause toggle stays at full opacity (it's a control).
+   The full opacity formula combines burnout × entrance (defined below). */
+.hero {
+  --burnout: 1;
+  --entrance: 1;  /* JS flips to 0 then back to 1 to drive entrance fade */
+}
+/* Multiply all bg layers together via filter: opacity (preserves their
+   individually-tuned per-layer values). */
+.hero__bg       { filter: opacity(calc(0.40 + var(--burnout) * 0.60)); }
+.hero__motion-toggle { /* control — never burns out */ }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg { filter: none !important; }
+}
+
 /* ---- Motion-pause toggle (viewport bottom-left, Accenture-style)
    Fixed to the viewport so it stays visible at the start; JS toggles
    .is-visible based on whether the hero is on screen so it disappears
@@ -636,10 +654,13 @@ ul {
   width: 100%;
 }
 
-/* ---- Accenture-style staggered hero entrance ---- */
-@keyframes hero-content-reveal {
-  0%   { opacity: 0; transform: translateY(40px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* ---- Accenture-style staggered hero entrance —
+   Transform-only animation (slide-in). Opacity is purely the burnout ×
+   entrance product so the burnout calc keeps full control after entrance.
+   --entrance starts at 0 (invisible), JS toggles to 1 to fade in. */
+@keyframes hero-slide-in {
+  from { transform: translateY(40px); }
+  to   { transform: translateY(0); }
 }
 
 .hero__eyebrow,
@@ -648,15 +669,24 @@ ul {
 .hero__cta,
 .hero__stats,
 .hero__portrait {
-  animation: hero-content-reveal 900ms var(--ease-premium) both;
+  animation: hero-slide-in 900ms var(--ease-premium) both;
+  transition: opacity 700ms var(--ease-premium);
 }
 
-.hero__eyebrow  { animation-delay: 120ms; }
-.hero__title    { animation-delay: 220ms; }
-.hero__subtitle { animation-delay: 380ms; }
-.hero__cta      { animation-delay: 520ms; }
-.hero__stats    { animation-delay: 660ms; }
-.hero__portrait { animation-delay: 300ms; animation-duration: 1100ms; }
+.hero__eyebrow  { opacity: calc(var(--entrance) * (0.30 + var(--burnout) * 0.70)); animation-delay: 120ms; transition-delay: 120ms; }
+.hero__title    { opacity: calc(var(--entrance) * (0.35 + var(--burnout) * 0.65)); animation-delay: 220ms; transition-delay: 220ms; }
+.hero__subtitle { opacity: calc(var(--entrance) * (0.20 + var(--burnout) * 0.80)); animation-delay: 380ms; transition-delay: 380ms; }
+.hero__cta      { opacity: calc(var(--entrance) * (0.40 + var(--burnout) * 0.60)); animation-delay: 520ms; transition-delay: 520ms; }
+.hero__stats    { opacity: calc(var(--entrance) * (0.30 + var(--burnout) * 0.70)); animation-delay: 660ms; transition-delay: 660ms; }
+.hero__portrait { opacity: calc(var(--entrance) * (0.45 + var(--burnout) * 0.55)); animation-delay: 300ms; animation-duration: 1100ms; transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__eyebrow, .hero__title, .hero__subtitle,
+  .hero__cta, .hero__stats, .hero__portrait {
+    animation: none !important;
+    transform: none !important;
+  }
+}
 
 .hero__inner {
   position: relative;
@@ -770,6 +800,23 @@ ul {
   gap: 48px;
   padding-top: 36px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hairline purple flag above each stat — "if you see this flag, what
+   follows is a fact." Creates a typographic system that ties every
+   numeric proof point on the site together. */
+.stat {
+  position: relative;
+  padding-top: 14px;
+}
+.stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
 }
 
 .stat__value {
@@ -2505,6 +2552,24 @@ ul {
 }
 .nav-mobile.is-open {
   transform: translateX(0);
+}
+
+/* Modal scrim — when the mobile drawer opens, body.is-modal-open lights
+   up a full-page dim layer beneath the drawer. Accenture-style "everything
+   else becomes background." Lead popup already has its own scrim so we
+   only toggle this for the drawer. */
+body.is-modal-open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 98;
+  pointer-events: auto;
+  opacity: 0;
+  animation: modal-scrim-in 320ms var(--ease-premium) forwards;
+}
+@keyframes modal-scrim-in {
+  to { opacity: 1; }
 }
 .nav-mobile__links {
   list-style: none;

@@ -198,6 +198,7 @@ import '../styles/global.css';
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         toggle.classList.toggle('is-open', open);
         drawer.classList.toggle('is-open', open);
+        document.body.classList.toggle('is-modal-open', open);
         if (open) {
           drawer.hidden = false;
           document.body.style.overflow = 'hidden';
@@ -209,6 +210,13 @@ import '../styles/global.css';
           }, 300);
         }
       }
+
+      // Click the scrim to close
+      document.addEventListener('click', function (e) {
+        if (e.target === document.body && document.body.classList.contains('is-modal-open')) {
+          setOpen(false);
+        }
+      });
 
       toggle.addEventListener('click', function () {
         const isOpen = toggle.getAttribute('aria-expanded') === 'true';

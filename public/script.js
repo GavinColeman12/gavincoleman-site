@@ -238,3 +238,36 @@
   window.addEventListener('resize', update, { passive: true });
   update();
 })();
+
+// Hero entrance — flip --entrance from 0 → 1 so opacity transitions fire.
+// CSS default is --entrance:1 so a no-JS page still shows everything (just
+// without the fade-in). With JS, we set 0 synchronously then flip to 1
+// on the next paint, letting the CSS opacity transition animate the fade.
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  hero.style.setProperty('--entrance', '0');
+  function release() { hero.style.setProperty('--entrance', '1'); }
+  requestAnimationFrame(() => requestAnimationFrame(release));
+  setTimeout(release, 120);  // fallback for throttled rAF (e.g. headless)
+})();
+
+// Hero scroll burnout — content fades to "spent" state as you scroll past hero
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function update() {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const fadeDistance = window.innerHeight * 0.5;
+    const t = Math.max(0, Math.min(1, y / fadeDistance));
+    hero.style.setProperty('--burnout', String(1 - t));
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
