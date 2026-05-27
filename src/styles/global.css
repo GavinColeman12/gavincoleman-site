@@ -728,6 +728,11 @@ ul {
   letter-spacing: 0.01em;
 }
 
+.hero__cta-note strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+}
+
 .hero__stats {
   display: flex;
   gap: 48px;
