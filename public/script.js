@@ -2,16 +2,22 @@
 // Gavin Coleman — Consulting Site Interactions
 // ============================================================
 
-// Fade-in on scroll using IntersectionObserver
+// Reveal on scroll — two flavors share one IntersectionObserver:
+//   .fade-in        — opacity + 30px Y rise (cards, photos, highlights)
+//   .shift-in-right — opacity + 64px X enter (section headers; cinematic)
 (function () {
-  const selectors = [
-    '.section__header',
+  const fadeSelectors = [
     '.service-card',
     '.case-card',
     '.testimonial',
     '.about__photo',
     '.about__content',
     '.highlight',
+    '.build-card',
+  ];
+
+  const shiftSelectors = [
+    '.section__header',
   ];
 
   const observer = new IntersectionObserver(
@@ -29,10 +35,17 @@
     }
   );
 
-  selectors.forEach((selector) => {
+  fadeSelectors.forEach((selector) => {
     document.querySelectorAll(selector).forEach((el, idx) => {
       el.classList.add('fade-in');
       el.style.transitionDelay = `${Math.min(idx * 60, 300)}ms`;
+      observer.observe(el);
+    });
+  });
+
+  shiftSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      el.classList.add('shift-in-right');
       observer.observe(el);
     });
   });
@@ -88,4 +101,173 @@
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
+})();
+
+// Magnetic hover on primary CTAs — button drifts toward cursor (Accenture-style)
+(function () {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  if (reducedMotion || isTouch) return;
+
+  const STRENGTH = 0.28;
+  const targets = document.querySelectorAll('.btn--primary');
+
+  targets.forEach((btn) => {
+    btn.style.willChange = 'translate';
+    btn.style.transition = (btn.style.transition || '') + ', translate 360ms cubic-bezier(0.85, 0, 0, 1)';
+
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) * STRENGTH;
+      const dy = (e.clientY - r.top - r.height / 2) * STRENGTH;
+      btn.style.translate = dx + 'px ' + dy + 'px';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.translate = '';
+    });
+  });
+})();
+
+// Stat number ticker — count up from 0 on first viewport entry
+(function () {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll('[data-count]');
+  if (!els.length) return;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function tickerFor(el) {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const duration = parseInt(el.dataset.duration || '1300', 10);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+
+    if (reducedMotion) {
+      el.textContent = prefix + target.toFixed(decimals) + suffix;
+      return;
+    }
+
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const v = target * easeOutCubic(t);
+      el.textContent = prefix + v.toFixed(decimals) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target.toFixed(decimals) + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function isInView(el) {
+    const r = el.getBoundingClientRect();
+    return r.top < window.innerHeight && r.bottom > 0;
+  }
+
+  els.forEach((el) => {
+    if (isInView(el)) {
+      tickerFor(el);
+    } else if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              tickerFor(e.target);
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      io.observe(el);
+    } else {
+      tickerFor(el);
+    }
+  });
+})();
+
+// Word rotator — cycles through [data-words]="a|b|c" with crossfade
+(function () {
+  const els = document.querySelectorAll('[data-words]');
+  if (!els.length) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  els.forEach((el) => {
+    const words = (el.dataset.words || '').split('|').map((s) => s.trim()).filter(Boolean);
+    if (words.length < 2) return;
+
+    const interval = parseInt(el.dataset.interval || '2800', 10);
+    let i = words.indexOf((el.textContent || '').trim());
+    if (i < 0) i = 0;
+
+    if (reducedMotion) return; // leave the static text as-is
+
+    function cycle() {
+      el.classList.add('is-leaving');
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('is-leaving');
+        el.classList.add('is-entering');
+        // Force reflow so the transition kicks
+        void el.offsetWidth;
+        requestAnimationFrame(() => {
+          el.classList.remove('is-entering');
+        });
+      }, 300);
+    }
+
+    setInterval(cycle, interval);
+  });
+})();
+
+// Scroll-progress bar — gradient bar at top of viewport, scales with scroll
+(function () {
+  const bar = document.querySelector('.scroll-progress');
+  if (!bar) return;
+
+  function update() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.max(0, Math.min(1, scrollTop / max)) : 0;
+    bar.style.transform = 'scaleX(' + progress + ')';
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+// Hero entrance — flip --entrance from 0 → 1 so opacity transitions fire.
+// CSS default is --entrance:1 so a no-JS page still shows everything (just
+// without the fade-in). With JS, we set 0 synchronously then flip to 1
+// on the next paint, letting the CSS opacity transition animate the fade.
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  hero.style.setProperty('--entrance', '0');
+  function release() { hero.style.setProperty('--entrance', '1'); }
+  requestAnimationFrame(() => requestAnimationFrame(release));
+  setTimeout(release, 120);  // fallback for throttled rAF (e.g. headless)
+})();
+
+// Hero scroll burnout — content fades to "spent" state as you scroll past hero
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  function update() {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const fadeDistance = window.innerHeight * 0.5;
+    const t = Math.max(0, Math.min(1, y / fadeDistance));
+    hero.style.setProperty('--burnout', String(1 - t));
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();

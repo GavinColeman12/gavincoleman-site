@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DemosSection from '../components/DemosSection.astro';
+import ArrowTrack from '../components/ArrowTrack.astro';
 ---
 
 <BaseLayout
@@ -12,9 +13,50 @@ import DemosSection from '../components/DemosSection.astro';
   <!-- HERO -->
   <header class="hero">
     <div class="hero__bg">
-      <div class="hero__grid"></div>
-      <div class="hero__blob hero__blob--1"></div>
-      <div class="hero__blob hero__blob--2"></div>
+      <!-- Crescendo: one upward-rising curve drawn in negative space.
+           The brand name literalized as a gesture. -->
+      <svg
+        class="hero__curve"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="crescGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#460073" stop-opacity="0" />
+            <stop offset="22%"  stop-color="#7500c0" stop-opacity="0.55" />
+            <stop offset="55%"  stop-color="#9921F2" stop-opacity="0.85" />
+            <stop offset="100%" stop-color="#E9D5FF" stop-opacity="0.95" />
+          </linearGradient>
+          <filter id="crescGlow" x="-10%" y="-30%" width="120%" height="160%">
+            <feGaussianBlur stdDeviation="6" result="glow" />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <!-- Subtle ghost beneath, blurred, low opacity -->
+        <path
+          class="hero__curve-ghost"
+          d="M -60 780 C 380 760, 760 600, 1100 320 S 1620 -40, 1700 -80"
+          stroke="url(#crescGrad)"
+          stroke-width="14"
+          fill="none"
+          stroke-linecap="round"
+          opacity="0.18"
+        />
+        <!-- Main crescendo line -->
+        <path
+          class="hero__curve-line"
+          d="M -60 780 C 380 760, 760 600, 1100 320 S 1620 -40, 1700 -80"
+          stroke="url(#crescGrad)"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          filter="url(#crescGlow)"
+        />
+      </svg>
     </div>
     <div class="hero__inner">
       <div class="hero__copy">
@@ -23,7 +65,7 @@ import DemosSection from '../components/DemosSection.astro';
           Available for new engagements
         </div>
         <h1 class="hero__title">
-          Fortune 100 AI playbooks.<br/>
+          Fortune 100 <span class="hero__rotator" data-words="AI playbooks|AI automations|AI builds|AI products" aria-live="polite">AI playbooks</span>.<br/>
           <span class="hero__title-accent">Delivered directly to your business.</span>
         </h1>
         <p class="hero__subtitle">
@@ -31,11 +73,11 @@ import DemosSection from '../components/DemosSection.astro';
         </p>
         <div class="hero__cta">
           <a href="#contact" class="btn btn--primary" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
-          <a href="#case-studies" class="btn btn--ghost">See Case Studies</a>
+          <a href="#case-studies" class="btn btn--ghost">See Case Studies<ArrowTrack /></a>
         </div>
         <div class="hero__stats">
           <div class="stat">
-            <div class="stat__value">8+</div>
+            <div class="stat__value" data-count="8" data-suffix="+">8+</div>
             <div class="stat__label">Industries · Fortune 100 Engagements</div>
           </div>
           <div class="stat">
@@ -54,6 +96,23 @@ import DemosSection from '../components/DemosSection.astro';
         </div>
       </div>
     </div>
+    <button
+      class="hero__motion-toggle"
+      type="button"
+      aria-label="Pause background motion"
+      aria-pressed="false"
+    >
+      <span class="hero__motion-toggle-icon" aria-hidden="true">
+        <svg class="hero__motion-toggle-svg hero__motion-toggle-svg--pause" width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+          <rect x="1.5" y="1" width="2.2" height="8" rx="0.6"/>
+          <rect x="6.3" y="1" width="2.2" height="8" rx="0.6"/>
+        </svg>
+        <svg class="hero__motion-toggle-svg hero__motion-toggle-svg--play" width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+          <path d="M2.2 1.3v7.4a0.4 0.4 0 0 0 0.62 0.34l5.4-3.7a0.4 0.4 0 0 0 0-0.68L2.82 0.96A0.4 0.4 0 0 0 2.2 1.3Z"/>
+        </svg>
+      </span>
+      <span class="hero__motion-toggle-label">Pause motion</span>
+    </button>
   </header>
 
   <!-- LOGO BAR -->
@@ -214,7 +273,7 @@ import DemosSection from '../components/DemosSection.astro';
           <div class="platform__sub">Monthly subscription · 3-month minimum · Free first Digital Snapshot</div>
           <div class="platform__actions">
             <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Get a free Digital Snapshot →</a>
-            <a href="#contact" class="btn btn--ghost btn--large">Talk subscription</a>
+            <a href="#contact" class="btn btn--ghost btn--large">Talk subscription<ArrowTrack /></a>
           </div>
         </div>
       </div>
@@ -284,7 +343,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>2–4 weeks</span>
             </div>
-            <span class="build-card__cta">See the demos →</span>
+            <span class="build-card__cta">See the demos<ArrowTrack /></span>
           </a>
 
           <a href="/demos#demo-reputation-intelligence" class="build-card">
@@ -296,7 +355,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>2–4 weeks</span>
             </div>
-            <span class="build-card__cta">See the demo →</span>
+            <span class="build-card__cta">See the demo<ArrowTrack /></span>
           </a>
 
           <a href="/demos#demo-geo-content-rewriter" class="build-card">
@@ -308,7 +367,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>1 wk / 20 pages</span>
             </div>
-            <span class="build-card__cta">See the demo →</span>
+            <span class="build-card__cta">See the demo<ArrowTrack /></span>
           </a>
 
           <a href="/demos#demo-hr-policy-chatbot" class="build-card">
@@ -320,7 +379,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>2–3 weeks</span>
             </div>
-            <span class="build-card__cta">See the demo →</span>
+            <span class="build-card__cta">See the demo<ArrowTrack /></span>
           </a>
 
           <a href="/demos#demo-client-portfolio-dashboard" class="build-card">
@@ -332,7 +391,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>4–12 weeks</span>
             </div>
-            <span class="build-card__cta">See the demo →</span>
+            <span class="build-card__cta">See the demo<ArrowTrack /></span>
           </a>
 
           <a href="#contact" class="build-card build-card--custom" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>
@@ -344,7 +403,7 @@ import DemosSection from '../components/DemosSection.astro';
             <div class="build-card__meta">
               <span>3–8 weeks</span>
             </div>
-            <span class="build-card__cta">Start with a diagnostic →</span>
+            <span class="build-card__cta">Start with a diagnostic<ArrowTrack /></span>
           </a>
         </div>
       </div>
@@ -546,12 +605,43 @@ import DemosSection from '../components/DemosSection.astro';
       </p>
       <div class="contact__actions">
         <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
-        <a href="mailto:gavin.coleman@crescendo-consulting.net?subject=Consulting%20inquiry" class="btn btn--ghost btn--large">Email Me</a>
+        <a href="mailto:gavin.coleman@crescendo-consulting.net?subject=Consulting%20inquiry" class="btn btn--ghost btn--large">Email Me<ArrowTrack /></a>
       </div>
       <div class="contact__direct">
         <a href="mailto:gavin.coleman@crescendo-consulting.net">gavin.coleman@crescendo-consulting.net</a>
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    // Motion-pause button — toggles .hero--paused on hero; show/hide
+    // based on whether the hero is in view. Now pauses the crescendo
+    // curve draw-in animation + the headline word-rotator via the class.
+    (function () {
+      const toggle = document.querySelector('.hero__motion-toggle');
+      const hero = document.querySelector('.hero');
+      const label = toggle && toggle.querySelector('.hero__motion-toggle-label');
+      if (!toggle || !hero) return;
+
+      toggle.addEventListener('click', function () {
+        const paused = hero.classList.toggle('hero--paused');
+        toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        toggle.setAttribute('aria-label', paused ? 'Resume background motion' : 'Pause background motion');
+        if (label) label.textContent = paused ? 'Resume motion' : 'Pause motion';
+        document.dispatchEvent(new CustomEvent('crescendo:motion-toggle', { detail: { paused: paused } }));
+      });
+
+      // Show immediately; IO will hide once hero is fully scrolled past.
+      toggle.classList.add('is-visible');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+          for (let i = 0; i < entries.length; i++) {
+            toggle.classList.toggle('is-visible', entries[i].isIntersecting);
+          }
+        }, { threshold: 0 });
+        io.observe(hero);
+      }
+    })();
+  </script>
 
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArrowTrack from '../../components/ArrowTrack.astro';
 import { getCollection } from 'astro:content';
 
 const all = await getCollection('insights', ({ data }) => !data.draft);
@@ -43,7 +44,7 @@ function formatDate(d: Date) {
           </div>
           <h2 class="insights__featured-title">{featured.data.title}</h2>
           <p class="insights__featured-dek">{featured.data.dek}</p>
-          <span class="insights__read-more">Read the piece →</span>
+          <span class="insights__read-more">Read the piece<ArrowTrack /></span>
         </a>
       </section>
 

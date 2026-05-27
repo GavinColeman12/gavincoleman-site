@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArrowTrack from '../../components/ArrowTrack.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -62,7 +63,7 @@ function formatDate(d: Date) {
         </p>
         <div class="article__cta-actions">
           <a href="/demos" class="btn btn--primary">See Live Demos</a>
-          <a class="btn btn--ghost" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call</a>
+          <a class="btn btn--ghost" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book an Intro Call<ArrowTrack /></a>
         </div>
       </aside>
 

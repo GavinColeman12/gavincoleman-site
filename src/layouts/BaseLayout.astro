@@ -54,11 +54,17 @@ import '../styles/global.css';
 </head>
 <body>
 
+  <!-- Scroll progress bar — top of viewport -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+
   <!-- NAV -->
   <nav class="nav">
     <div class="nav__inner">
       <a href="/" class="nav__brand" aria-label="Crescendo Consultants — home">
-        <img src="/images/logo-light.png" alt="Crescendo Consultants" class="nav__brand-logo" />
+        <img src="/images/logo-chevron.png" alt="" class="nav__brand-chevron" aria-hidden="true" />
+        <span class="nav__brand-wordmark-wrap">
+          <img src="/images/logo-wordmark.png" alt="Crescendo Consultants" class="nav__brand-wordmark" />
+        </span>
       </a>
       <ul class="nav__links">
         <li><a href="/#about">About</a></li>
@@ -192,6 +198,7 @@ import '../styles/global.css';
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         toggle.classList.toggle('is-open', open);
         drawer.classList.toggle('is-open', open);
+        document.body.classList.toggle('is-modal-open', open);
         if (open) {
           drawer.hidden = false;
           document.body.style.overflow = 'hidden';
@@ -203,6 +210,13 @@ import '../styles/global.css';
           }, 300);
         }
       }
+
+      // Click the scrim to close
+      document.addEventListener('click', function (e) {
+        if (e.target === document.body && document.body.classList.contains('is-modal-open')) {
+          setOpen(false);
+        }
+      });
 
       toggle.addEventListener('click', function () {
         const isOpen = toggle.getAttribute('aria-expanded') === 'true';
@@ -218,6 +232,21 @@ import '../styles/global.css';
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
       });
+    })();
+
+    // Nav brand demo — on first page load, autoplay the chevron→wordmark
+    // hover reveal so users discover the interaction exists. Tease + collapse.
+    (function () {
+      var brand = document.querySelector('.nav__brand');
+      if (!brand) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // Skip on touch (wordmark is always shown there anyway)
+      if (window.matchMedia('(hover: none)').matches) return;
+
+      // After hero entrance settles, play the tease
+      setTimeout(function () { brand.classList.add('nav__brand--demo'); }, 1400);
+      // Hold the open state, then collapse back to chevron-only
+      setTimeout(function () { brand.classList.remove('nav__brand--demo'); }, 4400);
     })();
   </script>
 
