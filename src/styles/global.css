@@ -150,6 +150,37 @@ ul {
   color: #fff;
 }
 
+/* Live Demo nav item — purple-accented, pulsing green dot to signal
+   "this is a real product running live behind the link." */
+.nav__link--live {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-2) !important;
+  font-weight: 600;
+}
+.nav__link--live:hover {
+  color: #fff !important;
+}
+.nav__live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+/* Mobile drawer version — same accent, slightly more prominent */
+.nav-mobile__link--live {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-2) !important;
+  font-weight: 700;
+}
+
 /* ============================================================
    Buttons
    ============================================================ */
@@ -663,8 +694,43 @@ ul {
 .hero__cta {
   display: flex;
   gap: 14px;
-  margin-bottom: 56px;
+  margin-bottom: 18px;
   flex-wrap: wrap;
+}
+
+/* Small inviting caption directly below the hero CTAs — explains what
+   "See live demos" leads to so the click is a real decision, not a leap. */
+.hero__cta-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 0 38px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.hero__cta-note .nav__live-dot {
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.hero__cta-note-text {
+  display: block;
+}
+
+.hero__cta-note-meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 0.01em;
+}
+
+.hero__cta-note strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
 }
 
 .hero__stats {
@@ -701,6 +767,14 @@ ul {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.stat__unit {
+  font-size: 0.55em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  opacity: 0.85;
+  margin-left: 2px;
 }
 
 .stat__label {
@@ -889,6 +963,102 @@ ul {
   color: #fff;
   overflow: hidden;
   padding: 140px 40px;
+}
+
+/* ============================================================
+   See the work — live Sonar/Blueprint demo CTA
+   ============================================================ */
+.see-work {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 80% at 25% 30%, rgba(70, 0, 115, 0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 80% 70%, rgba(124, 28, 214, 0.30) 0%, transparent 70%),
+    #06060c;
+}
+.see-work::before {
+  /* Faint upward gradient stripe — echoes the hero crescendo curve */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, transparent 30%, rgba(153, 33, 242, 0.08) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.see-work__inner {
+  max-width: 880px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.see-work__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.see-work .eyebrow {
+  align-items: center;
+}
+
+.see-work__lede {
+  font-size: 19px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 640px;
+  margin: 0 auto 28px;
+}
+
+.see-work__meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 36px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.see-work__meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.see-work__meta-sep {
+  opacity: 0.4;
+}
+
+.see-work__cta {
+  margin: 0 auto 16px;
+}
+
+.see-work__caption {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .see-work__meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .see-work__meta-sep { display: none; }
+  .see-work__lede { font-size: 17px; }
 }
 
 .section__inner {
