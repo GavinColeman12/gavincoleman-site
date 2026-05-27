@@ -233,6 +233,21 @@ import '../styles/global.css';
         if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
       });
     })();
+
+    // Nav brand demo — on first page load, autoplay the chevron→wordmark
+    // hover reveal so users discover the interaction exists. Tease + collapse.
+    (function () {
+      var brand = document.querySelector('.nav__brand');
+      if (!brand) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // Skip on touch (wordmark is always shown there anyway)
+      if (window.matchMedia('(hover: none)').matches) return;
+
+      // After hero entrance settles, play the tease
+      setTimeout(function () { brand.classList.add('nav__brand--demo'); }, 1400);
+      // Hold the open state, then collapse back to chevron-only
+      setTimeout(function () { brand.classList.remove('nav__brand--demo'); }, 4400);
+    })();
   </script>
 
   <script is:inline>

@@ -2253,7 +2253,7 @@ ul {
 }
 
 .nav__brand-chevron {
-  height: 36px;
+  height: 44px;
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -2264,7 +2264,8 @@ ul {
 }
 
 .nav__brand:hover .nav__brand-chevron,
-.nav__brand:focus-visible .nav__brand-chevron {
+.nav__brand:focus-visible .nav__brand-chevron,
+.nav__brand.nav__brand--demo .nav__brand-chevron {
   filter: drop-shadow(0 0 16px rgba(153, 33, 242, 0.6));
   transform: scale(0.78);
 }
@@ -2278,22 +2279,24 @@ ul {
 }
 
 .nav__brand:hover .nav__brand-wordmark-wrap,
-.nav__brand:focus-visible .nav__brand-wordmark-wrap {
-  max-width: 220px;
+.nav__brand:focus-visible .nav__brand-wordmark-wrap,
+.nav__brand.nav__brand--demo .nav__brand-wordmark-wrap {
+  max-width: 240px;
 }
 
 .nav__brand-wordmark {
-  height: 36px;
+  height: 44px;
   width: auto;
   display: block;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(32px);
   transition: opacity 380ms 140ms var(--ease-premium),
               transform 540ms 120ms var(--ease-premium);
 }
 
 .nav__brand:hover .nav__brand-wordmark,
-.nav__brand:focus-visible .nav__brand-wordmark {
+.nav__brand:focus-visible .nav__brand-wordmark,
+.nav__brand.nav__brand--demo .nav__brand-wordmark {
   opacity: 1;
   transform: translateY(0);
 }
@@ -2301,21 +2304,21 @@ ul {
 /* Mobile/tablet — always show wordmark since hover doesn't exist on touch */
 @media (hover: none), (max-width: 720px) {
   .nav__brand-chevron { transform: none !important; }
-  .nav__brand-wordmark-wrap { max-width: 220px; }
+  .nav__brand-wordmark-wrap { max-width: 240px; }
   .nav__brand-wordmark { opacity: 1; transform: none; }
 }
 
 @media (max-width: 900px) {
   .nav__brand-chevron,
-  .nav__brand-wordmark { height: 32px; }
+  .nav__brand-wordmark { height: 36px; }
 }
 @media (max-width: 640px) {
   .nav__brand-chevron,
-  .nav__brand-wordmark { height: 30px; }
+  .nav__brand-wordmark { height: 32px; }
 }
 @media (max-width: 380px) {
   .nav__brand-chevron,
-  .nav__brand-wordmark { height: 26px; }
+  .nav__brand-wordmark { height: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
