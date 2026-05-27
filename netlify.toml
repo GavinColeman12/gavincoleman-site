@@ -4,3 +4,15 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# /sonar/* is the Crescendo platform (Next.js app on Railway).
+# Transparent reverse proxy (status = 200, force = true) so the URL bar
+# stays at crescendo-consulting.net/sonar/<path> while Netlify silently
+# fetches the page from the Railway-hosted custom-domain backend.
+# Apex domain accumulates SEO authority instead of getting split across
+# subdomains.
+[[redirects]]
+  from = "/sonar/*"
+  to = "https://crescendo-platform.crescendo-consulting.net/sonar/:splat"
+  status = 200
+  force = true
