@@ -40,6 +40,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -50,6 +51,10 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Clip the off-screen mobile drawer (translateX(100%)) so it can't
+     create horizontal scroll on phones. Nav + scroll bar are position:
+     fixed, so this doesn't affect them. */
+  overflow-x: hidden;
 }
 
 img {
@@ -2109,6 +2114,14 @@ ul {
   will-change: opacity, transform;
 }
 
+/* Smaller horizontal travel on phones — 64px is 16% of a 390px screen
+   and reads as content flying in from way off-page. */
+@media (max-width: 720px) {
+  .shift-in-right {
+    transform: translateX(24px);
+  }
+}
+
 .shift-in-right.is-visible {
   opacity: 1;
   transform: translateX(0);
@@ -2232,6 +2245,17 @@ ul {
   .footer__brand,
   .footer__links {
     justify-content: center;
+  }
+
+  /* 7 footer links in a single flex row blow past the viewport on phones
+     — let them wrap so the grid track can shrink to the screen width. */
+  .footer__links {
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+  .footer__brand {
+    flex-wrap: wrap;
+    text-align: left;
   }
 
   .hero__badge {
@@ -2652,8 +2676,14 @@ body.is-modal-open::before {
 @media (max-width: 720px) {
   /* Hero: tighter, no oversized portrait */
   .hero__title {
-    font-size: clamp(32px, 8vw, 44px);
+    font-size: clamp(30px, 7.5vw, 44px);
+    line-height: 1.16;  /* loosen from 1.05 so wrapped lines + the rotator's
+                           vertical animation don't collide on narrow screens */
   }
+  /* Smaller swap travel on mobile so the rotating word never overlaps
+     the line above/below while mid-transition. */
+  .hero__rotator.is-leaving { transform: translateY(-5px); }
+  .hero__rotator.is-entering { transform: translateY(5px); }
   .hero__subtitle {
     font-size: 16px;
   }
