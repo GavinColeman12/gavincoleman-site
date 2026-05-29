@@ -19,6 +19,25 @@ import '../styles/global.css';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics 4 (gtag.js). Guarded to the production domain so
+       localhost dev + Netlify deploy-previews don't pollute the data. -->
+  <script is:inline>
+    (function () {
+      if (!location.hostname.endsWith('crescendo-consulting.net')) return;
+      var GA_ID = 'G-ZZ9FFQWKTT';
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    })();
+  </script>
+
   <title>{title}</title>
   <meta name="description" content={description} />
   {canonicalPath && <link rel="canonical" href={`https://crescendo-consulting.net${canonicalPath}`} />}
