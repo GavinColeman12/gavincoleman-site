@@ -109,7 +109,10 @@
   const isTouch = window.matchMedia('(hover: none)').matches;
   if (reducedMotion || isTouch) return;
 
-  const STRENGTH = 0.28;
+  const STRENGTH = 0.18;       // softer pull (was 0.28 — felt jumpy on wide buttons)
+  const MAX_TRAVEL = 10;        // hard cap so the effect is a hint, not a leap
+
+  const clamp = (v) => Math.max(-MAX_TRAVEL, Math.min(MAX_TRAVEL, v));
   const targets = document.querySelectorAll('.btn--primary');
 
   targets.forEach((btn) => {
@@ -118,8 +121,8 @@
 
     btn.addEventListener('mousemove', (e) => {
       const r = btn.getBoundingClientRect();
-      const dx = (e.clientX - r.left - r.width / 2) * STRENGTH;
-      const dy = (e.clientY - r.top - r.height / 2) * STRENGTH;
+      const dx = clamp((e.clientX - r.left - r.width / 2) * STRENGTH);
+      const dy = clamp((e.clientY - r.top - r.height / 2) * STRENGTH);
       btn.style.translate = dx + 'px ' + dy + 'px';
     });
 
