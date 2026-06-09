@@ -159,13 +159,15 @@ import ArrowTrack from '../components/ArrowTrack.astro';
       <div class="platform__inner">
         <div class="platform__video">
           <div class="platform__video-frame">
-            <iframe
-              src="https://www.loom.com/embed/97817dcbe5f949728349d9a321ee3f23"
-              title="Crescendo Platform — 4-minute walkthrough"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              allowfullscreen
-            ></iframe>
+            <video
+              class="platform__video-el"
+              src="/videos/sonar-tour.mp4"
+              poster="/videos/sonar-tour-poster.jpg"
+              controls
+              playsinline
+              preload="none"
+              aria-label="Sonar product tour — watch a Blueprint come together"
+            ></video>
           </div>
         </div>
 

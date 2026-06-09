@@ -1,0 +1,8 @@
+# Crescendo Consulting — robots.txt
+# Allow all crawlers, including AI/answer engines (GPTBot, ClaudeBot,
+# PerplexityBot, Google-Extended, etc.) so the brand can be cited in
+# generative search results.
+User-agent: *
+Allow: /
+
+Sitemap: https://crescendo-consulting.net/sitemap.xml

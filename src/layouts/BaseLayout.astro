@@ -11,6 +11,66 @@ const {
   canonicalPath,
 } = Astro.props;
 
+const SITE = "https://crescendo-consulting.net";
+
+// Structured data (JSON-LD) — lets Google + AI answer engines identify,
+// understand, and cite Crescendo as an entity. Site-wide org/person/website graph.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${SITE}/#org`,
+      name: "Crescendo Consulting",
+      alternateName: "Crescendo Consultants",
+      url: SITE,
+      logo: `${SITE}/images/logo.png`,
+      image: `${SITE}/images/og-card.png`,
+      description:
+        "Independent AI & technology consulting. Fortune 100 AI playbooks delivered directly to your business — strategy through hands-on implementation, no agency overhead.",
+      email: "gavin.coleman@crescendo-consulting.net",
+      telephone: "+1-804-405-9880",
+      priceRange: "$$$",
+      areaServed: { "@type": "Country", name: "United States" },
+      founder: { "@id": `${SITE}/#gavin` },
+      slogan: "Fortune 100 AI builds. Delivered directly to your business.",
+      knowsAbout: [
+        "Artificial intelligence",
+        "Agentic AI",
+        "Generative AI",
+        "Machine learning",
+        "Data engineering",
+        "Intelligent automation",
+        "AI strategy",
+        "Digital transformation",
+      ],
+      serviceType: [
+        "AI strategy consulting",
+        "AI implementation & customization",
+        "Data engineering & integration",
+        "Managed AI operations",
+      ],
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE}/#gavin`,
+      name: "Gavin Coleman",
+      jobTitle: "Independent AI & Technology Consultant",
+      worksFor: { "@id": `${SITE}/#org` },
+      url: SITE,
+      email: "gavin.coleman@crescendo-consulting.net",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      name: "Crescendo Consulting",
+      url: SITE,
+      publisher: { "@id": `${SITE}/#org` },
+      inLanguage: "en-US",
+    },
+  ],
+};
+
 import '../styles/global.css';
 ---
 
@@ -64,15 +124,20 @@ import '../styles/global.css';
   <!-- Open Graph + Twitter card meta -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Crescendo Consulting" />
+  <meta property="og:url" content={canonicalPath ? `${SITE}${canonicalPath}` : SITE} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content="https://crescendo-consulting.net/images/logo-square.jpg" />
-  <meta property="og:image:width" content="1024" />
-  <meta property="og:image:height" content="1024" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content={`${SITE}/images/og-card.png`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Crescendo Consulting — Fortune 100 AI builds, delivered directly to your business" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content="https://crescendo-consulting.net/images/logo-square.jpg" />
+  <meta name="twitter:image" content={`${SITE}/images/og-card.png`} />
+
+  <!-- Structured data (JSON-LD) — entity graph for Google + AI answer engines -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
