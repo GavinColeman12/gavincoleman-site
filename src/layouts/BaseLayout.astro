@@ -13,7 +13,7 @@ const {
 
 const SITE = "https://crescendo-consulting.net";
 
-// Structured data (JSON-LD) — lets Google + AI answer engines identify,
+// Structured data (JSON-LD), lets Google + AI answer engines identify,
 // understand, and cite Crescendo as an entity. Site-wide org/person/website graph.
 const structuredData = {
   "@context": "https://schema.org",
@@ -27,7 +27,7 @@ const structuredData = {
       logo: `${SITE}/images/logo.png`,
       image: `${SITE}/images/og-card.png`,
       description:
-        "Independent AI & technology consulting. Fortune 100 AI playbooks delivered directly to your business — strategy through hands-on implementation, no agency overhead.",
+        "Independent AI & technology consulting. Fortune 100 AI playbooks delivered directly to your business, strategy through hands-on implementation, no agency overhead.",
       email: "gavin.coleman@crescendo-consulting.net",
       telephone: "+1-804-405-9880",
       priceRange: "$$$",
@@ -134,13 +134,13 @@ import '../styles/global.css';
   <meta property="og:image" content={`${SITE}/images/og-card.png`} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Crescendo Consulting — Fortune 100 AI builds, delivered directly to your business" />
+  <meta property="og:image:alt" content="Crescendo Consulting, Fortune 100 AI builds, delivered directly to your business" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={`${SITE}/images/og-card.png`} />
 
-  <!-- Structured data (JSON-LD) — entity graph for Google + AI answer engines -->
+  <!-- Structured data (JSON-LD), entity graph for Google + AI answer engines -->
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -156,18 +156,18 @@ import '../styles/global.css';
 </head>
 <body>
 
-  <!-- Google Tag Manager (noscript) — fallback for JS-disabled browsers -->
+  <!-- Google Tag Manager (noscript), fallback for JS-disabled browsers -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQKQR4C2"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <!-- Scroll progress bar — top of viewport -->
+  <!-- Scroll progress bar, top of viewport -->
   <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav class="nav">
     <div class="nav__inner">
-      <a href="/" class="nav__brand" aria-label="Crescendo Consultants — home">
+      <a href="/" class="nav__brand" aria-label="Crescendo Consultants, home">
         <img src="/images/logo-chevron.png" alt="" class="nav__brand-chevron" aria-hidden="true" />
         <span class="nav__brand-wordmark-wrap">
           <img src="/images/logo-wordmark.png" alt="Crescendo Consultants" class="nav__brand-wordmark" />
@@ -288,7 +288,7 @@ import '../styles/global.css';
       </button>
 
       <div id="lead-success" style="display:none;">
-        <h3>Thanks — I'll be in touch within 24 hours.</h3>
+        <h3>Thanks, I'll be in touch within 24 hours.</h3>
       </div>
     </div>
   </div>
@@ -351,7 +351,7 @@ import '../styles/global.css';
       });
     })();
 
-    // Nav brand demo — on first page load, autoplay the chevron→wordmark
+    // Nav brand demo, on first page load, autoplay the chevron→wordmark
     // hover reveal so users discover the interaction exists. Tease + collapse.
     (function () {
       var brand = document.querySelector('.nav__brand');

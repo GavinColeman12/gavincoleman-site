@@ -1,12 +1,12 @@
 ---
-// DemosSection — renders all non-draft demos as a 2-column grid with
+// DemosSection, renders all non-draft demos as a 2-column grid with
 // live inline iframe embeds. Used on both /demos (as the whole page) and
 // the home page (inserted between Case Studies and Testimonials).
 //
 // Props:
-//   compact:   boolean  — tighter top/bottom padding, omits toc & page CTA.
+//   compact:   boolean , tighter top/bottom padding, omits toc & page CTA.
 //                         Use on home page.
-//   showHeader:boolean  — if false, caller renders its own heading. Default true.
+//   showHeader:boolean , if false, caller renders its own heading. Default true.
 //
 import DemoEmbed from './DemoEmbed.astro';
 import ArrowTrack from './ArrowTrack.astro';
@@ -31,7 +31,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
         <div class="eyebrow">Live Demos</div>
         <h2 class="demos-section__title">Every demo below is a real system. <em>Use them all right here.</em></h2>
         <p class="demos-section__lede">
-          No signup, no download, no sales call. Each tool is fully interactive — poke at them, try the inputs, see what fits your business.
+          No signup, no download, no sales call. Each tool is fully interactive, poke at them, try the inputs, see what fits your business.
         </p>
       </header>
     )}
@@ -93,7 +93,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
                   {isLive ? (
                     <DemoEmbed
                       src={d.data.liveUrl}
-                      title={`Crescendo — ${d.data.title} demo`}
+                      title={`Crescendo, ${d.data.title} demo`}
                       caption="Live interactive demo · sample data only"
                       aspect={d.data.aspect}
                       sandbox={d.data.sandbox}
@@ -119,7 +119,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
                 <a class="demo-cell__mobile-cta" href={d.data.liveUrl} target="_blank" rel="noopener noreferrer">
                   <div class="demo-cell__mobile-cta-body">
                     <div class="demo-cell__mobile-cta-title">{d.data.title}</div>
-                    <div class="demo-cell__mobile-cta-dek">Built for desktop dashboards. Tap to open the live demo in a new tab — or come back on a laptop for the full experience.</div>
+                    <div class="demo-cell__mobile-cta-dek">Built for desktop dashboards. Tap to open the live demo in a new tab, or come back on a laptop for the full experience.</div>
                   </div>
                   <div class="demo-cell__mobile-cta-action">
                     Open demo
@@ -143,7 +143,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
 </section>
 
 <script>
-  // Toast helper — single shared element for the whole page
+  // Toast helper, single shared element for the whole page
   let toastEl: HTMLDivElement | null = null;
   let toastTimer: number | null = null;
   function showToast(msg: string) {
@@ -169,7 +169,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
         await navigator.clipboard.writeText(url);
         showToast('Demo URL copied');
       } catch {
-        showToast('Could not copy — open the URL manually');
+        showToast('Could not copy, open the URL manually');
       }
     });
   });
@@ -230,7 +230,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     margin: 0;
   }
 
-  /* GRID — 2 columns desktop, 1 column mobile */
+  /* GRID, 2 columns desktop, 1 column mobile */
   .demos-section__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -316,7 +316,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     text-decoration: underline;
   }
 
-  /* EMBED CELL — uniform 560px height across all demos.
+  /* EMBED CELL, uniform 560px height across all demos.
      Now contains a browser-window chrome that wraps every embed for visual parity. */
   .demo-cell__embed {
     width: 100%;
@@ -324,7 +324,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     display: block;
   }
 
-  /* DEMO WINDOW — the consistent navy chrome around every iframe */
+  /* DEMO WINDOW, the consistent navy chrome around every iframe */
   .demo-window {
     width: 100%;
     height: 100%;
@@ -368,7 +368,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     white-space: nowrap;
     flex: 1;
   }
-  /* Action buttons in the chrome — Copy / Fullscreen / Open */
+  /* Action buttons in the chrome, Copy / Fullscreen / Open */
   .demo-window__actions {
     display: flex;
     gap: 4px;
@@ -424,7 +424,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     box-shadow: none !important;
     background: #fff !important;
   }
-  /* Hide DemoEmbed's own figcaption — redundant with the window chrome */
+  /* Hide DemoEmbed's own figcaption, redundant with the window chrome */
   .demo-window__body :global(.crescendo-demo figcaption) {
     display: none;
   }
@@ -473,7 +473,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     .demo-window__body :global(.crescendo-demo--portrait) { max-width: 100% !important; }
   }
 
-  /* Mobile fallback CTA — tappable card replacing the iframe on small screens */
+  /* Mobile fallback CTA, tappable card replacing the iframe on small screens */
   .demo-cell__mobile-cta {
     display: none; /* shown only on mobile via media query above */
     flex-direction: column;
@@ -521,7 +521,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     align-self: flex-start;
   }
 
-  /* Fullscreen mode — when a demo-window is fullscreened, blow it out */
+  /* Fullscreen mode, when a demo-window is fullscreened, blow it out */
   .demo-window:fullscreen,
   .demo-window:-webkit-full-screen {
     width: 100vw;
@@ -534,7 +534,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     height: calc(100vh - 46px);
   }
 
-  /* COMING SOON — fills the window body, matches chrome aesthetic */
+  /* COMING SOON, fills the window body, matches chrome aesthetic */
   .demo-cell__coming-soon {
     width: 100%;
     height: 100%;
@@ -575,7 +575,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   }
 </style>
 
-<!-- Toast notification — global, single instance, used by Copy URL action.
+<!-- Toast notification, global, single instance, used by Copy URL action.
      Defined as global styles so the JS-injected element picks them up. -->
 <style is:global>
   .crescendo-toast {

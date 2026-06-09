@@ -1,5 +1,5 @@
 ---
-// Reusable demo embed — drop into any .astro page or .mdx content file.
+// Reusable demo embed, drop into any .astro page or .mdx content file.
 //
 // Three aspect variants:
 //
@@ -42,14 +42,14 @@ const {
 
 const wrapClass = `crescendo-demo crescendo-demo--${aspect}${fluid ? ' crescendo-demo--fluid' : ''}`;
 // Unique id for auto-resize variant so the listener targets the right frame
-// Skip auto-resize entirely in fluid mode — the container height is fixed by the grid.
+// Skip auto-resize entirely in fluid mode, the container height is fixed by the grid.
 const shouldAutoResize = aspect === 'auto' && !fluid;
 const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2, 9)}` : undefined;
 ---
 
 <figure class={wrapClass}>
   <div class="crescendo-demo__frame" style={aspect === 'auto' ? `height:${initialHeight}px;` : ''}>
-    <!-- Loading skeleton — shown until iframe fires its load event. Sits behind the iframe (z-index 1, iframe is on top with opacity 0 → 1). -->
+    <!-- Loading skeleton, shown until iframe fires its load event. Sits behind the iframe (z-index 1, iframe is on top with opacity 0 → 1). -->
     <div class="crescendo-demo__skeleton" aria-hidden="true">
       <div class="crescendo-demo__pulse"></div>
       <div class="crescendo-demo__skeleton-label">Waking the demo…</div>
@@ -92,7 +92,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
         },
         { once: true }
       );
-      // Fallback — if the iframe never fires load (cross-origin error, blocked,
+      // Fallback, if the iframe never fires load (cross-origin error, blocked,
       // network hung), reveal it after 25s anyway so users aren't staring at
       // a spinner forever.
       setTimeout(() => frame.classList.add('is-loaded'), 25000);
@@ -117,7 +117,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     }
   }
 
-  // One global wire-up per page load — handles every demo embed at once
+  // One global wire-up per page load, handles every demo embed at once
   document.querySelectorAll('.crescendo-demo__frame').forEach(setupCrescendoDemo);
 </script>
 
@@ -152,7 +152,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     margin: 0 auto;
   }
 
-  /* Landscape — dashboard-style, wide */
+  /* Landscape, dashboard-style, wide */
   .crescendo-demo--landscape {
     max-width: 1200px;
   }
@@ -168,7 +168,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     }
   }
 
-  /* Portrait — phone-shaped app */
+  /* Portrait, phone-shaped app */
   .crescendo-demo--portrait {
     max-width: 640px;
   }
@@ -194,7 +194,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     min-height: 680px;
   }
 
-  /* Auto — content-driven height via postMessage */
+  /* Auto, content-driven height via postMessage */
   .crescendo-demo--auto {
     max-width: 900px;
   }
@@ -206,7 +206,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
     transition: height 0.2s ease;
   }
 
-  /* Shared frame styling — unified across all aspect variants.
+  /* Shared frame styling, unified across all aspect variants.
      Light warm background matches the site's off-white aesthetic and avoids
      weird dark letterbox around the phone-shaped portrait intake form. */
   .crescendo-demo__frame {
@@ -232,7 +232,7 @@ const frameId = shouldAutoResize ? `cc-demo-${Math.random().toString(36).slice(2
   }
   .crescendo-demo__frame.is-loaded iframe { opacity: 1; }
 
-  /* Loading skeleton — visible until the iframe load event fires.
+  /* Loading skeleton, visible until the iframe load event fires.
      Sits underneath the iframe; iframe fades in over it. */
   .crescendo-demo__skeleton {
     position: absolute;

@@ -7,23 +7,48 @@ type FaqSection = { heading: string; items: FaqItem[] };
 
 const sections: FaqSection[] = [
   {
+    heading: 'AI SEO & getting found by ChatGPT',
+    items: [
+      {
+        q: 'What is AI SEO?',
+        a: "AI SEO is the practice of optimizing a business so AI assistants, ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity, recommend it when customers ask. Crescendo's Sonar platform runs a free AI SEO audit across all five engines, scores you on four pillars (AI search visibility, reputation, competitive position, and technical foundation), and returns a plain-English Blueprint of what to fix first.",
+      },
+      {
+        q: 'How do I do AI SEO for my business?',
+        a: "Start with an AI SEO audit. Sonar asks the questions your customers would actually type across five AI engines and shows you exactly where you appear, and where a competitor appears instead. The Blueprint then gives you the specific, prioritized changes that get AI assistants to name your business.",
+      },
+      {
+        q: 'How much does an AI SEO audit cost?',
+        a: "Your first AI SEO audit, the Sonar Blueprint, is free. There is no charge to see how AI assistants currently represent your business; paid work only begins if you choose to act on what it surfaces.",
+      },
+      {
+        q: 'What does an AI SEO audit measure?',
+        a: "An AI SEO audit scores four pillars across five AI engines: AI search visibility (whether assistants surface you for the questions customers actually ask), reputation (what your review corpus really says), competitive benchmark (how you compare to the competitors AI recommends instead), and technical foundation (whether your site is built so AI engines can read and cite it).",
+      },
+      {
+        q: 'Why does AI SEO matter for local businesses?',
+        a: "Customers increasingly ask ChatGPT, Gemini, and Perplexity to recommend a dentist, restaurant, or law firm instead of scrolling through search results. If an AI assistant never names your business, you lose that customer before you knew they existed. AI SEO for local businesses fixes that, it gets you named when buyers ask.",
+      },
+    ],
+  },
+  {
     heading: 'How Crescendo works',
     items: [
       {
         q: 'What does an independent AI consultant actually do?',
-        a: "An independent AI consultant diagnoses the specific operational problems a business wants to solve, identifies where AI can meaningfully help (and where it cannot), and then either builds the solution directly or designs and manages its build. At Crescendo, every engagement includes both strategy and hands-on implementation — the same person who designs the solution writes the code. The typical output is a working system the client's team can run independently after the engagement ends, not a slide deck.",
+        a: "An independent AI consultant diagnoses the specific operational problems a business wants to solve, identifies where AI can meaningfully help (and where it cannot), and then either builds the solution directly or designs and manages its build. At Crescendo, every engagement includes both strategy and hands-on implementation, the same person who designs the solution writes the code. The typical output is a working system the client's team can run independently after the engagement ends, not a slide deck.",
       },
       {
         q: 'What is the difference between hiring an independent AI consultant and an agency?',
-        a: "Independent consultants give you direct access to a senior practitioner with no account managers, junior handoffs, or project overhead — typically at 40–60% less cost than a comparable agency engagement. The tradeoff is capacity: a single operator runs only a small number of engagements at a time, so timing matters. For small and mid-market businesses with a specific bottleneck, the independent model usually delivers a better outcome per dollar. For multi-year global transformations involving hundreds of stakeholders, an agency is still the right call.",
+        a: "Independent consultants give you direct access to a senior practitioner with no account managers, junior handoffs, or project overhead, typically at 40–60% less cost than a comparable agency engagement. The tradeoff is capacity: a single operator runs only a small number of engagements at a time, so timing matters. For small and mid-market businesses with a specific bottleneck, the independent model usually delivers a better outcome per dollar. For multi-year global transformations involving hundreds of stakeholders, an agency is still the right call.",
       },
       {
         q: 'What industries does Crescendo Consultants work with?',
-        a: 'Crescendo focuses on small and mid-market businesses in professional services (law, accounting, consulting), healthcare (dental, medical, medspa), financial services, and retail and e-commerce — typically 15 to 200 employees with clear operational bottlenecks. Prior enterprise work has spanned Disney, Marriott, American Express, Walmart, Bain & Company, Citi, Morgan Stanley, Fidelity, Santander, Colgate, and others; the pattern library travels well to mid-market problems.',
+        a: 'Crescendo focuses on small and mid-market businesses in professional services (law, accounting, consulting), healthcare (dental, medical, medspa), financial services, and retail and e-commerce, typically 15 to 200 employees with clear operational bottlenecks. Prior enterprise work has spanned Disney, Marriott, American Express, Walmart, Bain & Company, Citi, Morgan Stanley, Fidelity, Santander, Colgate, and others; the pattern library travels well to mid-market problems.',
       },
       {
         q: 'Do you build custom software or just advise?',
-        a: "Crescendo builds. Strategy without implementation rarely translates into business outcomes, so every engagement is scoped to produce a concrete technical deliverable — a working chatbot, an agentic workflow, a data pipeline, a dashboard — alongside the strategy that frames it. If a client needs advisory-only work (board-level strategy input, vendor selection, AI readiness assessment), that's available too, but it's a smaller slice of the practice.",
+        a: "Crescendo builds. Strategy without implementation rarely translates into business outcomes, so every engagement is scoped to produce a concrete technical deliverable, a working chatbot, an agentic workflow, a data pipeline, a dashboard, alongside the strategy that frames it. If a client needs advisory-only work (board-level strategy input, vendor selection, AI readiness assessment), that's available too, but it's a smaller slice of the practice.",
       },
     ],
   },
@@ -32,11 +57,11 @@ const sections: FaqSection[] = [
     items: [
       {
         q: 'How much does it cost to hire an independent AI consultant?',
-        a: "Every Crescendo engagement is scoped individually based on the complexity of the build, the timeline, and the deliverables you need. Pricing is discussed openly during the free 30-minute intro call and confirmed in writing before any paid work begins — so no one commits to a full engagement before knowing exactly what they are getting. Most clients begin with a short Diagnostic Sprint that produces a written assessment and a concrete scope for the implementation that follows.",
+        a: "Every Crescendo engagement is scoped individually based on the complexity of the build, the timeline, and the deliverables you need. Pricing is discussed openly during the free 30-minute intro call and confirmed in writing before any paid work begins, so no one commits to a full engagement before knowing exactly what they are getting. Most clients begin with a short Diagnostic Sprint that produces a written assessment and a concrete scope for the implementation that follows.",
       },
       {
         q: 'How long does a typical AI implementation take?',
-        a: "Most AI implementations at Crescendo run 4–12 weeks end to end, depending on complexity. A tightly-scoped tool build — a specific chatbot, a single automated workflow, an internal knowledge assistant — takes 2–4 weeks. A broader transformation involving multi-system integrations or agentic workflows spanning departments takes 8–12 weeks. Anything longer than that is usually structured as a fractional retainer rather than a project.",
+        a: "Most AI implementations at Crescendo run 4–12 weeks end to end, depending on complexity. A tightly-scoped tool build, a specific chatbot, a single automated workflow, an internal knowledge assistant, takes 2–4 weeks. A broader transformation involving multi-system integrations or agentic workflows spanning departments takes 8–12 weeks. Anything longer than that is usually structured as a fractional retainer rather than a project.",
       },
       {
         q: 'Is there a minimum engagement?',
@@ -44,7 +69,7 @@ const sections: FaqSection[] = [
       },
       {
         q: 'What ROI should I expect from an AI engagement?',
-        a: 'Crescendo engagements are scoped to pay for themselves within 6–12 months. ROI is measured one of three ways: labor hours reclaimed (each reclaimed hour has a real dollar value), revenue unlocked (faster response times, better conversion, more capacity), or cost avoided (fewer errors, less churn, better decisions). Every scope of work includes an explicit ROI target written into the brief — no engagement begins without one.',
+        a: 'Crescendo engagements are scoped to pay for themselves within 6–12 months. ROI is measured one of three ways: labor hours reclaimed (each reclaimed hour has a real dollar value), revenue unlocked (faster response times, better conversion, more capacity), or cost avoided (fewer errors, less churn, better decisions). Every scope of work includes an explicit ROI target written into the brief, no engagement begins without one.',
       },
     ],
   },
@@ -57,15 +82,15 @@ const sections: FaqSection[] = [
       },
       {
         q: 'Do you work remotely or on-site?',
-        a: 'Engagements run primarily remotely, with optional on-site travel for discovery workshops, stakeholder interviews, or go-live sprints. Most clients find remote delivery moves faster because it compresses the meeting cadence and keeps documentation tight. On-site visits are not required, but are not unusual either — typically one or two across a 12-week engagement.',
+        a: 'Engagements run primarily remotely, with optional on-site travel for discovery workshops, stakeholder interviews, or go-live sprints. Most clients find remote delivery moves faster because it compresses the meeting cadence and keeps documentation tight. On-site visits are not required, but are not unusual either, typically one or two across a 12-week engagement.',
       },
       {
         q: 'Who owns the code and IP you build?',
-        a: "The client owns 100% of the code, models, and data produced during an engagement. Crescendo retains only general methodology and non-client-specific patterns — nothing that belongs to the client's business. Standard mutual NDAs are signed before any material work begins, and custom NDAs are welcome. This is the default, not a negotiation point.",
+        a: "The client owns 100% of the code, models, and data produced during an engagement. Crescendo retains only general methodology and non-client-specific patterns, nothing that belongs to the client's business. Standard mutual NDAs are signed before any material work begins, and custom NDAs are welcome. This is the default, not a negotiation point.",
       },
       {
         q: 'What happens after the engagement ends?',
-        a: "Every Crescendo build is designed to be run by the client's team once the engagement ends — documentation, training sessions, and monitoring setup are included in every scope. Optional post-launch retainers are available for clients who want ongoing technical support, performance tuning, or iterative improvements. The default is independence, not dependence.",
+        a: "Every Crescendo build is designed to be run by the client's team once the engagement ends, documentation, training sessions, and monitoring setup are included in every scope. Optional post-launch retainers are available for clients who want ongoing technical support, performance tuning, or iterative improvements. The default is independence, not dependence.",
       },
     ],
   },
@@ -82,7 +107,7 @@ const sections: FaqSection[] = [
       },
       {
         q: 'What technology stack do you use?',
-        a: 'The default stack is Python, modern cloud (AWS, GCP, Azure depending on client preference), Claude and GPT for LLM work, agentic frameworks (LangChain, LangGraph, or direct model APIs depending on fit), Postgres or Snowflake for data, and Vercel/Netlify for client-facing deployments. The stack is selected to match the client — not every engagement needs a data warehouse, not every engagement needs a custom agent. The point is fit, not novelty.',
+        a: 'The default stack is Python, modern cloud (AWS, GCP, Azure depending on client preference), Claude and GPT for LLM work, agentic frameworks (LangChain, LangGraph, or direct model APIs depending on fit), Postgres or Snowflake for data, and Vercel/Netlify for client-facing deployments. The stack is selected to match the client, not every engagement needs a data warehouse, not every engagement needs a custom agent. The point is fit, not novelty.',
       },
     ],
   },
@@ -93,8 +118,8 @@ const allItems = sections.flatMap((s) => s.items);
 ---
 
 <BaseLayout
-  title="FAQ — Crescendo Consultants | Independent AI Consulting"
-  description="Frequently asked questions about hiring an independent AI consultant for small and mid-market businesses — costs, timelines, industries, process, and what to expect from an AI implementation."
+  title="FAQ, Crescendo Consultants | Independent AI Consulting"
+  description="Frequently asked questions about hiring an independent AI consultant for small and mid-market businesses, costs, timelines, process, and how AI SEO gets your business recommended by ChatGPT and other AI assistants."
   canonicalPath="/faq"
 >
   <!-- JSON-LD structured data for FAQ schema (GEO / AI search optimization) -->
@@ -118,7 +143,7 @@ const allItems = sections.flatMap((s) => s.items);
     <div class="faq__inner">
       <header class="faq__header">
         <div class="eyebrow">Frequently Asked</div>
-        <h1 class="faq__title">How Crescendo works — <em>in plain English</em>.</h1>
+        <h1 class="faq__title">How Crescendo works, <em>in plain English</em>.</h1>
         <p class="faq__lede">
           Costs, timelines, process, deliverables, and the questions real clients ask before hiring an independent AI consultant. If what you're looking for isn't here, <a href="mailto:gavin.coleman@crescendo-consulting.net">email me</a> or <a data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}' style="cursor:pointer;">book a 30-minute intro call</a>.
         </p>
@@ -145,7 +170,7 @@ const allItems = sections.flatMap((s) => s.items);
 
       <section class="faq__cta">
         <h2 class="faq__cta-title">Still have a question?</h2>
-        <p class="faq__cta-dek">Book a free 30-minute intro call. I'll give you a direct answer — not a sales pitch.</p>
+        <p class="faq__cta-dek">Book a free 30-minute intro call. I'll give you a direct answer, not a sales pitch.</p>
         <div class="faq__cta-actions">
           <a class="btn btn--primary btn--large" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>Book a Free Intro Call →</a>
           <a href="mailto:gavin.coleman@crescendo-consulting.net" class="btn btn--ghost btn--large">Email Directly<ArrowTrack /></a>
