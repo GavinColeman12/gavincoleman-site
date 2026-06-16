@@ -5,7 +5,7 @@ export async function GET(context) {
   const posts = await getCollection('insights', ({ data }) => !data.draft);
   const sorted = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   return rss({
-    title: 'Crescendo Consultants — Insights',
+    title: 'Crescendo AI Strategy Consultants — Insights',
     description:
       'Commentary, research, playbooks, field notes, and teardowns on AI and enterprise tech, and the businesses deploying it.',
     site: context.site,

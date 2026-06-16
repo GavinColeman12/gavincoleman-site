@@ -21,8 +21,8 @@ const structuredData = {
     {
       "@type": "ProfessionalService",
       "@id": `${SITE}/#org`,
-      name: "Crescendo Consulting",
-      alternateName: "Crescendo Consultants",
+      name: "Crescendo AI Strategy Consultants",
+      alternateName: ["Crescendo Consulting", "Crescendo Consultants", "Crescendo"],
       url: SITE,
       logo: `${SITE}/images/logo.png`,
       image: `${SITE}/images/og-card.png`,
@@ -67,7 +67,7 @@ const structuredData = {
     {
       "@type": "WebSite",
       "@id": `${SITE}/#website`,
-      name: "Crescendo Consulting",
+      name: "Crescendo AI Strategy Consultants",
       url: SITE,
       publisher: { "@id": `${SITE}/#org` },
       inLanguage: "en-US",
@@ -129,14 +129,14 @@ import '../styles/global.css';
 
   <!-- Open Graph + Twitter card meta -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Crescendo Consulting" />
+  <meta property="og:site_name" content="Crescendo AI Strategy Consultants" />
   <meta property="og:url" content={canonicalPath ? `${SITE}${canonicalPath}` : SITE} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={`${SITE}/images/og-card.png`} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Crescendo Consulting, Fortune 100 AI builds, delivered directly to your business" />
+  <meta property="og:image:alt" content="Crescendo AI Strategy Consultants, Fortune 100 AI builds, delivered directly to your business" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
@@ -169,10 +169,10 @@ import '../styles/global.css';
   <!-- NAV -->
   <nav class="nav">
     <div class="nav__inner">
-      <a href="/" class="nav__brand" aria-label="Crescendo Consultants, home">
+      <a href="/" class="nav__brand" aria-label="Crescendo AI Strategy Consultants, home">
         <img src="/images/logo-chevron.png" alt="" class="nav__brand-chevron" aria-hidden="true" />
         <span class="nav__brand-wordmark-wrap">
-          <img src="/images/logo-wordmark.png" alt="Crescendo Consultants" class="nav__brand-wordmark" />
+          <img src="/images/logo-wordmark.png" alt="Crescendo AI Strategy Consultants" class="nav__brand-wordmark" />
         </span>
       </a>
       <ul class="nav__links">
@@ -224,7 +224,7 @@ import '../styles/global.css';
   <footer class="footer">
     <div class="footer__inner">
       <div class="footer__brand">
-        <img src="/images/logo-light.png" alt="Crescendo Consultants" class="footer__logo" />
+        <img src="/images/logo-light.png" alt="Crescendo AI Strategy Consultants" class="footer__logo" />
         <div>
           <div class="footer__name">Gavin Coleman</div>
           <div class="footer__tagline">Independent Technology Consultant</div>
@@ -244,7 +244,7 @@ import '../styles/global.css';
         <span class="footer__sep">·</span>
         <a href="tel:+18044059880">+1 (804) 405-9880</a>
       </div>
-      <div class="footer__copy">© 2026 Crescendo Consultants. All rights reserved.</div>
+      <div class="footer__copy">© 2026 Crescendo AI Strategy Consultants. All rights reserved.</div>
     </div>
   </footer>
 
@@ -256,11 +256,11 @@ import '../styles/global.css';
       <button id="lead-popup-close" aria-label="Close">&times;</button>
 
       <div class="lead-popup-header">
-        <img src="/images/logo.png" alt="Crescendo Consultants" class="lead-popup-logo" />
+        <img src="/images/logo.png" alt="Crescendo AI Strategy Consultants" class="lead-popup-logo" />
         <h2>Ready to Grow? Let's Connect.</h2>
         <p class="lead-popup-subtitle">Start with a free consultation</p>
         <p class="lead-popup-description">
-          Tell me a bit about your business and goals. I'll follow up with personalized insights on how Crescendo Consultants can help you grow smarter.
+          Tell me a bit about your business and goals. I'll follow up with personalized insights on how Crescendo AI Strategy Consultants can help you grow smarter.
         </p>
       </div>
 
