@@ -667,6 +667,17 @@ ul {
   will-change: opacity, transform;
 }
 
+/* The trailing period lives ON the rotator (not as a separate text node after
+   the span), so it stays glued to the word and rides the same fade/translate
+   on every swap instead of detaching when the phrase changes width. Forced
+   solid white so the gradient text-clip above doesn't make it transparent. */
+.hero__rotator::after {
+  content: ".";
+  -webkit-text-fill-color: #fff;
+          text-fill-color: #fff;
+  color: #fff;
+}
+
 .hero__rotator.is-leaving {
   opacity: 0;
   transform: translateY(-10px);
