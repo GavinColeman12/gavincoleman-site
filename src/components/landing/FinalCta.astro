@@ -1,0 +1,34 @@
+---
+import '../../styles/landing.css';
+import LeadForm from '../LeadForm.astro';
+import CalButton from './CalButton.astro';
+
+export interface Props {
+  title: string;
+  lede: string;
+  bookTitle?: string;
+  bookText?: string;
+}
+const {
+  title,
+  lede,
+  bookTitle = 'Prefer to talk it through?',
+  bookText = "Book a free 30-minute intro call. I work with a small number of clients at a time, and I'll tell you honestly whether I can help.",
+} = Astro.props;
+---
+<section class="lp-final lp-dark" id="lead" aria-labelledby="lp-final-title">
+  <div class="lp-section__inner">
+    <div class="eyebrow eyebrow--light">Let's talk</div>
+    <h2 class="lp-final__title" id="lp-final-title">{title}</h2>
+    <p class="lp-final__lede">{lede}</p>
+    <div class="lp-final__grid">
+      <LeadForm idPrefix="lead" heading="Send a message" />
+      <div class="lp-final__book">
+        <h3 class="lp-final__book-title">{bookTitle}</h3>
+        <p>{bookText}</p>
+        <CalButton />
+        <a class="lp-mail" href="mailto:gavin.coleman@crescendo-consultants.com">gavin.coleman@crescendo-consultants.com</a>
+      </div>
+    </div>
+  </div>
+</section>

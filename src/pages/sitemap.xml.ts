@@ -18,6 +18,8 @@ export const GET: APIRoute = async () => {
     { loc: `${SITE}/`, priority: '1.0' },
     { loc: `${SITE}/insights`, priority: '0.8' },
     { loc: `${SITE}/demos`, priority: '0.8' },
+    { loc: `${SITE}/ai-consulting/`, priority: '0.9' },
+    { loc: `${SITE}/ai-automation/`, priority: '0.9' },
     { loc: `${SITE}/faq`, priority: '0.6' },
     { loc: `${SITE}/privacy`, priority: '0.3' },
     { loc: `${SITE}/data-deletion`, priority: '0.3' },

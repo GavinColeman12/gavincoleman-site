@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LandingHero from '../components/landing/LandingHero.astro';
+import HowItWorks from '../components/landing/HowItWorks.astro';
+import LandingBuilds from '../components/landing/LandingBuilds.astro';
+import WhyIndependent from '../components/landing/WhyIndependent.astro';
+import LandingFaq from '../components/landing/LandingFaq.astro';
+import FinalCta from '../components/landing/FinalCta.astro';
+import '../styles/landing.css';
+
+const steps = [
+  {
+    title: 'Tell me what to take off your team',
+    body: "Book a free 30-minute call and describe the repetitive work you want automated. I'll tell you honestly whether AI can help, and where it can't.",
+    meta: 'Free · 30 minutes',
+  },
+  {
+    title: 'Diagnose before building',
+    body: 'In a 1–2 week Diagnostic Sprint I audit your operations and data across your existing stack, score the opportunities by ROI and effort, and write a scope for the top one or two. You also get an honest "start here" recommendation, or "don\'t build this yet".',
+    meta: '1–2 weeks · credits toward implementation',
+  },
+  {
+    title: 'Build around your systems',
+    body: 'Agents and workflows built to fit the systems you already run. Intake and review tools take 2–4 weeks. Multi-step agents that span several systems take 4–12 weeks.',
+    meta: '2–12 weeks, depending on the build',
+  },
+  {
+    title: 'Your team runs it',
+    body: "You own the code, models, and data produced during the engagement. Documentation, training sessions, and monitoring setup are included in every scope. Optional post-launch retainers are there if you want them.",
+    meta: 'The default is independence',
+  },
+];
+
+const highlights = [
+  {
+    icon: 'discovery' as const,
+    title: 'A diagnosis before any build',
+    desc: 'I analyze your business myself to find the pain points and the highest-ROI opportunities, so you only automate what is worth automating.',
+  },
+  {
+    icon: 'methods' as const,
+    title: 'The Fortune 100 stack, right-sized',
+    desc: 'Agentic AI, Python, and cloud, the same tools used at large companies, fitted to a business your size.',
+  },
+  {
+    icon: 'systems' as const,
+    title: 'Software your team runs',
+    desc: 'Every engagement ships a working system. You are not left with a deck on the shelf.',
+  },
+  {
+    icon: 'direct' as const,
+    title: 'One person from call to launch',
+    desc: 'You deal with me directly. No handoffs, no junior analysts, no rotating faces.',
+  },
+];
+
+// Condensed from faq.astro (see line refs in the build report).
+const faqs = [
+  {
+    q: 'Do you build custom software or just advise?',
+    a: 'Crescendo builds. Strategy without implementation rarely turns into business outcomes, so every engagement is scoped to produce a concrete technical deliverable, such as a working chatbot, an agentic workflow, a data pipeline, or a dashboard. Advisory-only work is available too, but it is a smaller slice of the practice.',
+  },
+  {
+    q: 'How long does an automation take to build?',
+    a: 'A tightly-scoped build, such as a specific chatbot, a single automated workflow, or an internal knowledge assistant, takes 2–4 weeks. A broader build with multi-system integrations or agentic workflows spanning departments takes 8–12 weeks. Anything longer is usually structured as a retainer rather than a project.',
+  },
+  {
+    q: 'Will AI replace my employees?',
+    a: 'In most engagements, AI replaces specific tasks rather than whole roles. A typical outcome is that a team of five now handles the workload of six or seven without adding headcount, or that a senior person stops doing routine work and puts those hours into higher-leverage projects.',
+  },
+  {
+    q: 'Who owns the code and IP you build?',
+    a: "You own 100% of the code, models, and data produced during an engagement. Crescendo keeps only general methodology and non-client-specific patterns. Standard mutual NDAs are signed before any material work begins, and custom NDAs are welcome.",
+  },
+  {
+    q: 'What does it cost?',
+    a: 'Every engagement is scoped individually, based on the complexity of the build, the timeline, and the deliverables. Pricing is discussed openly on the free 30-minute intro call and confirmed in writing before any paid work begins.',
+  },
+];
+---
+
+<BaseLayout
+  title="AI Automation Agency, Custom AI Agents and Workflows | Crescendo"
+  description="AI automation services built around the systems you already run. Multi-step AI agents for intake, onboarding, client dashboards and back-office work. Book a free intro call."
+  canonicalPath="/ai-automation/"
+>
+  <main class="lp">
+    <LandingHero
+      eyebrow="AI automation agency"
+      title="AI automation services built around the systems you already run"
+      subtitle="Custom AI agents and multi-step automations for intake, onboarding and back-office work. You get a concrete scope and timeline before any build starts, and a working system at the end."
+    />
+
+    <LandingBuilds
+      eyebrow="What we automate"
+      title="Work your team repeats, handled by AI."
+      subtitle="Each automation is a working system your team can run independently when we're done. Timelines below are typical for each kind of build."
+      ids={['intake', 'agentic', 'hr', 'reputation']}
+      columns={2}
+      demosNote="Not sure what an automation looks like in practice? Use the working demos first, with no signup."
+    />
+
+    <HowItWorks
+      title="How an automation project runs"
+      subtitle="No RFPs, no SOW theater, no surprise invoices. You know the scope before the build starts."
+      steps={steps}
+    />
+
+    <WhyIndependent
+      eyebrow="Why independent"
+      title="Senior work, delivered directly."
+      subtitle="The same person who designs the automation writes the code. There is no agency layer between you and the build."
+      items={highlights}
+    />
+
+    <LandingFaq title="Automation questions, answered" items={faqs} />
+
+    <FinalCta
+      title="Tell us what you want AI to take off your plate"
+      lede="Describe the work that eats your team's time. I'll reply within 24 hours, or you can book a call straight away."
+      bookTitle="Rather talk it through?"
+      bookText="Book a free 30-minute intro call and we'll go through the work you want automated and the systems it touches."
+    />
+  </main>
+</BaseLayout>

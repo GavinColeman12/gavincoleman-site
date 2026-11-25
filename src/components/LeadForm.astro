@@ -1,0 +1,184 @@
+---
+// Reusable lead form. Plain static HTML so Netlify Forms detects it at build.
+// The submit script below handles every form[data-lead-form] on the page.
+import '../styles/landing.css';
+
+export interface Props {
+  /** Unique prefix for field ids, so two forms on one page never clash. */
+  idPrefix?: string;
+  heading?: string;
+}
+
+const { idPrefix = 'lead', heading = 'Send a message' } = Astro.props;
+const id = (n: string) => `${idPrefix}-${n}`;
+const attribution = [
+  'source_page',
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_term',
+  'utm_content',
+];
+---
+
+<div class="lead-form">
+  <h3 class="lead-form__title">{heading}</h3>
+  <form
+    name="lead-capture"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    data-lead-form
+  >
+    <input type="hidden" name="form-name" value="lead-capture" />
+    <p class="lead-form__hp" aria-hidden="true">
+      <input name="bot-field" tabindex="-1" autocomplete="off" />
+    </p>
+
+    <div class="lead-form__row">
+      <div class="lead-form__field">
+        <label for={id('name')}>Name <span class="lead-form__req" aria-hidden="true">*</span></label>
+        <input id={id('name')} type="text" name="name" autocomplete="name" required />
+      </div>
+      <div class="lead-form__field">
+        <label for={id('email')}>Work email <span class="lead-form__req" aria-hidden="true">*</span></label>
+        <input id={id('email')} type="email" name="email" autocomplete="email" required />
+      </div>
+    </div>
+
+    <div class="lead-form__field">
+      <label for={id('company')}>Company or website</label>
+      <input id={id('company')} type="text" name="company" autocomplete="organization" />
+    </div>
+
+    <div class="lead-form__row">
+      <div class="lead-form__field">
+        <label for={id('team')}>Company size</label>
+        <select id={id('team')} name="team_size">
+          <option value="">Select</option>
+          <option value="1-10">1-10</option>
+          <option value="11-50">11-50</option>
+          <option value="51-200">51-200</option>
+          <option value="201-1000">201-1,000</option>
+          <option value="1000+">1,000+</option>
+        </select>
+      </div>
+      <div class="lead-form__field">
+        <label for={id('phone')}>Phone (optional)</label>
+        <input id={id('phone')} type="tel" name="phone" autocomplete="tel" />
+      </div>
+    </div>
+
+    <div class="lead-form__field">
+      <label for={id('message')}>What would you like AI to handle?</label>
+      <textarea id={id('message')} name="message" rows="4"></textarea>
+    </div>
+
+    {attribution.map((n) => <input type="hidden" name={n} value="" />)}
+
+    <p class="lead-form__error" role="alert" data-lead-error hidden>
+      Something went wrong sending that. Please try again, or email
+      <a href="mailto:gavin.coleman@crescendo-consultants.com">gavin.coleman@crescendo-consultants.com</a>
+      directly.
+    </p>
+
+    <button type="submit" class="btn btn--primary btn--large lead-form__submit">Send message</button>
+    <p class="lead-form__fine">
+      By sending this you agree to our <a href="/privacy/">Privacy Policy</a>.
+    </p>
+  </form>
+</div>
+
+<script is:inline>
+  (function () {
+    if (window.__crescendoLeadFormInit) return;
+    window.__crescendoLeadFormInit = true;
+
+    var FIELDS = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+
+    function readAttribution() {
+      var stored = {};
+      try {
+        stored = JSON.parse(sessionStorage.getItem('crescendo_attr') || '{}') || {};
+      } catch (e) {
+        stored = {};
+      }
+      var params = null;
+      try {
+        params = new URLSearchParams(location.search);
+      } catch (e) {
+        params = null;
+      }
+      var out = {};
+      FIELDS.forEach(function (k) {
+        var v = stored[k];
+        if (!v && params) v = params.get(k);
+        out[k] = v || '';
+      });
+      return out;
+    }
+
+    function setField(form, name, value) {
+      var el = form.querySelector('input[name="' + name + '"]');
+      if (el) el.value = value;
+    }
+
+    function init(form) {
+      var btn = form.querySelector('button[type="submit"]');
+      var err = form.querySelector('[data-lead-error]');
+      var label = btn ? btn.textContent : 'Send message';
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (btn && btn.disabled) return;
+        if (err) err.hidden = true;
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Sending...';
+        }
+
+        setField(form, 'source_page', location.pathname);
+        var attr = readAttribution();
+        FIELDS.forEach(function (k) { setField(form, k, attr[k]); });
+
+        function fail() {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = label;
+          }
+          if (err) err.hidden = false;
+        }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+          .then(function (res) {
+            if (!res.ok) return fail();
+            try {
+              sessionStorage.setItem(
+                'crescendo_lead_submitted',
+                JSON.stringify({ form: 'lead-capture', source: location.pathname })
+              );
+            } catch (e) {}
+            window.location.assign('/thank-you/');
+          })
+          .catch(fail);
+      });
+    }
+
+    function boot() {
+      var forms = document.querySelectorAll('form[data-lead-form]');
+      for (var i = 0; i < forms.length; i++) init(forms[i]);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+  })();
+</script>

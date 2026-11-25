@@ -1,0 +1,55 @@
+---
+import '../../styles/landing.css';
+import CalButton from './CalButton.astro';
+
+export interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+}
+const { eyebrow, title, subtitle } = Astro.props;
+---
+<header class="lp-hero lp-dark">
+  <div class="lp-hero__inner">
+    <div class="lp-hero__grid">
+      <div class="lp-hero__copy">
+        <div class="eyebrow eyebrow--light">{eyebrow}</div>
+        <h1 class="lp-hero__title">{title}</h1>
+        <p class="lp-hero__sub">{subtitle}</p>
+        <div class="lp-actions">
+          <CalButton />
+          <a href="#lead" class="lp-textlink">Or send a message</a>
+        </div>
+        <p class="lp-reassure">
+          Free 30-minute call. You work with me directly: no handoffs, no junior analysts, no rotating faces.
+        </p>
+      </div>
+
+      <aside class="lp-panel" aria-label="Where most clients start">
+        <div class="lp-panel__label">Start here</div>
+        <h2 class="lp-panel__title">The Two-Week Diagnostic Sprint</h2>
+        <ul class="lp-panel__list">
+          <li>A written assessment of your business, your data, and the bottlenecks costing you money</li>
+          <li>A ranked list of AI opportunities, scored by ROI and effort</li>
+          <li>A concrete scope of work for the top one or two</li>
+        </ul>
+        <p class="lp-panel__foot">1–2 weeks · credits toward implementation</p>
+      </aside>
+    </div>
+
+    <div class="lp-stats">
+      <div class="stat">
+        <div class="stat__value">8+</div>
+        <div class="stat__label">Industries · Fortune 100 Engagements</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value">Bain · PS</div>
+        <div class="stat__label">Pedigree · Independent Delivery</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value">Tailored, Not Templated</div>
+        <div class="stat__label">Independent operator. Built for your business.</div>
+      </div>
+    </div>
+  </div>
+</header>

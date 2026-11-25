@@ -1,0 +1,33 @@
+---
+import '../../styles/landing.css';
+
+export interface Item {
+  q: string;
+  a: string;
+}
+export interface Props {
+  title?: string;
+  items: Item[];
+}
+const { title = 'Questions people ask first', items } = Astro.props;
+---
+<section class="lp-section lp-section--subtle" aria-labelledby="lp-faq-title">
+  <div class="lp-section__inner">
+    <div class="lp-header">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="section__title" id="lp-faq-title">{title}</h2>
+    </div>
+    <div class="lp-faq">
+      {items.map((it) => (
+        <details class="lp-faq__item">
+          <summary class="lp-faq__q">
+            <span>{it.q}</span>
+            <span class="lp-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="lp-faq__a"><p>{it.a}</p></div>
+        </details>
+      ))}
+    </div>
+    <p class="lp-faq__more">More answers on the <a href="/faq/">full FAQ</a>.</p>
+  </div>
+</section>

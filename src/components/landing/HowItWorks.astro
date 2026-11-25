@@ -1,0 +1,35 @@
+---
+import '../../styles/landing.css';
+
+export interface Step {
+  title: string;
+  body: string;
+  meta?: string;
+}
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  steps: Step[];
+}
+const { eyebrow = 'How it works', title, subtitle, steps } = Astro.props;
+---
+<section class="lp-section lp-section--subtle" aria-labelledby="lp-how-title">
+  <div class="lp-section__inner">
+    <div class="lp-header">
+      <div class="eyebrow">{eyebrow}</div>
+      <h2 class="section__title" id="lp-how-title">{title}</h2>
+      {subtitle && <p class="section__subtitle">{subtitle}</p>}
+    </div>
+    <ol class="lp-steps">
+      {steps.map((s, i) => (
+        <li class="lp-step">
+          <div class="lp-step__num">Step {i + 1}</div>
+          <h3 class="lp-step__title">{s.title}</h3>
+          <p class="lp-step__body">{s.body}</p>
+          {s.meta && <div class="lp-step__meta">{s.meta}</div>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

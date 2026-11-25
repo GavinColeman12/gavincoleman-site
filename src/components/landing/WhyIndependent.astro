@@ -1,0 +1,37 @@
+---
+import '../../styles/landing.css';
+import { HIGHLIGHT_ICONS } from './builds';
+
+export interface Item {
+  icon: keyof typeof HIGHLIGHT_ICONS;
+  title: string;
+  desc: string;
+}
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  items: Item[];
+}
+const { eyebrow = 'Why independent', title, subtitle, items } = Astro.props;
+---
+<section class="lp-section" aria-labelledby="lp-why-title">
+  <div class="lp-section__inner">
+    <div class="lp-header">
+      <div class="eyebrow">{eyebrow}</div>
+      <h2 class="section__title" id="lp-why-title">{title}</h2>
+      {subtitle && <p class="section__subtitle">{subtitle}</p>}
+    </div>
+    <div class="lp-why">
+      {items.map((it) => (
+        <div class="highlight">
+          <div class="highlight__icon" set:html={HIGHLIGHT_ICONS[it.icon]} />
+          <div>
+            <h3 class="highlight__title">{it.title}</h3>
+            <p class="highlight__desc">{it.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

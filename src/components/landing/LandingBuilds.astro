@@ -1,0 +1,51 @@
+---
+import '../../styles/landing.css';
+import ArrowTrack from '../ArrowTrack.astro';
+import { BUILDS, CUSTOM_BUILD } from './builds';
+
+export interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  /** Keys of BUILDS, in display order. */
+  ids: string[];
+  /** 2 or 3 desktop columns. The Custom card spans the full row in 2-col mode. */
+  columns?: 2 | 3;
+  demosNote: string;
+}
+const { eyebrow, title, subtitle, ids, columns = 3, demosNote } = Astro.props;
+const cards = ids.map((id) => BUILDS[id]);
+---
+<section class="lp-section lp-section--dark lp-dark" aria-labelledby="lp-builds-title">
+  <div class="lp-section__inner">
+    <div class="lp-header">
+      <div class="eyebrow eyebrow--light">{eyebrow}</div>
+      <h2 class="section__title section__title--light" id="lp-builds-title">{title}</h2>
+      <p class="section__subtitle">{subtitle}</p>
+    </div>
+
+    <div class:list={['lp-builds', columns === 2 && 'lp-builds--two']}>
+      {cards.map((b) => (
+        <a href={b.href} class="build-card">
+          <div class="build-card__icon" set:html={b.icon} />
+          <h3 class="build-card__title">{b.title}</h3>
+          <p class="build-card__desc">{b.desc}</p>
+          <div class="build-card__meta"><span>{b.time}</span></div>
+          <span class="build-card__cta">{b.cta}<ArrowTrack /></span>
+        </a>
+      ))}
+
+      <div class="build-card build-card--custom">
+        <div class="build-card__icon" set:html={CUSTOM_BUILD.icon} />
+        <h3 class="build-card__title">{CUSTOM_BUILD.title}</h3>
+        <p class="build-card__desc">{CUSTOM_BUILD.desc}</p>
+        <div class="build-card__meta"><span>{CUSTOM_BUILD.time}</span></div>
+        <button type="button" class="build-card__cta lp-linkbtn" data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>{CUSTOM_BUILD.cta}<ArrowTrack /></button>
+      </div>
+    </div>
+
+    <p class="lp-demos-note">
+      {demosNote} <a href="/demos/">Try the live demos</a>.
+    </p>
+  </div>
+</section>

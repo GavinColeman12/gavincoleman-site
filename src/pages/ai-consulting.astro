@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LandingHero from '../components/landing/LandingHero.astro';
+import HowItWorks from '../components/landing/HowItWorks.astro';
+import LandingBuilds from '../components/landing/LandingBuilds.astro';
+import WhyIndependent from '../components/landing/WhyIndependent.astro';
+import LandingFaq from '../components/landing/LandingFaq.astro';
+import FinalCta from '../components/landing/FinalCta.astro';
+import '../styles/landing.css';
+
+const steps = [
+  {
+    title: 'Free intro call',
+    body: "A free 30-minute call to see whether Crescendo is the right fit. Pricing is discussed openly on the call. I work with a small number of clients at a time, and I'll tell you honestly whether I can help.",
+    meta: 'Free · 30 minutes',
+  },
+  {
+    title: 'The Two-Week Diagnostic Sprint',
+    body: 'Before any build, two weeks understanding your business, your data, and the bottlenecks costing you money. You leave with a written assessment, a ranked list of AI opportunities, and a concrete scope of work. The diagnostic fee credits toward whatever we build next.',
+    meta: '1–2 weeks · credits toward implementation',
+  },
+  {
+    title: 'We build it',
+    body: 'A working system, not a slide deck. Timelines depend on the build: 2–4 weeks for AI intake or review tools, 2–3 weeks for an internal knowledge assistant, 4–12 weeks for agentic workflows that span your systems.',
+    meta: '2–12 weeks, depending on the build',
+  },
+  {
+    title: 'Handover or ongoing partnership',
+    body: 'Every build is designed to be run by your team once we finish, with documentation, training sessions, and monitoring setup included. If you want ongoing guidance, a retainer gives you a senior operator on call for decisions, architecture, and roadmap reviews.',
+    meta: 'Retainers typically 6–12 months',
+  },
+];
+
+const highlights = [
+  {
+    icon: 'discovery' as const,
+    title: 'Discovery & Diagnosis',
+    desc: 'I run a personal analysis of your business to surface the pain points and highest-ROI opportunities, before any build starts.',
+  },
+  {
+    icon: 'methods' as const,
+    title: 'Modern Methods & Tools',
+    desc: 'Agentic AI, Python, and cloud, the Fortune 100 stack, right-sized for your business.',
+  },
+  {
+    icon: 'systems' as const,
+    title: 'Working Systems, Not Slides',
+    desc: 'Every engagement ships software your team actually runs. No decks on the shelf.',
+  },
+  {
+    icon: 'direct' as const,
+    title: 'Direct Partnership',
+    desc: 'You work with me, no handoffs, no junior analysts, no rotating faces.',
+  },
+];
+
+// Condensed from faq.astro (see line refs in the build report).
+const faqs = [
+  {
+    q: 'How much does it cost to hire an independent AI consultant?',
+    a: 'Every engagement is scoped individually, based on the complexity of the build, the timeline, and the deliverables you need. Pricing is discussed openly during the free 30-minute intro call and confirmed in writing before any paid work begins. Most clients begin with a short Diagnostic Sprint that produces a written assessment and a concrete scope for the implementation that follows.',
+  },
+  {
+    q: 'How do engagements start?',
+    a: "Every engagement starts with a free 30-minute intro call to see whether Crescendo is the right fit. If there's mutual interest, the next step is a 1–2 week paid diagnostic sprint. Only then is a full implementation engagement signed, and if you move forward, the diagnostic fee credits toward it.",
+  },
+  {
+    q: 'How long does a typical AI implementation take?',
+    a: 'Most implementations run 4–12 weeks end to end, depending on complexity. A tightly-scoped tool build, such as a specific chatbot or an internal knowledge assistant, takes 2–4 weeks. A broader build with multi-system integrations or agentic workflows spanning departments takes 8–12 weeks.',
+  },
+  {
+    q: 'What is the difference between an independent AI consultant and an agency?',
+    a: 'Independent consultants give you direct access to a senior practitioner, with no account managers, junior handoffs, or project overhead. The tradeoff is capacity: a single operator runs only a small number of engagements at a time, so timing matters.',
+  },
+  {
+    q: 'What happens after the engagement ends?',
+    a: "Every build is designed to be run by your team once the engagement ends. Documentation, training sessions, and monitoring setup are included in every scope. Optional post-launch retainers are available if you want ongoing technical support, performance tuning, or iterative improvements. The default is independence, not dependence.",
+  },
+];
+---
+
+<BaseLayout
+  title="AI Consulting Services, Strategy to Working System | Crescendo"
+  description="Independent AI consultant. Start with a two-week diagnostic sprint, then get a working system built, not a slide deck. Book a free intro call."
+  canonicalPath="/ai-consulting/"
+>
+  <main class="lp">
+    <LandingHero
+      eyebrow="Independent AI consultant"
+      title="AI consulting services that end in a working system"
+      subtitle="Strategy, build, and handover from one independent consultant. You end with a working system, not a slide deck."
+    />
+
+    <HowItWorks
+      title="From first call to a system your team runs"
+      subtitle="Every engagement is tailored, but the shape is consistent. Start with a diagnostic, choose a build, stay on retainer if you want ongoing leadership."
+      steps={steps}
+    />
+
+    <LandingBuilds
+      eyebrow="What we build"
+      title="Six kinds of build we ship."
+      subtitle="Each one is a working system your team can run independently when we're done. Most clients come in through the diagnostic and pick the build that maps to their priority opportunity."
+      ids={['intake', 'reputation', 'geo', 'hr', 'agentic']}
+      demosNote="Want to see what the work looks like before you talk to anyone? Every build has a demo you can use right now, with no signup."
+    />
+
+    <WhyIndependent
+      title="Enterprise pattern recognition. Independent delivery."
+      subtitle="When you hire Crescendo, you hire me, not a delivery team. You get the same thinking and the same code from first call to final system."
+      items={highlights}
+    />
+
+    <LandingFaq items={faqs} />
+
+    <FinalCta
+      title="Tell us what you want AI to take off your plate"
+      lede="Send a short message and I'll reply within 24 hours. Or skip the form and pick a time that suits you."
+    />
+  </main>
+</BaseLayout>
