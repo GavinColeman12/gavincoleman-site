@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CalButton from '../components/landing/CalButton.astro';
+import '../styles/landing.css';
+---
+
+<BaseLayout
+  title="Thanks, message received | Crescendo"
+  description="Thanks for getting in touch with Crescendo AI Strategy Consultants."
+  canonicalPath="/thank-you/"
+  noindex
+>
+  <main class="lp">
+    <section class="lp-hero lp-dark lp-thanks">
+      <div class="lp-thanks__inner">
+        <div class="eyebrow eyebrow--light">Message received</div>
+        <h1 class="lp-hero__title">Thanks, your message is in.</h1>
+        <p class="lp-thanks__lede">
+          I'll reply within 24 hours. If you'd rather not wait, pick a time that suits you and we can talk it through on a free 30-minute intro call.
+        </p>
+        <div class="lp-actions">
+          <CalButton />
+        </div>
+
+        <div class="lp-thanks__next">
+          <h2 class="lp-thanks__next-title">While you wait</h2>
+          <ul class="lp-thanks__links">
+            <li><a href="/demos/">Try the live demos</a></li>
+            <li><a href="/faq/">Read the FAQ</a></li>
+            <li><a href="/">Back to the home page</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    (function () {
+      try {
+        var KEY = 'crescendo_lead_submitted';
+        var raw = sessionStorage.getItem(KEY);
+        if (!raw) return;
+        sessionStorage.removeItem(KEY);
+        var payload = {};
+        try { payload = JSON.parse(raw) || {}; } catch (e) {}
+        if (typeof window.crescendoTrack === 'function') window.crescendoTrack('lead', payload);
+      } catch (e) {}
+    })();
+  </script>
+</BaseLayout>

@@ -1,0 +1,9 @@
+---
+// "Book a free intro call" button. Attributes copied from the homepage hero button.
+export interface Props {
+  class?: string;
+  label?: string;
+}
+const { class: cls = 'btn btn--primary btn--large', label = 'Book a free intro call' } = Astro.props;
+---
+<button type="button" class={cls} data-cal-link="gavin-coleman-pxrlkg/intro" data-cal-namespace="intro" data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'>{label}</button>

@@ -3,12 +3,15 @@ export interface Props {
   title: string;
   description?: string;
   canonicalPath?: string;
+  /** Keep the page out of search indexes (e.g. /thank-you/). */
+  noindex?: boolean;
 }
 
 const {
   title,
   description = "Independent technology consultant helping small and medium-sized businesses harness AI, automation, and modern software to grow faster and work smarter.",
   canonicalPath,
+  noindex = false,
 } = Astro.props;
 
 const SITE = "https://crescendo-consulting.net";
@@ -84,6 +87,63 @@ import '../styles/global.css';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Measurement helpers. Must run before any Google tag so the consent
+       defaults apply to them.
+       1) Consent: ad signals are OFF by default for visitors in the EEA, UK and
+          Switzerland (this site shows no consent banner). Analytics is unaffected,
+          and visitors elsewhere are unaffected.
+       2) Attribution: keeps ad click ids / UTM tags for the session so a lead
+          form can record where the visitor came from.
+       3) crescendoTrack(kind): the one place that reports lead, booking and
+          call events (GA4 event, plus a Google Ads conversion when configured). -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']
+    });
+
+    // Google Ads conversion ids. While these are empty, only the GA4 events fire
+    // (GA4 key events are imported into Google Ads as conversions).
+    window.CRESCENDO_ADS = { id: '', labels: { lead: '', booking: '', call: '' } };
+
+    (function () {
+      try {
+        var KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+        var q = new URLSearchParams(location.search);
+        var cur = {};
+        try { cur = JSON.parse(sessionStorage.getItem('crescendo_attr') || '{}') || {}; } catch (e) { cur = {}; }
+        var changed = false;
+        KEYS.forEach(function (k) {
+          var v = q.get(k);
+          if (v) { cur[k] = String(v).slice(0, 200); changed = true; }
+        });
+        if (changed) sessionStorage.setItem('crescendo_attr', JSON.stringify(cur));
+      } catch (e) {}
+    })();
+
+    window.crescendoTrack = function (kind, detail) {
+      try {
+        var names = { lead: 'generate_lead', booking: 'book_intro_call', call: 'click_to_call' };
+        var name = names[kind];
+        if (!name) return;
+        detail = detail || {};
+        window.gtag('event', name, {
+          lead_source: detail.form || kind,
+          page_source: detail.source || location.pathname
+        });
+        var ads = window.CRESCENDO_ADS || {};
+        if (ads.id && ads.labels && ads.labels[kind]) {
+          window.gtag('event', 'conversion', { send_to: ads.id + '/' + ads.labels[kind] });
+        }
+      } catch (e) {}
+    };
+  </script>
+
   <!-- Google Tag Manager (container GTM-NQKQR4C2). Guarded to the production
        domain so localhost dev + Netlify deploy-previews don't fire tags. -->
   <script is:inline>
@@ -113,11 +173,15 @@ import '../styles/global.css';
       window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', GA_ID);
+      // Google Ads tag, only once a conversion id is configured above.
+      var ADS = window.CRESCENDO_ADS || {};
+      if (ADS.id) gtag('config', ADS.id);
     })();
   </script>
 
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   {canonicalPath && <link rel="canonical" href={`https://crescendo-consulting.net${canonicalPath}`} />}
 
   <!-- Favicons + app icon — the exact Crescendo chevron mark. SVG first so
@@ -154,6 +218,18 @@ import '../styles/global.css';
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     Cal("init", "intro", {origin:"https://app.cal.com"});
     Cal.ns.intro("ui", {"hideEventTypeDetails":false,"layout":"week_view"});
+    // Report a completed intro-call booking once per page view. Event name per
+    // Cal.com's embed docs (bookingSuccessfulV2 replaces bookingSuccessful).
+    try {
+      Cal.ns.intro("on", {
+        action: "bookingSuccessfulV2",
+        callback: function () {
+          if (window.__crescendoBooked) return;
+          window.__crescendoBooked = true;
+          if (typeof window.crescendoTrack === 'function') window.crescendoTrack('booking', { form: 'cal-intro' });
+        }
+      });
+    } catch (e) {}
   </script>
 </head>
 <body>
@@ -269,6 +345,9 @@ import '../styles/global.css';
         <p style="display:none;">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
+        {['source_page', 'gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].map((n) => (
+          <input type="hidden" name={n} value="" />
+        ))}
 
         <div class="form-row">
           <input type="text" name="name" placeholder="Name" required />
@@ -300,7 +379,18 @@ import '../styles/global.css';
     <input type="text" name="name" />
     <input type="email" name="email" />
     <input type="tel" name="phone" />
+    <input type="text" name="company" />
+    <input type="text" name="team_size" />
     <textarea name="message"></textarea>
+    <input type="text" name="source_page" />
+    <input type="text" name="gclid" />
+    <input type="text" name="gbraid" />
+    <input type="text" name="wbraid" />
+    <input type="text" name="utm_source" />
+    <input type="text" name="utm_medium" />
+    <input type="text" name="utm_campaign" />
+    <input type="text" name="utm_term" />
+    <input type="text" name="utm_content" />
   </form>
   <form name="insights-signup" netlify netlify-honeypot="bot-field" hidden>
     <input type="email" name="email" />
@@ -408,21 +498,40 @@ import '../styles/global.css';
       if (form) form.addEventListener('submit', function(e) {
         e.preventDefault();
         const f = e.target;
+        // Record where the visitor came from (ad click ids / UTM tags kept for the session).
+        try {
+          const attr = JSON.parse(sessionStorage.getItem('crescendo_attr') || '{}') || {};
+          const setHidden = function (name, value) {
+            const el = f.querySelector('input[name="' + name + '"]');
+            if (el) el.value = value || '';
+          };
+          setHidden('source_page', location.pathname);
+          ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']
+            .forEach(function (k) { setHidden(k, attr[k]); });
+        } catch (err) {}
         const data = new FormData(f);
         fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(data).toString()
         })
-        .then(() => {
-          f.style.display = 'none';
-          const s = document.getElementById('lead-success');
-          if (s) s.style.display = 'block';
-          setTimeout(hidePopup, 3000);
+        .then((res) => {
+          if (!res.ok) throw new Error('Form submit failed: ' + res.status);
+          // The thank-you page reports the lead once, then clears this flag.
+          try {
+            sessionStorage.setItem('crescendo_lead_submitted', JSON.stringify({ form: 'lead-popup', source: location.pathname }));
+          } catch (err) {}
+          window.location.assign('/thank-you/');
         })
         .catch(() => {
           alert('There was an error submitting the form. Please try emailing gavin.coleman@crescendo-consultants.com directly.');
         });
+      });
+
+      // Phone-number taps (footer and anywhere else a tel: link appears).
+      document.addEventListener('click', function (e) {
+        const a = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+        if (a && typeof window.crescendoTrack === 'function') window.crescendoTrack('call', { form: 'tel-link' });
       });
     })();
   </script>
