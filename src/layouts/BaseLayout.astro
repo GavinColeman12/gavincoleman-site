@@ -107,9 +107,13 @@ import '../styles/global.css';
       region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']
     });
 
-    // Google Ads conversion ids. While these are empty, only the GA4 events fire
-    // (GA4 key events are imported into Google Ads as conversions).
-    window.CRESCENDO_ADS = { id: '', labels: { lead: '', booking: '', call: '' } };
+    // Google Ads conversion ids (account 732-805-2952). 'lead' = Submit lead form,
+    // 'booking' = Book appointment. 'call' has no Ads conversion action, so phone
+    // taps are reported to GA4 only.
+    window.CRESCENDO_ADS = {
+      id: 'AW-18595580215',
+      labels: { lead: '-wBGCN2Pqr8dELeSiKNF', booking: 'nVsYCOCPqr8dELeSiKNF', call: '' }
+    };
 
     (function () {
       try {
